@@ -1,7 +1,7 @@
 'use strict';
 
-describe('myApp.version module', function() {
-  beforeEach(module('myApp.version'));
+describe('apiRepo.version module', function() {
+  beforeEach(module('apiRepo.version'));
 
   describe('interpolate filter', function() {
     beforeEach(module(function($provide) {
