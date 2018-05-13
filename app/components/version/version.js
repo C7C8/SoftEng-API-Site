@@ -1,8 +1,8 @@
 'use strict';
 
-angular.module('apiRepo.version', [
-  'apiRepo.version.interpolate-filter',
-  'apiRepo.version.version-directive'
+angular.module('myApp.version', [
+  'myApp.version.interpolate-filter',
+  'myApp.version.version-directive'
 ])
 
 .value('version', '0.1');

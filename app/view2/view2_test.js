@@ -1,8 +1,8 @@
 'use strict';
 
-describe('apiRepo.view2 module', function() {
+describe('myApp.view2 module', function() {
 
-  beforeEach(module('apiRepo.view2'));
+  beforeEach(module('myApp.view2'));
 
   describe('view2 controller', function(){
 
