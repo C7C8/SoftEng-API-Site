@@ -8,3 +8,8 @@ angular.module('apiRepo', [
 ]).config(['$locationProvider', '$routeProvider', function ($locationProvider, $routeProvider) {
 	$routeProvider.otherwise({redirectTo: '/home'});
 }]);
+
+$(".navbutton").on("click", event => {
+	$(event.currentTarget).siblings().removeClass("active");
+	$(event.currentTarget).addClass("active");
+});
