@@ -3,10 +3,10 @@
 // Declare app level module which depends on views, and components
 angular.module('apiRepo', [
   'ngRoute',
-  'apiRepo.landingPage',
+  'apiRepo.home',
 ]).
 config(['$locationProvider', '$routeProvider', function($locationProvider, $routeProvider) {
   $locationProvider.hashPrefix('!');
 
-  $routeProvider.otherwise({redirectTo: '/landingPage'});
+  $routeProvider.otherwise({redirectTo: '/home'});
 }]);
