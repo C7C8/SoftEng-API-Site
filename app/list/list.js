@@ -1,7 +1,6 @@
 'use strict';
 
 angular.module('apiRepo.list', ['ngRoute'])
-
 	.config(['$routeProvider', function ($routeProvider) {
 		$routeProvider.when('/list', {
 			templateUrl: 'list/list.html',
@@ -9,6 +8,10 @@ angular.module('apiRepo.list', ['ngRoute'])
 		});
 	}])
 
-	.controller('ListCtl', [function () {
-
+	.controller('ListCtl', ['$scope', 'apilist', function($scope, apilist) {
+		$scope.test="world";
+		apilist.success(function(data) {
+			console.log("Grabbed API list data");
+			$scope.apilist = data;
+		});
 	}]);

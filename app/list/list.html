@@ -1,2 +1,10 @@
-<h1>List</h1>
+<h1>API List</h1>
+<p>Below you can find a list of all {{ apilist.count }} available APIs, sorted by term and team letter.
+	Be kind to other teams, please use APIs from your term if you can!</p>
 
+<div ng-repeat="class in apilist.classes">
+	<h2>{{ class.term }}{{ class.year | limitTo : 2 : 2 }}</h2>
+	<div ng-repeat="api in class.list | orderBy : 'team'">
+		<api-card api="api"></api-card>
+	</div>
+</div>

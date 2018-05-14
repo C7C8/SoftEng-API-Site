@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('apiRepo', [
+var app = angular.module('apiRepo', [
 	'ngRoute',
 	'apiRepo.home',
 	'apiRepo.list',
