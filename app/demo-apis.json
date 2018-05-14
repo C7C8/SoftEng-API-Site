@@ -1,6 +1,5 @@
 {
   "count": 4,
-  "size": 100,
   "classes": [
 	{
 	  "term": "D",
@@ -11,6 +10,7 @@
 		  "team": "D",
 		  "version": "1.2.0",
 		  "size": 24,
+		  "contact": "email@email.com",
 		  "gradle": "[group: 'd18.teamD', name: 'GiftRequest', version: '1.2.0']",
 		  "description": "Provides an API to request gifts to rooms. Allows for report generation",
 		  "image": "https://ravana.dyn.wpi.edu/apilist/d18/teamd-gift-request/gift-request.png",
@@ -26,6 +26,7 @@
 		  "team": "D",
 		  "version": "1.1.0",
 		  "size": 5,
+		  "contact": "email@email.com",
 		  "gradle": " [group: 'd18.teamD', name: 'AffineTransformation', version: '1.1.0']",
 		  "description": "Performs an affine transformation, converting 2D coordinates into 3D coordinates and vice versa",
 		  "image": "",
@@ -46,6 +47,7 @@
 		  "team": "G",
 		  "version": "1.0.0",
 		  "size": 35,
+		  "contact": "email@email.com",
 		  "gradle": "[group: 'b17.teamG', name: 'FoodRequest', version: '1.0.0']",
 		  "description": "Food request",
 		  "image": "",
@@ -59,6 +61,7 @@
 		  "team": "I",
 		  "version": "1.0.0",
 		  "size": 30,
+		  "contact": "email@email.com",
 		  "gradle": "[group: 'b17.teamI', name: 'FoodRequest', version: '1.0.0']",
 		  "description": "Food request",
 		  "image": "",

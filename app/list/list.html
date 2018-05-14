@@ -4,7 +4,5 @@
 
 <div ng-repeat="class in apilist.classes">
 	<h2>{{ class.term }}{{ class.year | limitTo : 2 : 2 }}</h2>
-	<div ng-repeat="api in class.list | orderBy : 'team'">
-		<api-card api="api"></api-card>
-	</div>
+	<api-card ng-repeat="api in class.list | orderBy : 'team'" api="api"></api-card>
 </div>
