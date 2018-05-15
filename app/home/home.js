@@ -10,5 +10,5 @@ angular.module('apiRepo.home', ['ngRoute'])
 	}])
 
 	.controller('HomeCtl', [function () {
-
+		$('#button-home').addClass("active").siblings().removeClass("active");
 	}]);

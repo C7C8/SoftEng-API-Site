@@ -10,5 +10,5 @@ angular.module('apiRepo.submit', ['ngRoute'])
 	}])
 
 	.controller('SubmitCtl', [function () {
-
+		$("#button-submit").addClass("active").siblings().removeClass("active");
 	}]);

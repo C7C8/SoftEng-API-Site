@@ -9,6 +9,8 @@ angular.module('apiRepo.list', ['ngRoute'])
 	}])
 
 	.controller('ListCtl', ['$scope', 'apilist', function($scope, apilist) {
+		$('#button-list').addClass("active").siblings().removeClass("active");
+
 		apilist.success(function(data) {
 			console.log("Grabbed API list data");
 			$scope.apilist = data;

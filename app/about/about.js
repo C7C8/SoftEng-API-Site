@@ -10,5 +10,5 @@ angular.module('apiRepo.about', ['ngRoute'])
 	}])
 
 	.controller('AboutCtl', [function () {
-
+		$("#button-about").addClass("active").siblings().removeClass("active");
 	}]);
