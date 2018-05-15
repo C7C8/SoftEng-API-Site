@@ -49,7 +49,7 @@ header a:hover {
 	background-color: #777777;
 }
 
-.navdivider {
+.nav-divider {
 	background-color: #0088ff;
 	padding-bottom: 0.25em;
 }
@@ -63,7 +63,7 @@ header a:hover {
 	border: ridge rgba(136, 136, 136, 0.2) 3px;
 	border-radius: 20px;
 	box-shadow: 0 0 3px 5px #CCCCCC;
-	margin: 15px 0;
+	margin: 15px 15px;
 }
 
 .api-card h3,h4,p {
@@ -113,6 +113,35 @@ header a:hover {
 .version-history > li:before {
 	content: '- ';
 	text-indent: -1em;
+}
+
+/* API list display */
+.api-class{
+	border: ridge rgba(136, 136, 136, 0.2) 3px;
+	border-radius: 20px;
+	box-shadow: 0 0 3px 5px #CCCCCC;
+	margin: 15px 0;
+}
+
+.api-class > h2 {
+	padding-left: 1em;
+}
+
+.select-chevron {
+	max-width: 1em;
+	display: inline-block;
+	float: left;
+	padding-left: 1em;
+	padding-right: 0.5em;
+	vertical-align: middle;
+	cursor: pointer;
+	transform-origin: 50% 50%;
+	transition: 0.4s;
+}
+
+.select-chevron-expand {
+	transform: rotate(90deg);
+	transition: 0.4s;
 }
 
 /* Code block display */

@@ -10,7 +10,9 @@ var app = angular.module('apiRepo', [
 	$routeProvider.otherwise({redirectTo: '/home'});
 }]);
 
-$(".navbutton").on("click", event => {
+$(".nav-button").on("click", event => {
 	$(event.currentTarget).siblings().removeClass("active");
 	$(event.currentTarget).addClass("active");
 });
+
+

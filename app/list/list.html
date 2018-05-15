@@ -3,6 +3,11 @@
 	Be kind to other teams, please use APIs from your term if you can!</p>
 
 <div class="api-class" ng-repeat="class in apilist.classes">
-	<h2>{{ class.term }}{{ class.year | limitTo : 2 : 2 }}</h2>
-	<api-card ng-repeat="api in class.list | orderBy : 'team'" api="api"></api-card>
+	<div>
+		<img src="img/arrow-down.png" class="select-chevron select-chevron-expand" ng-click="toggleClassView($event)">
+		<h2>{{ class.term }}{{ class.year | limitTo : 2 : 2 }}</h2>
+	</div>
+	<div>
+		<api-card ng-repeat="api in class.list | orderBy : 'team'" api="api"></api-card>
+	</div>
 </div>

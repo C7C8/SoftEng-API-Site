@@ -9,9 +9,14 @@ angular.module('apiRepo.list', ['ngRoute'])
 	}])
 
 	.controller('ListCtl', ['$scope', 'apilist', function($scope, apilist) {
-		$scope.test="world";
 		apilist.success(function(data) {
 			console.log("Grabbed API list data");
 			$scope.apilist = data;
 		});
+
+		//Expand or hide an API class section
+		$scope.toggleClassView = function($event){
+			$($event.currentTarget).toggleClass("select-chevron-expand", 400);
+			$($event.currentTarget).parent().siblings().slideToggle();
+		}
 	}]);
