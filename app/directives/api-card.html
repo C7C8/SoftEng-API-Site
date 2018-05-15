@@ -3,8 +3,8 @@
 		<img src="img/arrow-down.png" class="select-chevron select-chevron-expand" ng-click="toggleAPIView($event)">
 		<h3>Team {{ api.team }} {{ api.name }}</h3>
 	</div>
-	<img class="api-preview" ng-src="{{ api.image }}">
 	<div class="api-details">
+		<img class="api-preview" ng-src="{{ api.image }}">
 		<div class="api-detail-list">
 			<ul>
 				<li>v{{ api.version }}</li>
@@ -13,6 +13,7 @@
 				<li>Contact: <a href="mailto:{{ api.contact }}">{{ api.contact }}</a></li>
 			</ul>
 		</div>
+		<p><code>{{ api.gradle }}</code></p>
 		<h4>About</h4>
 		<p>{{ api.description }}</p>
 		<h4>Version History</h4>
