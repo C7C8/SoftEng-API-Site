@@ -6,9 +6,17 @@
 	<link rel="stylesheet" href="bower_components/html5-boilerplate/dist/css/main.css">
 	<link rel="stylesheet" href="main.css">
 	<script src="bower_components/html5-boilerplate/dist/js/vendor/modernizr-2.8.3.min.js"></script>
-</head>
-<body>
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 
+	<!-- In production use:
+	<script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script>
+	-->
+	<script src="bower_components/angular/angular.js"></script>
+	<script src="bower_components/angular-route/angular-route.js"></script>
+
+</head>
+
+<body>
 <header>
 	<ul>
 		<li class="nav-button"><a href="#/home">Home</a></li>
@@ -21,18 +29,17 @@
 
 <div ng-view></div>
 
-<!-- In production use:
-<script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script>
--->
-<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-<script src="bower_components/angular/angular.js"></script>
-<script src="bower_components/angular-route/angular-route.js"></script>
-<script src="main.js"></script>
-<script src="home/home.js"></script>
-<script src="list/list.js"></script>
-<script src="submit/submit.js"></script>
-<script src="about/about.js"></script>
-<script src="services/apilist.js"></script>
-<script src="directives/api-card.js"></script>
+<footer>
+	<a href="https://github.com/C7C8/CS3733-API-Site"><img src="img/GitHub-Mark-32px.png"> GitHub</a>
+</footer>
+
+	<script src="main.js"></script>
+	<script src="home/home.js"></script>
+	<script src="list/list.js"></script>
+	<script src="submit/submit.js"></script>
+	<script src="about/about.js"></script>
+	<script src="services/apilist.js"></script>
+	<script src="directives/api-card.js"></script>
+
 </body>
 </html>
