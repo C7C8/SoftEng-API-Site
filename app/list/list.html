@@ -1,6 +1,9 @@
 <h1>API List</h1>
-<p>Below you can find a list of all {{ apilist.count }} available APIs, sorted by term and team letter.
-	Be kind to other teams, please use APIs from your term if you can!</p>
+<p>Below you can find a list of available APIs, sorted by term and team letter.
+Be kind to other teams, please use APIs from your term if you can! Currently storing
+{{ apilist.count | number }} APIs in {{ apilist.size }} MB, or {{ apilist.totalCount | number }} files /
+{{ apilist.totalSize | number }} MB across all versions.</p>
+
 
 <div class="api-class" ng-repeat="class in apilist.classes">
 	<div>
