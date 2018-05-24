@@ -1,14 +1,13 @@
 'use strict';
 
 angular.module('apiRepo.submit', ['ngRoute'])
-
 	.config(['$routeProvider', function ($routeProvider) {
-		$routeProvider.when('/submit', {
-			templateUrl: 'submit/submit.html',
+		$routeProvider.when('/manage', {
+			templateUrl: 'views/manage/manage.html',
 			controller: 'SubmitCtl'
 		});
 	}])
 
 	.controller('SubmitCtl', [function () {
-		$("#button-submit").addClass("active").siblings().removeClass("active");
+		$("#button-manage").addClass("active").siblings().removeClass("active");
 	}]);
