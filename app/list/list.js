@@ -8,7 +8,7 @@ angular.module('apiRepo.list', ['ngRoute'])
 		});
 	}])
 
-	.controller('ListCtl', ['$scope', 'apilist', function($scope, apilist) {
+	.controller('ListCtl', ['$scope', '$sce', 'apilist', function($scope, $sce, apilist) {
 		$('#button-list').addClass("active").siblings().removeClass("active");
 
 		apilist.success(function(data) {
@@ -20,5 +20,9 @@ angular.module('apiRepo.list', ['ngRoute'])
 		$scope.toggleClassView = function($event){
 			$($event.currentTarget).toggleClass("select-chevron-expand", 400);
 			$($event.currentTarget).parent().siblings().slideToggle();
-		}
+		};
+
+		$scope.htrust = function(html){
+			return $sce.trustAsHtml(html)
+		};
 	}]);

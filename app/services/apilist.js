@@ -1,5 +1,5 @@
 app.factory("apilist", ["$http", function($http) {
-	return $http.get("http://localhost:8000/demo-apis.json")
+	return $http.get("http://localhost:8000/apilist.json")
 		.success(function(data){
 			return data;
 		})
