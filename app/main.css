@@ -89,6 +89,28 @@ footer img {
 	max-width: 1.5em;
 }
 
+/* Login form */
+.login {
+	max-width: 33%;
+	border-radius: 10px;
+	box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 10);
+	padding: 0.1em;
+	margin: auto;
+	text-align: center;
+}
+
+.login h4 {
+	margin: 0;
+}
+
+.login input[type="button"] {
+	margin: 0.5em;
+}
+
+.login input[type="text"],input[type="password"] {
+	border-radius: 2px;
+}
+
 /* API card */
 .api-card {
 	border: 1px #CCC;

@@ -1,16 +1,18 @@
-<h1>API List</h1>
-<p>Below you can find a list of available APIs, sorted by term and team letter.
-Be kind to other teams, please use APIs from your term if you can! Currently storing
-{{ apilist.count | number }} APIs in {{ apilist.size }} MB, or {{ apilist.totalCount | number }} files /
-{{ apilist.totalSize | number }} MB across all versions.</p>
+<div ng-controller="ListCtl">
+	<h1>API List</h1>
+	<p>Below you can find a list of available APIs, sorted by term and team letter.
+	Be kind to other teams, please use APIs from your term if you can! Currently storing
+	{{ apilist.count | number }} APIs in {{ apilist.size }} MB, or {{ apilist.totalCount | number }} files /
+	{{ apilist.totalSize | number }} MB across all versions.</p>
 
 
-<div class="api-class" ng-repeat="class in apilist.classes">
-	<div>
-		<img src="img/arrow-down.png" class="select-chevron select-chevron-expand" ng-click="toggleClassView($event)">
-		<h2>{{ class.term }}{{ class.year | limitTo : 2 : 2 }}</h2>
+	<div class="api-class" ng-repeat="class in apilist.classes">
+		<div>
+			<img src="img/arrow-down.png" class="select-chevron select-chevron-expand" ng-click="toggleClassView($event)">
+			<h2>{{ class.term }}{{ class.year | limitTo : 2 : 2 }}</h2>
+		</div>
+		<div>
+			<api-card ng-repeat="api in class.apis | orderBy : 'team'" api="api"></api-card>
 	</div>
-	<div>
-		<api-card ng-repeat="api in class.apis | orderBy : 'team'" api="api"></api-card>
-	</div>
+</div>
 </div>
