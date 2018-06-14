@@ -4,6 +4,7 @@
 body {
   color: #303030;
   max-width: 50em;
+  height: 100%;
   margin: 0 auto;
   text-align: left;
   line-height: 1.4;
@@ -32,4 +33,34 @@ h7 {
 
 p {
   font-family: "Times New Roman", "Georgia", serif;
+}
+
+/* Code block display */
+code {
+  background-color: #e5e5e5;
+  font-size: 13px;
+  padding: 2px 4px 1px;
+}
+
+pre.code {
+  white-space: pre-wrap;
+  display: inline-block;
+  background-color: #e5e5e5;
+  text-align: left;
+  padding: 2px 4px 2px;
+}
+
+pre.code code {
+  counter-increment: listing;
+}
+
+pre.code code::before {
+  content: counter(listing) " ";
+  display: inline-block;
+  text-align: right;
+  color: #B0B0B0;
+}
+
+.center {
+  text-align: center;
 }

@@ -1,0 +1,9 @@
+/* For sticky footer */
+.content {
+  min-height: 100%;
+  margin-bottom: -3em;
+}
+
+app-footer, .push {
+  height: 3em;
+}
