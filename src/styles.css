@@ -35,6 +35,14 @@ p {
   font-family: "Times New Roman", "Georgia", serif;
 }
 
+a {
+  text-decoration: none;
+  color: #0088ff;
+  font-weight: bold;
+  font-family: Arial, sans-serif;
+  font-size: 0.9em;
+}
+
 /* Code block display */
 code {
   background-color: #e5e5e5;
