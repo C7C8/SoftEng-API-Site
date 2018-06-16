@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import * as showdown from 'showdown';
+const conv = new showdown.Converter();
 
 import { APIFetchService } from '../../apifetch.service';
 import { APIData } from '../../api-data';
@@ -12,7 +14,7 @@ let apiData: APIData = null;
 })
 export class ListComponent implements OnInit {
   apis: APIData = null;
-  dataLoaded: boolean = false;
+  dataLoaded = false;
 
   constructor(private fetchService: APIFetchService) { }
 
@@ -20,7 +22,16 @@ export class ListComponent implements OnInit {
     if (apiData === null) {
       this.fetchService.getAPIData().subscribe(data => {
         apiData = data;
-        this.apis = data;
+        conv.setOption('headerLevelStart', 5);
+
+        // Render markdown as HTML
+        for (const cls of apiData.classes) {
+          for (const api of cls.list) {
+            api.description = conv.makeHtml(api.description.replace(/\\n/g, '\n'));
+          }
+        }
+
+        this.apis = apiData;
         this.dataLoaded = true;
       });
     } else {

@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { MatTabsModule} from '@angular/material';
+import { MatCardModule, MatTabsModule, MatButtonModule, MatTreeModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 
@@ -12,6 +12,7 @@ import { ManageComponent } from './pages/manage/manage.component';
 import { AboutComponent } from './pages/about/about.component';
 import { FooterComponent } from './footer/footer.component';
 import { AppRoutingModule } from './app-routing.module';
+import { ApiCardComponent } from './pages/list/api-card/api-card.component';
 
 @NgModule({
   declarations: [
@@ -21,12 +22,16 @@ import { AppRoutingModule } from './app-routing.module';
     ListComponent,
     ManageComponent,
     AboutComponent,
-    FooterComponent
+    FooterComponent,
+    ApiCardComponent
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     MatTabsModule,
+    MatCardModule,
+    MatButtonModule,
+    MatTreeModule,
     AppRoutingModule,
     HttpClientModule
   ],
