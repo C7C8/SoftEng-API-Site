@@ -1,4 +1,6 @@
 <h1>API List</h1>
-<p>Below you can find a list of available APIs, sorted by term and team letter. Be kind to other teams, please use APIs
-from your term if you can! Currently storing {{apis.count}} APIs in {{apis.size}} MB, or {{apis.totalCount}}
-files / {{apis.totalSize}} MB across all versions.</p>
+<div *ngIf="dataLoaded">
+  <p>Below you can find a list of available APIs, sorted by term and team letter. Be kind to other teams, please use APIs
+  from your term if you can! Currently storing {{apis.count}} APIs in {{apis.size}} MB, or {{apis.totalCount}}
+  files / {{apis.totalSize}} MB across all versions.</p>
+</div>

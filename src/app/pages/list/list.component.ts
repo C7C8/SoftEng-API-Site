@@ -12,6 +12,7 @@ let apiData: APIData = null;
 })
 export class ListComponent implements OnInit {
   apis: APIData = null;
+  dataLoaded: boolean = false;
 
   constructor(private fetchService: APIFetchService) { }
 
@@ -19,10 +20,12 @@ export class ListComponent implements OnInit {
     if (apiData === null) {
       this.fetchService.getAPIData().subscribe(data => {
         apiData = data;
-        this.apis = apiData;
+        this.apis = data;
+        this.dataLoaded = true;
       });
     } else {
       this.apis = apiData;
+      this.dataLoaded = true;
     }
   }
 
