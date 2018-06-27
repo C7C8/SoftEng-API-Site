@@ -7,6 +7,7 @@ mat-card-title, mat-card-subtitle {
 }
 
 .version-history {
+  font-size: 10px;
   font-family: monospace;
   list-style-type: none;
   padding-left: 1em;
@@ -31,6 +32,6 @@ h4 {
   margin-top: 0.5em;
 }
 
-p ::ng-deep {
+::ng-deep p {
   margin: 0;
 }
