@@ -1,5 +1,5 @@
 <mat-card id="{{api.gradle}}"> <!--What? Don't look at me like that!-->
-  <mat-card-title><button mat-icon-button>&gt;</button> Team {{api.team}} {{api.name}}</mat-card-title>
+  <mat-card-title><button mat-icon-button><fa-icon [icon]="faAngleRight"></fa-icon></button> Team {{api.team}} {{api.name}}</mat-card-title>
   <mat-card-subtitle>v{{api.version}} |
     {{api.size}} MB |
     Last updated: {{api.updated | date}} |

@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { faAngleRight } from '@fortawesome/free-solid-svg-icons';
 import { API } from '../../../api-data';
 
 @Component({
@@ -8,6 +9,7 @@ import { API } from '../../../api-data';
 })
 export class ApiCardComponent implements OnInit {
   @Input() api: API;
+  faAngleRight = faAngleRight;
 
   constructor() { }
 

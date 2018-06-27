@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { MatCardModule, MatTabsModule, MatButtonModule, MatTreeModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
@@ -33,7 +34,8 @@ import { ApiCardComponent } from './pages/list/api-card/api-card.component';
     MatButtonModule,
     MatTreeModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    FontAwesomeModule
   ],
   providers: [],
   bootstrap: [AppComponent]

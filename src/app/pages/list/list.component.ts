@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {faAngleRight} from '@fortawesome/free-solid-svg-icons';
 import * as showdown from 'showdown';
 const conv = new showdown.Converter();
 
@@ -15,6 +16,7 @@ let apiData: APIData = null;
 export class ListComponent implements OnInit {
   apis: APIData = null;
   dataLoaded = false;
+  faAngleRight = faAngleRight;
 
   constructor(private fetchService: APIFetchService) { }
 

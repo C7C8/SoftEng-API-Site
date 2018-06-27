@@ -5,7 +5,7 @@
   files / {{apis.totalSize}} MB across all versions.</p>
 
   <mat-card *ngFor="let class of apis.classes">
-    <mat-card-title><button mat-icon-button>&gt;</button> {{class.term}} Term {{class.year}}</mat-card-title>
+    <mat-card-title><button mat-icon-button><fa-icon [icon]="faAngleRight"></fa-icon></button> {{class.term}} Term {{class.year}}</mat-card-title>
     <mat-card-subtitle>{{class.list.length}} APIs</mat-card-subtitle>
     <app-api-card *ngFor="let api of class.list" [api]="api"></app-api-card>
   </mat-card>
