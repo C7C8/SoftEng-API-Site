@@ -45,7 +45,7 @@ a {
 
 /* Code block display */
 code {
-  background-color: #e5e5e5;
+  background-color: #eeeeee;
   font-size: 13px;
   padding: 2px 4px 1px;
 }
@@ -53,7 +53,7 @@ code {
 pre.code {
   white-space: pre-wrap;
   display: inline-block;
-  background-color: #e5e5e5;
+  background-color: #eeeeee;
   text-align: left;
   padding: 2px 4px 2px;
 }

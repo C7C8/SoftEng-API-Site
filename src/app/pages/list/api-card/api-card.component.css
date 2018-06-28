@@ -1,9 +1,13 @@
-mat-card {
-  margin: 0.5em;
+mat-panel-title {
+  font-size: 0.9em;
+  font-weight: bold;
+  margin: auto;
 }
 
-mat-card-title, mat-card-subtitle {
-  margin-bottom: 3px;
+mat-panel-description {
+  font-size: 0.65em;
+  display: flex;
+  justify-content: flex-end;
 }
 
 .version-history {

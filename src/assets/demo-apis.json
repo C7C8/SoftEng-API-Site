@@ -17,7 +17,7 @@
 		  "gradle": "[group: 'd18.teamD', name: 'GiftRequest', version: '1.2.0']",
 		  "description": "Provides an API to request gifts to rooms. Allows for report generation",
 		  "image": "https://ravana.dyn.wpi.edu/apilist/d18/teamd-gift-request/gift-request.png",
-		  "updated": 0,
+		  "updated": 1500000000000,
 		  "history": [
 			"1.2.0 GiftServiceRequest.initialize() is now static; added report feature",
 			"1.1.0 Can now mark the recipient of a gift. Can call initialize() to start the database early",

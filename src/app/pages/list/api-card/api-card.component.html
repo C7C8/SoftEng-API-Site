@@ -1,18 +1,21 @@
-<mat-card id="{{api.gradle}}"> <!--What? Don't look at me like that!-->
-  <mat-card-title><button mat-icon-button><fa-icon [icon]="faAngleRight"></fa-icon></button> Team {{api.team}} {{api.name}}</mat-card-title>
-  <mat-card-subtitle>v{{api.version}} |
-    {{api.size}} MB |
-    Last updated: {{api.updated | date}} |
-    Contact: <a href="mailto:{{api.contact}}">{{api.contact}}</a></mat-card-subtitle>
-  <mat-card-content>
-    <img src="{{api.image}}">
-    <h4>Gradle</h4>
-    <code>{{api.gradle}}</code>
-    <h4>About</h4>
-    <div [innerHTML]="api.description"></div>
-    <h4>Version History</h4>
-    <ul class="version-history">
-      <li *ngFor="let version of api.history">{{version}}</li>
-    </ul>
-  </mat-card-content>
-</mat-card>
+<mat-expansion-panel multi="true" id="{{api.gradle}}"> <!--What? Don't look at me like that!-->
+  <mat-expansion-panel-header>
+    <mat-panel-title>Team {{api.team}} {{api.name}}</mat-panel-title>
+    <mat-panel-description><span>
+      v{{api.version}} |
+      {{api.size}} MB |
+      Last updated: {{api.updated | date}} |
+      Contact: <a href="mailto:{{api.contact}}">{{api.contact}}</a></span>
+    </mat-panel-description>
+  </mat-expansion-panel-header>
+
+  <img src="{{api.image}}">
+  <h4>Gradle</h4>
+  <code>{{api.gradle}}</code>
+  <h4>About</h4>
+  <div [innerHTML]="api.description"></div>
+  <h4>Version History</h4>
+  <ul class="version-history">
+    <li *ngFor="let version of api.history">{{version}}</li>
+  </ul>
+</mat-expansion-panel>
