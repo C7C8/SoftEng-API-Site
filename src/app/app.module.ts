@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { MatExpansionModule, MatTabsModule, MatButtonModule, MatTreeModule } from '@angular/material';
+import { MatExpansionModule, MatTabsModule, MatButtonModule, MatTreeModule, MatTooltipModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -33,6 +33,7 @@ import { ApiCardComponent } from './pages/list/api-card/api-card.component';
     MatExpansionModule,
     MatButtonModule,
     MatTreeModule,
+    MatTooltipModule,
     AppRoutingModule,
     HttpClientModule,
     FontAwesomeModule

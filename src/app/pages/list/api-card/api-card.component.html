@@ -1,4 +1,4 @@
-<mat-expansion-panel multi="true" id="{{api.gradle}}"> <!--What? Don't look at me like that!-->
+<mat-expansion-panel multi="true">
   <mat-expansion-panel-header>
     <mat-panel-title>Team {{api.team}} {{api.name}}</mat-panel-title>
     <mat-panel-description><span>
@@ -18,4 +18,13 @@
   <ul class="version-history">
     <li *ngFor="let version of api.history">{{version}}</li>
   </ul>
+
+  <mat-action-row>
+    <button mat-icon-button matTooltip="Report inappropriate content" id="report" (click)="report()">
+      <fa-icon [icon]="faExclamation"></fa-icon>
+    </button>
+    <button mat-icon-button matTooltip="Like this API!" id="like" (click)="like()">
+      <fa-icon [icon]="faStar"></fa-icon>
+    </button>
+  </mat-action-row>
 </mat-expansion-panel>

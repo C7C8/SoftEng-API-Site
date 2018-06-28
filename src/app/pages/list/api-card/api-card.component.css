@@ -1,3 +1,4 @@
+
 mat-panel-title {
   font-size: 0.9em;
   font-weight: bold;
@@ -38,4 +39,12 @@ h4 {
 
 ::ng-deep p {
   margin: 0;
+}
+
+::ng-deep .mat-icon {
+  font-size: 0.5em !important;
+}
+
+mat-action-row {
+  padding: 1px;
 }
