@@ -1,0 +1,19 @@
+<h1>API List</h1>
+<div *ngIf="dataLoaded">
+  <p>Below you can find a list of available APIs, sorted by term and team letter. Be kind to other teams, please use APIs
+  from your term if you can! Currently storing {{apis.count}} APIs in {{apis.size}} MB, or {{apis.totalCount}}
+  files / {{apis.totalSize}} MB across all versions.</p>
+  <br>
+
+  <mat-accordion multi="true">
+    <mat-expansion-panel *ngFor="let class of apis.classes">
+      <mat-expansion-panel-header>
+        <mat-panel-title>{{class.term}} Term {{class.year}}</mat-panel-title>
+        <mat-action-row>{{class.list.length}} APIs</mat-action-row>
+      </mat-expansion-panel-header>
+      <mat-accordion multi="true">
+        <app-api-card *ngFor="let api of class.list" [api]="api"></app-api-card>
+      </mat-accordion>
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>
