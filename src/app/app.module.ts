@@ -16,6 +16,7 @@ import { FooterComponent } from './footer/footer.component';
 import { AppRoutingModule } from './app-routing.module';
 import { ApiCardComponent } from './pages/list/api-card/api-card.component';
 import { LoginComponent } from './pages/manage/login/login.component';
+import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { LoginComponent } from './pages/manage/login/login.component';
     AboutComponent,
     FooterComponent,
     ApiCardComponent,
-    LoginComponent
+    LoginComponent,
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule,
