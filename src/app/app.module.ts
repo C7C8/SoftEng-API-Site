@@ -4,6 +4,7 @@ import { MatExpansionModule, MatTabsModule, MatButtonModule, MatTreeModule, MatT
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { ManageRoutingModule } from './pages/manage/manage-routing.module';
 
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
@@ -14,6 +15,7 @@ import { AboutComponent } from './pages/about/about.component';
 import { FooterComponent } from './footer/footer.component';
 import { AppRoutingModule } from './app-routing.module';
 import { ApiCardComponent } from './pages/list/api-card/api-card.component';
+import { LoginComponent } from './pages/manage/login/login.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +26,8 @@ import { ApiCardComponent } from './pages/list/api-card/api-card.component';
     ManageComponent,
     AboutComponent,
     FooterComponent,
-    ApiCardComponent
+    ApiCardComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -34,11 +37,12 @@ import { ApiCardComponent } from './pages/list/api-card/api-card.component';
     MatButtonModule,
     MatTreeModule,
     MatTooltipModule,
+    ManageRoutingModule,
     AppRoutingModule,
     HttpClientModule,
     FontAwesomeModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [ AppComponent ]
 })
 export class AppModule { }
