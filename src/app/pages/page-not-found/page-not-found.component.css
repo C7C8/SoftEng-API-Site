@@ -1,0 +1,36 @@
+.overlay {
+  text-align: center;
+  color: white;
+  background-color: blue;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 2;
+}
+
+.message {
+  min-width: 500px;
+  margin: 20% 20%;
+}
+
+.neg {
+  font-family: "Courier New", monospace;
+  color: blue;
+  background-color: white;
+  font-weight: bold;
+  padding: 0.04em 0.15em;
+}
+
+p {
+  font-family: "Courier New", monospace;
+  text-align: left;
+}
+
+h2 {
+  font-family: "Courier New", monospace;
+  text-align: left;
+  font-weight: normal;
+  font-size: 1em;
+}
