@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { MatExpansionModule, MatTabsModule, MatButtonModule, MatTreeModule, MatTooltipModule } from '@angular/material';
+import { MatCardModule, MatExpansionModule, MatTabsModule, MatButtonModule, MatTreeModule, MatTooltipModule, MatInputModule } from '@angular/material';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -34,11 +35,14 @@ import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.com
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
+    MatCardModule,
+    MatFormFieldModule,
     MatTabsModule,
     MatExpansionModule,
     MatButtonModule,
     MatTreeModule,
     MatTooltipModule,
+    MatInputModule,
     ManageRoutingModule,
     AppRoutingModule,
     HttpClientModule,

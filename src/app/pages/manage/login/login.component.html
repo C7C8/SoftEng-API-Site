@@ -1,3 +1,15 @@
-<p>
-  login works!
-</p>
+<form class="login-container">
+  <mat-card>
+    <h4>Login/Register</h4>
+    <div class="textinput">
+      <mat-form-field>
+        <input matInput [(ngModel)]="loginInfo.username" type="text" id="username" name="username" placeholder="WPI Email" required>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput [(ngModel)]="loginInfo.password" type="password" id="password" name="password" placeholder="Password">
+      </mat-form-field>
+    </div>
+    <button mat-raised-button color="primary" (click)="login()">Login</button>
+    <button mat-raised-button (click)="register()">Register</button>
+  </mat-card>
+</form>
