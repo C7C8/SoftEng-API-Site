@@ -17,11 +17,13 @@ class AuthResponse {
 export class UserService implements CanActivate {
   private apiUrl = environment.apiUrl;
   private jwt: string;
+  private username: string;
 
   constructor(private http: HttpClient, private router: Router) { }
 
   login(username: string, password: string, callback?: (boolean) => void): void {
     console.log('Logging in as ' + username);
+    this.username = username;
     this.http.post<AuthResponse>(this.apiUrl + '/auth/login',
       {
         username: username,
@@ -103,7 +105,12 @@ export class UserService implements CanActivate {
 
   logout() {
     this.jwt = null;
+    this.username = '';
     console.log('Logged out');
+  }
+
+  getUsername(): string {
+    return this.username;
   }
 
   private handleError<T> (operation = 'operation', result?: T) {

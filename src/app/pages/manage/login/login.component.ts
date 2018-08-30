@@ -56,6 +56,7 @@ export class LoginComponent implements OnInit {
     if (success) {
       this.snackbar.open('Successfully registered as ' + this.username, '', {duration: 2000});
       this.userv.login(this.username, this.password);
+      this.router.navigate(['/manage']);
     } else {
       this.snackbar.open('Failed to register, this username is probably already taken', '', {duration: 2000});
     }
