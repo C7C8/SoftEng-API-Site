@@ -3,7 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 
 import { environment } from '../environments/environment';
-import {catchError} from 'rxjs/operators';
+import { catchError } from 'rxjs/operators';
+import { CanActivate, Router } from '@angular/router';
 
 class AuthResponse {
   message: string;
@@ -13,11 +14,11 @@ class AuthResponse {
 @Injectable({
   providedIn: 'root'
 })
-export class UserService {
+export class UserService implements CanActivate {
   private apiUrl = environment.apiUrl;
   private jwt: string;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private router: Router) { }
 
   login(username: string, password: string, callback?: (boolean) => void): void {
     console.log('Logging in as ' + username);
@@ -45,6 +46,14 @@ export class UserService {
 
   isLoggedIn(): boolean {
     return (this.jwt !== null && this.jwt !== undefined);
+  }
+
+  canActivate(): boolean {
+    const res = this.isLoggedIn();
+    if (!res) {
+      this.router.navigate(['/login']);
+    }
+    return res;
   }
 
   register(username: string, password: string, callback?: (boolean) => void): void {

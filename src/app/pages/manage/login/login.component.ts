@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material';
 import { UserService } from '../../../user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -11,7 +12,7 @@ export class LoginComponent implements OnInit {
   username = '';
   password = '';
 
-  constructor(private userv: UserService, private snackbar: MatSnackBar) { }
+  constructor(private userv: UserService, private snackbar: MatSnackBar, private router: Router) { }
 
   ngOnInit() {
   }
@@ -32,6 +33,7 @@ export class LoginComponent implements OnInit {
   loginCallback(success: boolean): void {
     if (success) {
       this.snackbar.open('Logged in as ' + this.username + '!', '', {duration: 2000});
+      this.router.navigate(['/manage']);
     } else {
       this.snackbar.open('Could not verify credentials', '', {duration: 2000});
     }
