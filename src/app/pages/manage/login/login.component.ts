@@ -17,10 +17,45 @@ export class LoginComponent implements OnInit {
   }
 
   login(): void {
-    console.log('Login clicked!');
+    if (this.username.length === 0 || this.password.length === 0) {
+      return;
+    }
+
+    if (this.userv.isLoggedIn()) {
+      this.snackbar.open('You\'re already logged in!', '', {duration: 2000});
+      return;
+    }
+
+    this.userv.login(this.username, this.password, this.loginCallback.bind(this));
+  }
+
+  loginCallback(success: boolean): void {
+    if (success) {
+      this.snackbar.open('Logged in as ' + this.username + '!', '', {duration: 2000});
+    } else {
+      this.snackbar.open('Could not verify credentials', '', {duration: 2000});
+    }
   }
 
   register(): void {
-    console.log('Register clicked!');
+    if (this.username.length === 0 || this.password.length === 0) {
+      return;
+    }
+
+    if (this.userv.isLoggedIn()) {
+      this.snackbar.open('You\'re already logged in!', '', {duration: 2000});
+      return;
+    }
+
+    this.userv.register(this.username, this.password, this.registerCallback.bind(this));
+  }
+
+  registerCallback(success: boolean): void {
+    if (success) {
+      this.snackbar.open('Successfully registered as ' + this.username, '', {duration: 2000});
+      this.userv.login(this.username, this.password);
+    } else {
+      this.snackbar.open('Failed to register, this username is probably already taken', '', {duration: 2000});
+    }
   }
 }

@@ -49,21 +49,25 @@ export class UserService {
 
   register(username: string, password: string, callback?: (boolean) => void): void {
     console.log('Registering as ' + username);
-    this.http.post<AuthResponse>(this.apiUrl + '/auth/registration',
+    this.http.post<AuthResponse>(this.apiUrl + '/auth/register',
       {
         username: username,
         password: password
-      }).subscribe(response => {
-        if (callback === undefined) {
-          return;
-        }
-        if (response.message !== undefined && response.message.includes('Successfully')) {
-          callback(true);
+      })
+      .pipe(
+        catchError(this.handleError('register', new AuthResponse()))
+      )
+      .subscribe(response => {
+        if (response.message !== undefined && response.message.includes('registered')) {
+          if (callback !== undefined) {
+            callback(true);
+          }
         } else {
-          callback(false);
+          if (callback !== undefined) {
+            callback(false);
+          }
         }
-      }
-    );
+      });
   }
 
   deleteUser(username: string, password: string, callback?: (boolean) => void): void {
