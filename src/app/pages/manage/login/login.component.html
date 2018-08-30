@@ -1,15 +1,27 @@
-<form class="login-container">
+<form #loginForm="ngForm" class="login-container">
   <mat-card>
     <h4>Login/Register</h4>
     <div class="textinput">
       <mat-form-field>
-        <input matInput [(ngModel)]="loginInfo.username" type="text" id="username" name="username" placeholder="WPI Email" required>
+        <input matInput
+               type="text"
+               id="username"
+               name="username"
+               placeholder="WPI Email"
+               [(ngModel)]="username"
+               required>
       </mat-form-field>
       <mat-form-field>
-        <input matInput [(ngModel)]="loginInfo.password" type="password" id="password" name="password" placeholder="Password">
+        <input matInput
+               type="password"
+               id="password"
+               name="password"
+               placeholder="Password"
+               [(ngModel)]="password"
+               required>
       </mat-form-field>
     </div>
-    <button mat-raised-button color="primary" (click)="login()">Login</button>
-    <button mat-raised-button (click)="register()">Register</button>
+    <button mat-raised-button (click)="login()" color="primary">Login</button>
+    <button mat-raised-button (click)="register()" >Register</button>
   </mat-card>
 </form>
