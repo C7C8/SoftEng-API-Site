@@ -4,12 +4,15 @@ import { HomeComponent } from './pages/home/home.component';
 import { ListComponent } from './pages/list/list.component';
 import { AboutComponent } from './pages/about/about.component';
 import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
-import { LoginComponent } from './pages/manage/login/login.component';
+import { LoginComponent } from './pages/login/login.component';
+import {ManageComponent} from './pages/manage/manage.component';
+import {UserService} from './user.service';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'list', component: ListComponent },
   { path: 'about', component: AboutComponent },
+  { path: 'manage', component: ManageComponent, canActivate: [UserService] },
   { path: 'login', component: LoginComponent },
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: '**', component: PageNotFoundComponent }

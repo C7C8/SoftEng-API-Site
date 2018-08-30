@@ -6,7 +6,6 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { ManageRoutingModule } from './pages/manage/manage-routing.module';
 
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
@@ -17,7 +16,7 @@ import { AboutComponent } from './pages/about/about.component';
 import { FooterComponent } from './footer/footer.component';
 import { AppRoutingModule } from './app-routing.module';
 import { ApiCardComponent } from './pages/list/api-card/api-card.component';
-import { LoginComponent } from './pages/manage/login/login.component';
+import { LoginComponent } from './pages/login/login.component';
 import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
 
 @NgModule({
@@ -46,7 +45,6 @@ import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.com
     MatTooltipModule,
     MatInputModule,
     MatSnackBarModule,
-    ManageRoutingModule,
     AppRoutingModule,
     HttpClientModule,
     FontAwesomeModule
