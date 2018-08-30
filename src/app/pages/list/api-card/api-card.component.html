@@ -19,12 +19,17 @@
     <li *ngFor="let version of api.history">{{version}}</li>
   </ul>
 
-  <mat-action-row>
+  <mat-action-row *ngIf="!admin">
     <button mat-icon-button matTooltip="Report inappropriate content" id="report" (click)="report()">
       <fa-icon [icon]="faExclamation"></fa-icon>
     </button>
     <button mat-icon-button matTooltip="Like this API!" id="like" (click)="like()">
       <fa-icon [icon]="faStar"></fa-icon>
+    </button>
+  </mat-action-row>
+  <mat-action-row *ngIf="admin">
+    <button mat-icon-button matTooltip="Delete API" id="delete" (click)="delete()">
+      <fa-icon [icon]="faTrash"></fa-icon>
     </button>
   </mat-action-row>
 </mat-expansion-panel>

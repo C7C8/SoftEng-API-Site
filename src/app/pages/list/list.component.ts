@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import {faAngleRight} from '@fortawesome/free-solid-svg-icons';
+import { APIFetchService } from '../../apifetch.service';
+import { APIData } from '../../api-data';
 import * as showdown from 'showdown';
 const conv = new showdown.Converter();
 
-import { APIFetchService } from '../../apifetch.service';
-import { APIData } from '../../api-data';
 
 let apiData: APIData = null;
 

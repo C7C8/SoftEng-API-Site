@@ -12,7 +12,7 @@ export class LoginComponent implements OnInit {
   username = '';
   password = '';
 
-  constructor(private userv: UserService, private snackbar: MatSnackBar, private router: Router) { }
+  constructor(private userService: UserService, private snackbar: MatSnackBar, private router: Router) { }
 
   ngOnInit() {
   }
@@ -22,12 +22,12 @@ export class LoginComponent implements OnInit {
       return;
     }
 
-    if (this.userv.isLoggedIn()) {
+    if (this.userService.isLoggedIn()) {
       this.snackbar.open('You\'re already logged in!', '', {duration: 2000});
       return;
     }
 
-    this.userv.login(this.username, this.password, this.loginCallback.bind(this));
+    this.userService.login(this.username, this.password, this.loginCallback.bind(this));
   }
 
   loginCallback(success: boolean): void {
@@ -44,18 +44,18 @@ export class LoginComponent implements OnInit {
       return;
     }
 
-    if (this.userv.isLoggedIn()) {
+    if (this.userService.isLoggedIn()) {
       this.snackbar.open('You\'re already logged in!', '', {duration: 2000});
       return;
     }
 
-    this.userv.register(this.username, this.password, this.registerCallback.bind(this));
+    this.userService.register(this.username, this.password, this.registerCallback.bind(this));
   }
 
   registerCallback(success: boolean): void {
     if (success) {
       this.snackbar.open('Successfully registered as ' + this.username, '', {duration: 2000});
-      this.userv.login(this.username, this.password);
+      this.userService.login(this.username, this.password);
       this.router.navigate(['/manage']);
     } else {
       this.snackbar.open('Failed to register, this username is probably already taken', '', {duration: 2000});

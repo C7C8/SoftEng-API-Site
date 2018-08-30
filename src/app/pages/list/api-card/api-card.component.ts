@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { faAngleRight, faStar, faExclamation } from '@fortawesome/free-solid-svg-icons';
+import { faAngleRight, faStar, faExclamation, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { API } from '../../../api-data';
 
 @Component({
@@ -9,9 +9,10 @@ import { API } from '../../../api-data';
 })
 export class ApiCardComponent implements OnInit {
   @Input() api: API;
-  faAngleRight = faAngleRight;
+  @Input() admin = false;
   faStar = faStar;
   faExclamation = faExclamation;
+  faTrash = faTrash;
 
   constructor() { }
 
@@ -22,6 +23,9 @@ export class ApiCardComponent implements OnInit {
   }
 
   like() {
+  }
+
+  delete(){
   }
 
 }

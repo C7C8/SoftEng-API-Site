@@ -17,7 +17,7 @@ class AuthResponse {
 export class UserService implements CanActivate {
   private apiUrl = environment.apiUrl;
   private jwt: string;
-  private username: string;
+  public username: string;
 
   constructor(private http: HttpClient, private router: Router) { }
 
