@@ -62,4 +62,8 @@ export class ApiCardComponent implements OnInit {
   toggleEdit() {
     this.edit = !this.edit;
   }
+
+  setEdit(edit: boolean) {
+    this.edit = edit;
+  }
 }

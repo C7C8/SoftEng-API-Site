@@ -1,4 +1,4 @@
-<mat-expansion-panel multi="true">
+<mat-expansion-panel multi="true" (closed)="setEdit(false)">
   <mat-expansion-panel-header>
     <mat-panel-title *ngIf="!edit">Team {{api.team}} {{api.name}}</mat-panel-title>
     <mat-panel-title *ngIf="edit"><span id="edit-title">Team {{api.team}}</span>
