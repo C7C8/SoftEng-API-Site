@@ -2,8 +2,6 @@ import { Component, OnInit} from '@angular/core';
 import { UserService } from '../../user.service';
 import { API, APIData } from '../../api-data';
 import { APIFetchService } from '../../apifetch.service';
-import * as showdown from 'showdown';
-const conv = new showdown.Converter();
 
 @Component({
   selector: 'app-manage',
@@ -20,15 +18,13 @@ export class ManageComponent implements OnInit {
     if (!this.dataLoaded) {
       this.fetchService.getAPIData().subscribe(data => {
         const apiData: APIData = data;
-        conv.setOption('headerLevelStart', 5);
 
         for (const cls of apiData.classes) {
           for (const api of cls.list) {
             // TODO: Remove debug case where no username is acceptable
-            //if (api.contact === this.userService.getUsername() || this.userService.getUsername() === '') {
-              api.description = conv.makeHtml(api.description.replace(/\\n/g, '\n'));
+            // if (api.contact === this.userService.getUsername() || this.userService.getUsername() === '') {
               this.apis.push(api);
-            //}
+            // }
           }
         }
 

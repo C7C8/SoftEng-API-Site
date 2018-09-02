@@ -1,6 +1,13 @@
 <mat-expansion-panel multi="true">
   <mat-expansion-panel-header>
-    <mat-panel-title>Team {{api.team}} {{api.name}}</mat-panel-title>
+    <mat-panel-title *ngIf="!edit">Team {{api.team}} {{api.name}}</mat-panel-title>
+    <mat-panel-title *ngIf="edit"><span id="edit-title">Team {{api.team}}</span>
+      <form #editForm="ngForm">
+        <mat-form-field>
+          <input matInput [(ngModel)]="api.name" name="name" placeholder="API Name">
+        </mat-form-field>
+      </form>
+    </mat-panel-title>
     <mat-panel-description><span>
       v{{api.version}} |
       {{api.size}} MB |
@@ -9,27 +16,65 @@
     </mat-panel-description>
   </mat-expansion-panel-header>
 
-  <img src="{{api.image}}">
-  <h4>Gradle</h4>
-  <code>{{api.gradle}}</code>
-  <h4>About</h4>
-  <div [innerHTML]="api.description"></div>
-  <h4>Version History</h4>
-  <ul class="version-history">
-    <li *ngFor="let version of api.history">{{version}}</li>
-  </ul>
+  <!-- Show normal details menu if the API isn't being edited -->
+  <div class="details" *ngIf="!edit">
+    <img src="{{api.image}}">
+    <h4>Gradle</h4>
+    <code>{{api.gradle}}</code>
+    <h4>About</h4>
+    <div [innerHTML]="api.description | renderMarkdown"></div>
+    <h4 id="version-header">Version History</h4>
+    <ul class="version-history">
+      <li *ngFor="let version of api.history">{{version}}</li>
+    </ul>
+  </div>
 
+  <!-- Edit API info fields -->
+  <div class="edit" *ngIf="edit">
+    <form #editForm="ngForm">
+      <p>Current image preview:</p>
+      <img src="{{api.image}}">
+      <button mat-raised-button (click)="changeImage()" id="edit-image">Change Image</button>
+      <h4>Gradle</h4>
+      <code>{{api.gradle}}</code>
+      <h4>About</h4>
+      <mat-form-field id="edit-fields">
+        <textarea matInput [(ngModel)]="api.description" name="description"></textarea>
+      </mat-form-field>
+      <h4>Version History</h4>
+      <ul class="version-history">
+        <li>
+          <mat-form-field id="edit-version">
+            <input matInput placeholder="Version X.X.X" name="vnum" [(ngModel)]="newVersionNum" [formControl]="versionFormControl"
+            [errorStateMatcher]="matcher">
+          </mat-form-field>
+          <mat-form-field id="edit-changelog">
+            <input matInput placeholder="Summary of changes" name="vdesc" [(ngModel)]="newVersionDesc">
+          </mat-form-field>
+          <button mat-raised-button id="submit-version" (click)="newVersion()">Submit New Version</button>
+        </li>
+        <li *ngFor="let version of api.history">{{version}}</li>
+      </ul>
+    </form>
+  </div>
+
+  <!-- Action row -- show a "report" and "like" button if not an admin, otherwise show edit and delete -->
   <mat-action-row *ngIf="!admin">
-    <button mat-icon-button matTooltip="Report inappropriate content" id="report" (click)="report()">
+    <button mat-icon-button matTooltip="Report inappropriate content" id="report-button" (click)="report()">
       <fa-icon [icon]="faExclamation"></fa-icon>
     </button>
-    <button mat-icon-button matTooltip="Like this API!" id="like" (click)="like()">
+    <button mat-icon-button matTooltip="Like this API!" id="like-button" (click)="like()">
       <fa-icon [icon]="faStar"></fa-icon>
     </button>
   </mat-action-row>
   <mat-action-row *ngIf="admin">
-    <button mat-icon-button matTooltip="Delete API" id="delete" (click)="delete()">
+    <button mat-icon-button matTooltip="Delete API" id="delete-button" (click)="delete()">
       <fa-icon [icon]="faTrash"></fa-icon>
     </button>
+    <button mat-icon-button matTooltip="Toggle edit mode" id="edit-button" (click)="toggleEdit()">
+      <fa-icon [icon]="faEllipsisH"></fa-icon>
+    </button>
+    <button mat-raised-button color="primary" id="submit-changes" *ngIf="edit" (click)="submit()">Submit Changes</button>
   </mat-action-row>
+
 </mat-expansion-panel>

@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {faAngleRight} from '@fortawesome/free-solid-svg-icons';
+import { faAngleRight } from '@fortawesome/free-solid-svg-icons';
 import { APIFetchService } from '../../apifetch.service';
 import { APIData } from '../../api-data';
-import * as showdown from 'showdown';
-const conv = new showdown.Converter();
 
 
 let apiData: APIData = null;
@@ -24,15 +22,8 @@ export class ListComponent implements OnInit {
     if (apiData === null) {
       this.fetchService.getAPIData().subscribe(data => {
         apiData = data;
-        conv.setOption('headerLevelStart', 5);
 
-        // Render markdown as HTML
-        for (const cls of apiData.classes) {
-          for (const api of cls.list) {
-            api.description = conv.makeHtml(api.description.replace(/\\n/g, '\n'));
-          }
-        }
-
+        // TODO: Clean!
         this.apis = apiData;
         this.dataLoaded = true;
       });

@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { MatCardModule, MatExpansionModule, MatTabsModule, MatButtonModule, MatTreeModule, MatTooltipModule, MatInputModule, MatSnackBarModule } from '@angular/material';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatCardModule, MatExpansionModule, MatTabsModule, MatButtonModule, MatTreeModule, MatTooltipModule, MatInputModule, MatSnackBarModule, MatProgressSpinnerModule } from '@angular/material';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
@@ -18,6 +18,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { ApiCardComponent } from './pages/list/api-card/api-card.component';
 import { LoginComponent } from './pages/login/login.component';
 import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
+import { RenderMarkdownPipe } from './render-markdown.pipe';
 
 @NgModule({
   declarations: [
@@ -30,11 +31,13 @@ import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.com
     FooterComponent,
     ApiCardComponent,
     LoginComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    RenderMarkdownPipe
   ],
   imports: [
     BrowserModule,
     FormsModule,
+    ReactiveFormsModule,
     BrowserAnimationsModule,
     MatCardModule,
     MatFormFieldModule,
@@ -45,6 +48,7 @@ import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.com
     MatTooltipModule,
     MatInputModule,
     MatSnackBarModule,
+    MatProgressSpinnerModule,
     AppRoutingModule,
     HttpClientModule,
     FontAwesomeModule

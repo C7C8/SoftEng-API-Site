@@ -11,6 +11,10 @@ mat-panel-description {
   justify-content: flex-end;
 }
 
+#version-header {
+  clear: both;
+}
+
 .version-history {
   font-size: 10px;
   font-family: monospace;
@@ -25,7 +29,7 @@ mat-panel-description {
   text-indent: -1em;
 }
 
-img {
+.details > img {
   max-width: 40%;
   margin: 0 0.5em 0 1em;
   display: inline-block;
@@ -47,4 +51,44 @@ h4 {
 
 mat-action-row {
   padding: 1px;
+}
+
+#edit-fields {
+  width: 100%;
+}
+
+form > img {
+  display: block;
+  margin: auto;
+  max-width: 40%;
+}
+
+#edit-version {
+  max-width: 7em;
+  margin-right: 1em;
+}
+
+#edit-changelog {
+  min-width: 30em;
+  margin-right: 3em;
+}
+
+#submit-version {
+  float: right;
+}
+
+#edit-title {
+  padding-top: 1.2em;
+  padding-right: 0.75em;
+}
+
+#submit-changes {
+  clear: both;
+  float: right;
+}
+
+#edit-image {
+  clear: both;
+  display: block;
+  margin: 1em auto auto;
 }

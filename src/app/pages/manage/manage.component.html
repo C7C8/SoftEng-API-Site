@@ -2,13 +2,13 @@
 
 <h1>Manage APIs</h1>
 <h2>Your APIs</h2>
-{{apis}}
-
+<p>You can view, edit, or delete your APIs here. You can use markdown to enhance your API
+descriptions &amp; documentation, with headers, links, lists, code samples, etc.</p>
 <div *ngIf="dataLoaded">
   <mat-accordion multi="true">
     <app-api-card *ngFor="let api of apis" [api]="api" [admin]="true"></app-api-card>
   </mat-accordion>
 </div>
 <div *ngIf="!dataLoaded">
-  Failed to load API data!
+  <mat-spinner [diameter]="50"></mat-spinner>
 </div>
