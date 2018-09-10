@@ -1,8 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormControl, FormGroupDirective, NgForm, Validators } from '@angular/forms';
-import { ErrorStateMatcher } from '@angular/material';
+import { ErrorStateMatcher, MatDialog } from '@angular/material';
 import { faEllipsisH, faStar, faExclamation, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { API } from '../../../api-data';
+import { FileUploadComponent } from './file-upload/file-upload.component';
 
 // Lifted straight out of the angular docs, unfortunately -- errors when control is dirty, touched, or submitted
 class MyErrorStateMatcher implements ErrorStateMatcher {
@@ -27,6 +28,7 @@ export class ApiCardComponent implements OnInit {
   ]);
   matcher = new MyErrorStateMatcher();
 
+  newVersionFile: File;
   newVersionDesc: string;
   newVersionNum: string;
   newImage: any;
@@ -36,7 +38,7 @@ export class ApiCardComponent implements OnInit {
   faTrash = faTrash;
   faEllipsisH = faEllipsisH;
 
-  constructor() { }
+  constructor(public dialog: MatDialog) { }
 
   ngOnInit() {
   }
@@ -54,6 +56,9 @@ export class ApiCardComponent implements OnInit {
   }
 
   newVersion(): void {
+    this.dialog.open(FileUploadComponent, {
+      data: null
+    });
   }
 
   submit(): void {

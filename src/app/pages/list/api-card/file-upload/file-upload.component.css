@@ -1,0 +1,7 @@
+#file-input {
+  display: none;
+}
+
+button[mat-raised-button] {
+  margin-top: 1em;
+}

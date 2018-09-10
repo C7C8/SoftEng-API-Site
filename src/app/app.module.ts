@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatCardModule, MatExpansionModule, MatTabsModule, MatButtonModule, MatTreeModule, MatTooltipModule, MatInputModule, MatSnackBarModule, MatProgressSpinnerModule } from '@angular/material';
+import { MatCardModule, MatExpansionModule, MatTabsModule, MatButtonModule, MatTreeModule, MatTooltipModule, MatInputModule, MatSnackBarModule, MatProgressSpinnerModule, MatDialogModule } from '@angular/material';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
@@ -19,6 +19,7 @@ import { ApiCardComponent } from './pages/list/api-card/api-card.component';
 import { LoginComponent } from './pages/login/login.component';
 import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
 import { RenderMarkdownPipe } from './render-markdown.pipe';
+import { FileUploadComponent } from './pages/list/api-card/file-upload/file-upload.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { RenderMarkdownPipe } from './render-markdown.pipe';
     ApiCardComponent,
     LoginComponent,
     PageNotFoundComponent,
-    RenderMarkdownPipe
+    RenderMarkdownPipe,
+    FileUploadComponent
   ],
   imports: [
     BrowserModule,
@@ -49,9 +51,13 @@ import { RenderMarkdownPipe } from './render-markdown.pipe';
     MatInputModule,
     MatSnackBarModule,
     MatProgressSpinnerModule,
+    MatDialogModule,
     AppRoutingModule,
     HttpClientModule,
     FontAwesomeModule
+  ],
+  entryComponents: [
+    FileUploadComponent
   ],
   providers: [],
   bootstrap: [ AppComponent ]
