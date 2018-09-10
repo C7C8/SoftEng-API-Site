@@ -3,5 +3,9 @@
 }
 
 button[mat-raised-button] {
-  margin-top: 1em;
+  margin: 1em;
+}
+
+.cancel-button {
+  float: right;
 }

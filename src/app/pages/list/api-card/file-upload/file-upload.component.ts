@@ -10,6 +10,7 @@ import { UserService } from '../../../../user.service';
 export class FileUploadComponent implements OnInit {
   @ViewChild('file') nativeFile;
   file: File = null;
+  fname: string = null;
 
   constructor(public dialogRef: MatDialogRef<FileUploadComponent>, public userService: UserService) { }
 
@@ -17,12 +18,18 @@ export class FileUploadComponent implements OnInit {
   }
 
   addFile(): void {
-    console.log('Click!');
     this.nativeFile.nativeElement.click();
   }
 
   onFileAdded(): void {
     this.file = this.nativeFile.nativeElement.files[0];
-    console.log('Got file: ', this.file);
+    this.fname = this.file.name; // Because referencing {{file.name}} in the HTML won't work...
+  }
+
+  submit(): void {
+  }
+
+  cancel(): void {
+    return this.dialogRef.close();
   }
 }

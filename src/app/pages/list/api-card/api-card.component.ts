@@ -29,8 +29,8 @@ export class ApiCardComponent implements OnInit {
   matcher = new MyErrorStateMatcher();
 
   newVersionFile: File;
-  newVersionDesc: string;
-  newVersionNum: string;
+  newVersionDesc = '';
+  newVersionNum = '';
   newImage: any;
 
   faStar = faStar;
@@ -38,7 +38,7 @@ export class ApiCardComponent implements OnInit {
   faTrash = faTrash;
   faEllipsisH = faEllipsisH;
 
-  constructor(public dialog: MatDialog) { }
+  constructor(private dialog: MatDialog) { }
 
   ngOnInit() {
   }
@@ -53,6 +53,9 @@ export class ApiCardComponent implements OnInit {
   }
 
   changeImage(): void {
+    this.dialog.open(FileUploadComponent, {
+      data: null
+    });
   }
 
   newVersion(): void {

@@ -1,9 +1,13 @@
-<input type="file" #file id="file-input" (change)="onFileAdded()" accept=".jar, application/x-java-archive" required>
-<h3>Submit new version</h3>
-<p>Please select a jar file from your filesystem. File size isn't hard-limited, but large
+<input type="file" #file id="file-input" (change)="onFileAdded()" accept=".jar, .png" required>
+<h3>Upload File</h3>
+<p>Please select a file from your filesystem. File size isn't hard-limited, but large
 (&gt;100 MB) files <i>will</i> catch the admin's eye - don't be the person that makes me add a limit!</p>
 
-<p><i>If you're concerned about your file size, email me at <a href="crmyers@wpi.edu">
+<p><i>If you're concerned about your jar file size, email me at <a href="crmyers@wpi.edu">
   crmyers@wpi.edu</a>, odds are you've done something wrong in creating your jar file and I'll
   be happy to help you out.</i></p>
-<button mat-raised-button color="primary" (click)="addFile()">Select file</button> {{file.name}}
+<button mat-raised-button (click)="addFile()">Select file</button>
+<button mat-raised-button color="primary" (click)="submit()" [disabled]="fname === null">Submit</button>
+<button mat-raised-button (click)="cancel()" class="cancel-button">Cancel</button>
+<br>
+<span *ngIf="fname">Selected file: {{fname}}</span>

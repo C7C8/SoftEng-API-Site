@@ -46,12 +46,12 @@
         <li>
           <mat-form-field id="edit-version">
             <input matInput placeholder="Version X.X.X" name="vnum" [(ngModel)]="newVersionNum" [formControl]="versionFormControl"
-            [errorStateMatcher]="matcher">
+            [errorStateMatcher]="matcher" required>
           </mat-form-field>
           <mat-form-field id="edit-changelog">
-            <input matInput placeholder="Summary of changes" name="vdesc" [(ngModel)]="newVersionDesc">
+            <input matInput placeholder="Summary of changes" name="vdesc" [(ngModel)]="newVersionDesc" required>
           </mat-form-field>
-          <button mat-raised-button id="submit-version" (click)="newVersion()">Submit New Version</button>
+          <button mat-raised-button id="submit-version" (click)="newVersion()" [disabled]="versionFormControl.errors || newVersionDesc.length === 0">Submit New Version</button>
         </li>
         <li *ngFor="let version of api.history">{{version}}</li>
       </ul>
