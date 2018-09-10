@@ -1,5 +1,4 @@
-/* You can add global styles to this file, and also import other style files */
-@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+@import './redblack-theme.scss';
 
 body {
   color: #303030;
@@ -20,7 +19,8 @@ h2 {
   line-height: 0.5;
 }
 
-h5,h6,h7 { /* I... guess h7 is a tag now? Whatever, just roll with it */
+/* I... guess h7 is a tag now? Whatever, just roll with it */
+h5,h6,h7 {
   font-size: 0.8em;
   font-family: Arial, sans-serif;
   margin: 0.65em auto 0.25em;
@@ -32,7 +32,7 @@ h7 {
 }
 
 p {
-  font-family: "Times New Roman", "Georgia", serif;
+  font-family: Arial, sans-serif;
   margin-bottom: 0.5em;
 }
 
@@ -46,7 +46,7 @@ a {
 
 /* Code block display */
 code {
-  background-color: #eeeeee;
+  background-color: #555;
   font-size: 13px;
   padding: 2px 4px 1px;
 }
@@ -54,7 +54,7 @@ code {
 pre.code {
   white-space: pre-wrap;
   display: inline-block;
-  background-color: #eeeeee;
+  background-color: #555;
   text-align: left;
   padding: 2px 4px 2px;
 }
@@ -67,7 +67,7 @@ pre.code code::before {
   content: counter(listing) " ";
   display: inline-block;
   text-align: right;
-  color: #B0B0B0;
+  color: #999;
 }
 
 .center {
