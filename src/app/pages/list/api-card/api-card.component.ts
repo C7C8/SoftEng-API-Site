@@ -2,8 +2,9 @@ import { Component, OnInit, Input } from '@angular/core';
 import { FormControl, FormGroupDirective, NgForm, Validators } from '@angular/forms';
 import { ErrorStateMatcher, MatDialog, MatSnackBar } from '@angular/material';
 import { faEllipsisH, faStar, faExclamation, faTrash } from '@fortawesome/free-solid-svg-icons';
-import { API } from '../../../api-data';
+import { API, PyAPIResponse, PyAPISubmission } from '../../../api-data';
 import { FileUploadComponent } from './file-upload/file-upload.component';
+import { UserService } from '../../../user.service';
 
 // Lifted straight out of the angular docs, unfortunately -- errors when control is dirty, touched, or submitted
 class MyErrorStateMatcher implements ErrorStateMatcher {
@@ -38,7 +39,7 @@ export class ApiCardComponent implements OnInit {
   faTrash = faTrash;
   faEllipsisH = faEllipsisH;
 
-  constructor(private dialog: MatDialog, private snackbar: MatSnackBar) { }
+  constructor(private dialog: MatDialog, private snackbar: MatSnackBar, private userService: UserService) { }
 
   ngOnInit() {
   }
@@ -61,9 +62,25 @@ export class ApiCardComponent implements OnInit {
         const reader = new FileReader();
         reader.onload = (event: Event) => {
           const b64file: string = reader.result.toString().split(',')[1];
+          this.api.updated = new Date();
           this.api.image = reader.result;
 
           // TODO: Perform submission logic
+          const submission: PyAPISubmission = {
+            action: 'update',
+            id: this.api.id,
+            info: {
+              image: reader.result.toString().split(',')[1]
+            }
+          };
+
+          this.userService.submitUpdate(submission, (response: PyAPIResponse) => {
+            if (response.status && response.status !== 'error') {
+              this.snackbar.open('Submitted new image!', '', {duration: 2000});
+            } else {
+              this.snackbar.open(response.message, '', {duration: 2000});
+            }
+          });
         };
         reader.readAsDataURL(result);
       }

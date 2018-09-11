@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 
 import { environment } from '../environments/environment';
 import { catchError } from 'rxjs/operators';
 import { CanActivate, Router } from '@angular/router';
+import { PyAPIResponse, PyAPISubmission } from './api-data';
 
 class AuthResponse {
   message: string;
@@ -16,8 +17,8 @@ class AuthResponse {
 })
 export class UserService implements CanActivate {
   private apiUrl = environment.apiUrl;
-  private jwt: string;
-  public username: string;
+  private jwt: string = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1MzY2MzE0NTYsIm5iZiI6MTUzNjYzMTQ1NiwianRpIjoiZjE4ODk3NWUtZmRhOS00NWEyLThjNzEtYmE3OGQyYzRhYjkyIiwiZXhwIjoxNTM4MzU5NDU2LCJpZGVudGl0eSI6InNvdXJlYyIsImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyJ9.81d9xkXJbWST_8Yv41tpVl_ftFik3omCCjeTlzTc4ZQ';
+  public username: string = null;
 
   constructor(private http: HttpClient, private router: Router) { }
 
@@ -47,7 +48,7 @@ export class UserService implements CanActivate {
   }
 
   isLoggedIn(): boolean {
-    return (this.jwt !== null && this.jwt !== undefined);
+    return (this.jwt !== null && this.jwt !== undefined && this.jwt.length > 0);
   }
 
   canActivate(): boolean {
@@ -59,7 +60,6 @@ export class UserService implements CanActivate {
   }
 
   register(username: string, password: string, callback?: (boolean) => void): void {
-    console.log('Registering as ' + username);
     this.http.post<AuthResponse>(this.apiUrl + '/auth/register',
       {
         username: username,
@@ -113,8 +113,26 @@ export class UserService implements CanActivate {
     return this.username;
   }
 
+  submitUpdate(info: PyAPISubmission, callback?: (response: PyAPIResponse) => void) {
+    const requestOptions = {
+      headers: new HttpHeaders({
+        'Authorization': 'Bearer ' + this.jwt,
+      })
+    };
+
+    this.http.post<PyAPIResponse>(this.apiUrl + '/list', info,  requestOptions)
+      .pipe(
+        catchError(this.handleError())
+      )
+      .subscribe((response: PyAPIResponse) => {
+        if (callback) {
+          callback(response !== undefined ? response : {status: 'error', message: 'Submission failed'});
+        }
+      });
+  }
+
   private handleError<T> (operation = 'operation', result?: T) {
-    return (error: any): Observable<T> => {
+    return (error: HttpErrorResponse): Observable<T> => {
       console.error(operation + ': ' + error.message);
       return of(result as T);
     };

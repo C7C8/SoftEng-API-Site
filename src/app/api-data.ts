@@ -25,3 +25,23 @@ export class APIData {
   totalSize: number;
   classes: Class[];
 }
+
+export class PyAPISubmission {
+  action: string;
+  id: string;
+  info: {
+    name?: string;
+    version?: string;
+    description?: string;
+    jar?: string;
+    image?: string;
+    term?: string;
+    year?: number;
+    team?: string;
+  };
+}
+
+export class PyAPIResponse {
+  status: string;
+  message: string;
+}
