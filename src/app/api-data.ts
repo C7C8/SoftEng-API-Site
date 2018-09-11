@@ -15,7 +15,7 @@ export class API {
 export class Class {
   term: string;
   year: number;
-  list: API[];
+  apis: API[];
 }
 
 export class APIData {

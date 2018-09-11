@@ -9,10 +9,10 @@
     <mat-expansion-panel *ngFor="let class of apis.classes">
       <mat-expansion-panel-header>
         <mat-panel-title>{{class.term}} Term {{class.year}}</mat-panel-title>
-        <mat-action-row>{{class.list.length}} APIs</mat-action-row>
+        <mat-action-row>{{class.apis.length}} APIs</mat-action-row>
       </mat-expansion-panel-header>
       <mat-accordion multi="true">
-        <app-api-card *ngFor="let api of class.list" [api]="api"></app-api-card>
+        <app-api-card *ngFor="let api of class.apis" [api]="api"></app-api-card>
       </mat-accordion>
     </mat-expansion-panel>
   </mat-accordion>

@@ -17,7 +17,7 @@ class AuthResponse {
 })
 export class UserService implements CanActivate {
   private apiUrl = environment.apiUrl;
-  private jwt: string = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1MzY2MzE0NTYsIm5iZiI6MTUzNjYzMTQ1NiwianRpIjoiZjE4ODk3NWUtZmRhOS00NWEyLThjNzEtYmE3OGQyYzRhYjkyIiwiZXhwIjoxNTM4MzU5NDU2LCJpZGVudGl0eSI6InNvdXJlYyIsImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyJ9.81d9xkXJbWST_8Yv41tpVl_ftFik3omCCjeTlzTc4ZQ';
+  private jwt: string = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1MzY2ODY5OTAsIm5iZiI6MTUzNjY4Njk5MCwianRpIjoiMDVlM2RiMmItZmVkNy00NDkzLWIyMWMtNzI5ZGIwMWI1ZmE4IiwiZXhwIjoxNTM4NDE0OTkwLCJpZGVudGl0eSI6InNvdXJlYyIsImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyJ9.cL5F5t5x9HGgS_8tv5DTdL0LI8CdVDLNFeoo9S7EMYg'
   public username: string = null;
 
   constructor(private http: HttpClient, private router: Router) { }

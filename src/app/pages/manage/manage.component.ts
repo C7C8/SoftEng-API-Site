@@ -20,7 +20,7 @@ export class ManageComponent implements OnInit {
         const apiData: APIData = data;
 
         for (const cls of apiData.classes) {
-          for (const api of cls.list) {
+          for (const api of cls.apis) {
             // TODO: Remove debug case where no username is acceptable
             // if (api.contact === this.userService.getUsername() || this.userService.getUsername() === '') {
               this.apis.push(api);
