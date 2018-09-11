@@ -5,7 +5,7 @@
 
   <p>Currently storing {{apis.count}} APIs in {{apis.size}} MB, or {{apis.totalCount}} files / {{apis.totalSize}} MB
    across all versions.</p>
-  <mat-accordion multi="true">
+  <mat-accordion multi="true" *ngIf="dataLoaded">
     <mat-expansion-panel *ngFor="let class of apis.classes">
       <mat-expansion-panel-header>
         <mat-panel-title>{{class.term}} Term {{class.year}}</mat-panel-title>
@@ -16,4 +16,8 @@
       </mat-accordion>
     </mat-expansion-panel>
   </mat-accordion>
+
+  <div *ngIf="!dataLoaded">
+    <mat-spinner [diameter]="50"></mat-spinner>
+  </div>
 </div>
