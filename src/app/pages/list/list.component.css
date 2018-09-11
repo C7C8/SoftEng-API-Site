@@ -2,3 +2,7 @@ mat-panel-title {
   font-weight: bold;
   margin: auto;
 }
+
+p {
+  margin-bottom: 0.5em;
+}
