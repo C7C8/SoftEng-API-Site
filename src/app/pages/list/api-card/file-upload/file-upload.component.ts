@@ -27,6 +27,7 @@ export class FileUploadComponent implements OnInit {
   }
 
   submit(): void {
+    return this.dialogRef.close(this.file);
   }
 
   cancel(): void {

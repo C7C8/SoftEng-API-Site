@@ -8,8 +8,6 @@ export class API {
   description: string;
   image: string;
   updated: Date;
-  term: string;
-  year: number;
   team: string;
   history: string[];
 }

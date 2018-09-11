@@ -1,13 +1,13 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormControl, FormGroupDirective, NgForm, Validators } from '@angular/forms';
-import { ErrorStateMatcher, MatDialog } from '@angular/material';
+import { ErrorStateMatcher, MatDialog, MatSnackBar } from '@angular/material';
 import { faEllipsisH, faStar, faExclamation, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { API } from '../../../api-data';
 import { FileUploadComponent } from './file-upload/file-upload.component';
 
 // Lifted straight out of the angular docs, unfortunately -- errors when control is dirty, touched, or submitted
 class MyErrorStateMatcher implements ErrorStateMatcher {
-  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null) : boolean {
+  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
     const isSubmitted = form && form.submitted;
     return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
   }
@@ -29,16 +29,16 @@ export class ApiCardComponent implements OnInit {
   matcher = new MyErrorStateMatcher();
 
   newVersionFile: File;
+  newImage: File;
   newVersionDesc = '';
   newVersionNum = '';
-  newImage: any;
 
   faStar = faStar;
   faExclamation = faExclamation;
   faTrash = faTrash;
   faEllipsisH = faEllipsisH;
 
-  constructor(private dialog: MatDialog) { }
+  constructor(private dialog: MatDialog, private snackbar: MatSnackBar) { }
 
   ngOnInit() {
   }
@@ -54,13 +54,35 @@ export class ApiCardComponent implements OnInit {
 
   changeImage(): void {
     this.dialog.open(FileUploadComponent, {
-      data: null
-    });
+      data: File
+    })
+      .afterClosed().subscribe((result: File) => {
+        console.log('Processing ' + result.name);
+        const reader = new FileReader();
+        reader.onload = (event: Event) => {
+          const b64file: string = reader.result.toString().split(',')[1];
+          this.api.image = reader.result;
+
+          // TODO: Perform submission logic
+        };
+        reader.readAsDataURL(result);
+      }
+    );
   }
 
   newVersion(): void {
     this.dialog.open(FileUploadComponent, {
-      data: null
+      data: File
+    })
+      .afterClosed().subscribe((result: File) => {
+      this.api.history.unshift(this.newVersionNum + ' ' + this.newVersionDesc);
+      this.snackbar.open('Submitted version ' + this.newVersionNum, '', {duration: 2000});
+      this.api.updated = new Date();
+
+      // TODO: Perform submission logic
+
+      this.newVersionDesc = '';
+      this.versionFormControl.reset();
     });
   }
 

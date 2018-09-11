@@ -2,8 +2,8 @@
 
 <h1>Manage APIs</h1>
 <h2>Your APIs</h2>
-<p>You can view, edit, or delete your APIs here. You can use markdown to enhance your API
-descriptions &amp; documentation, with headers, links, lists, code samples, etc.</p>
+<p>You can view, edit, or delete your APIs here. Markdown support is enabled, so you can enhance your API
+descriptions &amp; documentation with headers, links, lists, code samples, etc.</p>
 <div *ngIf="dataLoaded">
   <mat-accordion multi="true">
     <app-api-card *ngFor="let api of apis" [api]="api" [admin]="true"></app-api-card>
