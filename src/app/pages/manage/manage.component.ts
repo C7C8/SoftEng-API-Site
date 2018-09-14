@@ -1,4 +1,4 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../user.service';
 import { API, APIData } from '../../api-data';
 import { APIFetchService } from '../../apifetch.service';
@@ -17,17 +17,14 @@ export class ManageComponent implements OnInit {
   ngOnInit() {
     if (!this.dataLoaded) {
       this.fetchService.getAPIData().subscribe(data => {
-        const apiData: APIData = data;
-
-        for (const cls of apiData.classes) {
+        for (const cls of data.classes) {
           for (const api of cls.apis) {
-            // TODO: Remove debug case where no username is acceptable
-            // if (api.contact === this.userService.getUsername() || this.userService.getUsername() === '') {
+            // TODO: Maybe embed username in API owner?
+            if (api.contact === this.userService.getUsername() || this.userService.getUsername() === '') {
               this.apis.push(api);
-            // }
+            }
           }
         }
-
         this.dataLoaded = true;
       });
     }

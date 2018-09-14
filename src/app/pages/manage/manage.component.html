@@ -12,5 +12,6 @@ descriptions &amp; documentation with headers, links, lists, code samples, etc.<
 <div *ngIf="!dataLoaded">
   <mat-spinner [diameter]="50"></mat-spinner>
 </div>
+<i *ngIf="dataLoaded && apis.length === 0">No APIs found; submit one below!</i>
 <br><br>
 

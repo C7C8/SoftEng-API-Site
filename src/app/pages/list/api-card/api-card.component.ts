@@ -61,7 +61,6 @@ export class ApiCardComponent implements OnInit {
         console.log('Processing ' + result.name);
         const reader = new FileReader();
         reader.onload = (event: Event) => {
-          const b64file: string = reader.result.toString().split(',')[1];
           this.api.updated = new Date();
           this.api.image = reader.result;
 
@@ -93,13 +92,32 @@ export class ApiCardComponent implements OnInit {
     })
       .afterClosed().subscribe((result: File) => {
       this.api.history.unshift(this.newVersionNum + ' ' + this.newVersionDesc);
-      this.snackbar.open('Submitted version ' + this.newVersionNum, '', {duration: 2000});
       this.api.updated = new Date();
 
-      // TODO: Perform submission logic
+      const reader = new FileReader();
+      reader.onload = (event: Event) => {
+        const submission: PyAPISubmission = {
+          action: 'update',
+          id: this.api.id,
+          info: {
+            version: this.newVersionNum + ' ' + this.newVersionDesc,
+            jar: reader.result.toString().split(',')[1]
+          }
+        };
 
-      this.newVersionDesc = '';
-      this.versionFormControl.reset();
+        this.userService.submitUpdate(submission, (response: PyAPIResponse) => {
+          if (response.status && response.status !== 'error') {
+            this.snackbar.open('Submitted new version!', '', { duration: 2000 });
+          } else {
+            this.snackbar.open(response.message, '', {duration: 2000});
+          }
+
+          this.newVersionDesc = '';
+          this.versionFormControl.reset();
+        });
+      };
+      reader.readAsDataURL(result);
+
     });
   }
 
