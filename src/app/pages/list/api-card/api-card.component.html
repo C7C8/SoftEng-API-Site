@@ -1,13 +1,6 @@
 <mat-expansion-panel multi="true" (closed)="setEdit(false)">
   <mat-expansion-panel-header>
-    <mat-panel-title *ngIf="!edit">Team {{api.team}} {{api.name}}</mat-panel-title>
-    <mat-panel-title *ngIf="edit"><span id="edit-title">Team {{api.team}}</span>
-      <form #editForm="ngForm">
-        <mat-form-field>
-          <input matInput [(ngModel)]="api.name" name="name" placeholder="API Name">
-        </mat-form-field>
-      </form>
-    </mat-panel-title>
+    <mat-panel-title>Team {{api.team}} {{api.name}}</mat-panel-title>
     <mat-panel-description><span>
       v{{api.version}} |
       {{api.size}} MB |
@@ -15,6 +8,12 @@
       Contact: <a href="mailto:{{api.contact}}">{{api.contact}}</a></span>
     </mat-panel-description>
   </mat-expansion-panel-header>
+
+  <form #editForm="ngForm" *ngIf="edit">
+    <mat-form-field>
+      <input matInput [(ngModel)]="api.name" name="name" placeholder="Edit name">
+    </mat-form-field>
+  </form>
 
   <!-- Show normal details menu if the API isn't being edited -->
   <div class="details" *ngIf="!edit">
