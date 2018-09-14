@@ -17,9 +17,9 @@ export class APIFetchService {
   public userApis: API[];
 
   getAPIData(callback?: (data: APIData) => void): void {
-    this.http.get<any>(environment.apiJson)
+    this.http.get<APIData>(environment.apiJson)
       .pipe(
-        catchError(this.handleError([]))
+        catchError(this.handleError(null))
       )
       .subscribe((response: APIData) => {
         this.apiData = response;
@@ -32,8 +32,8 @@ export class APIFetchService {
   getFilteredAPIs(username: string) {
     // If API data isn't loaded yet, load it, then re-call this function. It's wonderfully recursive, but not infinitely so
     if (this.apiData === null) {
-      this.getAPIData((response: APIData) => {
-        if (response !== null) {
+      this.getAPIData((response) => {
+        if (response) {
           this.getFilteredAPIs(username);
         }
       });
