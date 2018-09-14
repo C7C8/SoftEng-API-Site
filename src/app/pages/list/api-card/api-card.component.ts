@@ -29,8 +29,6 @@ export class ApiCardComponent implements OnInit {
   ]);
   matcher = new MyErrorStateMatcher();
 
-  newVersionFile: File;
-  newImage: File;
   newVersionDesc = '';
   newVersionNum = '';
 
@@ -74,7 +72,7 @@ export class ApiCardComponent implements OnInit {
           };
 
           this.userService.submitUpdate(submission, (response: PyAPIResponse) => {
-            if (response.status && response.status !== 'error') {
+            if (response.status !== 'error') {
               this.snackbar.open('Submitted new image!', '', {duration: 2000});
             } else {
               this.snackbar.open(response.message, '', {duration: 2000});
@@ -106,10 +104,10 @@ export class ApiCardComponent implements OnInit {
         };
 
         this.userService.submitUpdate(submission, (response: PyAPIResponse) => {
-          if (response.status && response.status !== 'error') {
+          if (response.status !== 'error') {
             this.snackbar.open('Submitted new version!', '', { duration: 2000 });
           } else {
-            this.snackbar.open(response.message, '', {duration: 2000});
+            this.snackbar.open(response.message, '', { duration: 2000 });
           }
 
           this.newVersionDesc = '';
@@ -122,6 +120,23 @@ export class ApiCardComponent implements OnInit {
   }
 
   submit(): void {
+    const submission: PyAPISubmission = {
+      action: 'update',
+      id: this.api.id,
+      info: {
+        name: this.api.name,
+        description: this.api.description,
+      }
+    };
+
+    this.userService.submitUpdate(submission, (response: PyAPIResponse) => {
+      if (response.status !== 'error') {
+        this.snackbar.open('Submitted changes!', '', { duration: 2000 });
+      } else {
+        this.snackbar.open(response.message, '', { duration: 2000 });
+      }
+      this.edit = false;
+    });
   }
 
   toggleEdit() {
