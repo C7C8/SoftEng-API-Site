@@ -17,7 +17,7 @@
 
   <!-- Show normal details menu if the API isn't being edited -->
   <div class="details" *ngIf="!edit">
-    <img src="{{api.image}}">
+    <img *ngIf="api.image" src="{{api.image}}">
     <h4>Gradle</h4>
     <code>{{api.gradle}}</code>
     <h4>About</h4>

@@ -4,26 +4,56 @@ import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
 import { environment } from '../environments/environment';
+import { API, APIData } from './api-data';
 
 @Injectable({
   providedIn: 'root'
 })
 export class APIFetchService {
-  private jsonUrl = environment.apiJson;
 
   constructor(private http: HttpClient) { }
 
-  getAPIData(): Observable<any> {
-    console.log('Fetching data from ' + this.jsonUrl);
-    return this.http.get<any>(this.jsonUrl)
+  public apiData: APIData = null;
+  public userApis: API[];
+
+  getAPIData(callback?: (data: APIData) => void): void {
+    this.http.get<any>(environment.apiJson)
       .pipe(
-        catchError(this.handleError('getAPIData', []))
-      );
+        catchError(this.handleError([]))
+      )
+      .subscribe((response: APIData) => {
+        this.apiData = response;
+        if (callback) {
+          callback(response);
+        }
+      });
   }
 
-  private handleError<T> (operation = 'operation', result?: T) {
+  getFilteredAPIs(username: string) {
+    // If API data isn't loaded yet, load it, then re-call this function. It's wonderfully recursive, but not infinitely so
+    if (this.apiData === null) {
+      this.getAPIData((response: APIData) => {
+        if (response !== null) {
+          this.getFilteredAPIs(username);
+        }
+      });
+      return;
+    }
+
+    // TODO: Maybe embed username in API data to make this cleaner?
+    this.userApis = [];
+    for (const cls of this.apiData.classes) {
+      for (const api of cls.apis) {
+        if (api.contact === username) {
+          this.userApis.push(api);
+        }
+      }
+    }
+  }
+
+  private handleError<T> (result?: T) {
     return (error: any): Observable<T> => {
-      console.error(operation + ': ' + error.message);
+      console.error(error.message);
       return of(result as T);
     };
   }

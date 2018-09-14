@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../user.service';
-import { API, APIData } from '../../api-data';
 import { APIFetchService } from '../../apifetch.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-manage',
@@ -9,27 +9,17 @@ import { APIFetchService } from '../../apifetch.service';
   styleUrls: ['./manage.component.css']
 })
 export class ManageComponent implements OnInit {
-  dataLoaded = false;
-  apis: API[] = [];
 
-  constructor(public userService: UserService, private fetchService: APIFetchService) { }
+  constructor(public userService: UserService, public fetchService: APIFetchService, private router: Router) { }
 
   ngOnInit() {
-    if (!this.dataLoaded) {
-      this.fetchService.getAPIData().subscribe(data => {
-        for (const cls of data.classes) {
-          for (const api of cls.apis) {
-            // TODO: Maybe embed username in API owner?
-            if (api.contact === this.userService.getUsername() || this.userService.getUsername() === '') {
-              this.apis.push(api);
-            }
-          }
-        }
-        this.dataLoaded = true;
-      });
+    if (this.fetchService.apiData === null) {
+      this.fetchService.getFilteredAPIs(this.userService.getUsername());
     }
   }
 
   logout(): void {
+    this.userService.logout();
+    this.router.navigate(['/list']);
   }
 }
