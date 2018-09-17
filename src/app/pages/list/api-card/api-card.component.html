@@ -65,6 +65,8 @@
     </form>
   </div>
 
+  <mat-spinner *ngIf="uploading" [diameter]="50"></mat-spinner>
+
   <!-- Action row -- show a "report" and "like" button if not an admin, otherwise show edit and delete -->
   <mat-action-row *ngIf="!admin">
     <button mat-icon-button matTooltip="Report inappropriate content" id="report-button" (click)="report()">

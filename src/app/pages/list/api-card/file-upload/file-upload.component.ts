@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatDialogRef } from '@angular/material';
-import { UserService } from '../../../../user.service';
+import { MatDialogRef, MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-file-upload',
@@ -12,7 +11,7 @@ export class FileUploadComponent implements OnInit {
   file: File = null;
   fname: string = null;
 
-  constructor(public dialogRef: MatDialogRef<FileUploadComponent>, public userService: UserService) { }
+  constructor(public dialogRef: MatDialogRef<FileUploadComponent>, public snackbar: MatSnackBar) { }
 
   ngOnInit() {
   }
@@ -27,6 +26,7 @@ export class FileUploadComponent implements OnInit {
   }
 
   submit(): void {
+    this.snackbar.open('Uploading file, don\'t close the page until finished!');
     return this.dialogRef.close(this.file);
   }
 

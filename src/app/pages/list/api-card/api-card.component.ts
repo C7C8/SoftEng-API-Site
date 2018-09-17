@@ -31,6 +31,7 @@ export class ApiCardComponent implements OnInit {
 
   newVersionDesc = '';
   newVersionNum = '';
+  uploading = false;
 
   faStar = faStar;
   faExclamation = faExclamation;
@@ -59,7 +60,7 @@ export class ApiCardComponent implements OnInit {
         if (result === null || result === undefined) {
           return;
         }
-
+        this.uploading = true;
         const reader = new FileReader();
         reader.onload = (event: Event) => {
           this.api.updated = new Date();
@@ -80,6 +81,7 @@ export class ApiCardComponent implements OnInit {
             } else {
               this.snackbar.open(response.message, '', {duration: 2000});
             }
+            this.uploading = false;
           });
         };
         reader.readAsDataURL(result);
@@ -96,9 +98,7 @@ export class ApiCardComponent implements OnInit {
         return;
       }
 
-      this.api.history.unshift(this.newVersionNum + ' ' + this.newVersionDesc);
-      this.api.updated = new Date();
-
+      this.uploading = true;
       const reader = new FileReader();
       reader.onload = (event: Event) => {
         const submission: PyAPISubmission = {
@@ -117,6 +117,9 @@ export class ApiCardComponent implements OnInit {
             this.snackbar.open(response.message, '', { duration: 2000 });
           }
 
+          this.uploading = false;
+          this.api.history.unshift(this.newVersionNum + ' ' + this.newVersionDesc);
+          this.api.updated = new Date();
           this.newVersionDesc = '';
           this.versionFormControl.reset();
         });

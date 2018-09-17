@@ -13,8 +13,7 @@
   <i *ngIf="fetchService.userApis.length === 0">No APIs found; submit one below!</i>
   <br><br>
 </div>
-<div *ngIf="!fetchService.apiData">
-  <mat-spinner [diameter]="50"></mat-spinner>
-</div>
+
+<mat-spinner *ngIf="!fetchService.apiData" [diameter]="50"></mat-spinner>
 
 

@@ -68,6 +68,10 @@ form > img {
   font-style: italic;
 }
 
+mat-spinner {
+  margin: auto;
+}
+
 #edit-version {
   max-width: 8em;
   margin-right: 1em;
