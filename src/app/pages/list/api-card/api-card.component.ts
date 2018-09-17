@@ -56,7 +56,10 @@ export class ApiCardComponent implements OnInit {
       data: File
     })
       .afterClosed().subscribe((result: File) => {
-        console.log('Processing ' + result.name);
+        if (result === null || result === undefined) {
+          return;
+        }
+
         const reader = new FileReader();
         reader.onload = (event: Event) => {
           this.api.updated = new Date();
@@ -89,6 +92,10 @@ export class ApiCardComponent implements OnInit {
       data: File
     })
       .afterClosed().subscribe((result: File) => {
+      if (result === null || result === undefined) {
+        return;
+      }
+
       this.api.history.unshift(this.newVersionNum + ' ' + this.newVersionDesc);
       this.api.updated = new Date();
 
