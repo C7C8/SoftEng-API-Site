@@ -63,6 +63,11 @@ form > img {
   max-width: 40%;
 }
 
+.version-warning {
+  color: red;
+  font-style: italic;
+}
+
 #edit-version {
   max-width: 8em;
   margin-right: 1em;
@@ -87,3 +92,4 @@ form > img {
   display: block;
   margin: 1em auto auto;
 }
+

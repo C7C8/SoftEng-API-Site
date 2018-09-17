@@ -17,7 +17,7 @@ class AuthResponse {
 })
 export class UserService implements CanActivate {
   private apiUrl = environment.apiUrl;
-  private jwt: string = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1MzY5NDM5MTIsIm5iZiI6MTUzNjk0MzkxMiwianRpIjoiZGJkMTc2YWMtYzdlYS00NTRjLTk5MjQtZDZlNGM1NmQwYTYzIiwiZXhwIjoxNTM4NjcxOTEyLCJpZGVudGl0eSI6ImNybXllcnNAd3BpLmVkdSIsImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyJ9.0W7R6TaDyoL4uidOh-RxMb-Aw13RH4aNDmI3LkSKvUA';
+  private jwt: string = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1MzcyMDM5OTMsIm5iZiI6MTUzNzIwMzk5MywianRpIjoiN2IyOWI2YzItZWM1ZC00NGY2LTlhZmQtZjc4MmEzYzJmZDFlIiwiZXhwIjoxNTM4OTMxOTkzLCJpZGVudGl0eSI6ImNybXllcnNAd3BpLmVkdSIsImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyJ9.juguNESCAl2bE0EytLRJuKPmNxRr9rJ7bi9f8yGxQmM';
   public username: string = 'crmyers@wpi.edu';
 
   constructor(private http: HttpClient, private router: Router) { }

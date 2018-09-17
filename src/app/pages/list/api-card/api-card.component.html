@@ -19,23 +19,31 @@
   <div class="details" *ngIf="!edit">
     <img *ngIf="api.image" src="{{api.image}}">
     <h4>Gradle</h4>
-    <code>{{api.gradle}}</code>
+
+    <!--Display warning if there is no version available -->
+    <code *ngIf="api.history.length > 0">{{api.gradle}}</code>
+    <p class="version-warning" *ngIf="api.history.length === 0">No Jar file submitted for this API!</p>
+
     <h4>About</h4>
     <div [innerHTML]="api.description | renderMarkdown"></div>
-    <h4 id="version-header">Version History</h4>
+    <h4 id="version-header" *ngIf="api.history.length > 0">Version History</h4>
     <ul class="version-history">
       <li *ngFor="let version of api.history">{{version}}</li>
     </ul>
   </div>
 
   <!-- Edit API info fields -->
-  <div class="edit" *ngIf="edit">
+  <div class="edit-form" *ngIf="edit">
     <form #editForm="ngForm">
       <p>Current image preview:</p>
       <img src="{{api.image}}">
       <button mat-raised-button (click)="changeImage()" id="edit-image">Change Image</button>
       <h4>Gradle</h4>
-      <code>{{api.gradle}}</code>
+
+      <!--Display warning if there is no version available -->
+      <code *ngIf="api.history.length > 0">{{api.gradle}}</code>
+      <p class="version-warning" *ngIf="api.history.length === 0">No Jar file submitted for this API!</p>
+
       <h4>About</h4>
       <mat-form-field id="edit-fields">
         <textarea matInput [(ngModel)]="api.description" name="description"></textarea>
