@@ -40,11 +40,10 @@ export class APIFetchService {
       return;
     }
 
-    // TODO: Maybe embed username in API data to make this cleaner?
     this.userApis = [];
     for (const cls of this.apiData.classes) {
       for (const api of cls.apis) {
-        if (api.contact === username) {
+        if (api.creator === username) {
           this.userApis.push(api);
         }
       }

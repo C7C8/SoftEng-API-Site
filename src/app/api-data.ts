@@ -9,6 +9,7 @@ export class API {
   image: string;
   updated: Date;
   team: string;
+  creator: string;
   history: string[];
 }
 
