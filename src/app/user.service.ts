@@ -11,8 +11,8 @@ import { PyAPIResponse, PyAPISubmission } from './api-data';
   providedIn: 'root'
 })
 export class UserService implements CanActivate {
-  private jwt: string = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1MzcyOTczMjEsIm5iZiI6MTUzNzI5NzMyMSwianRpIjoiZGQ5MzkyZjktYjNlZC00MTlkLTlhZmYtZjUzNjM2NTY2NWNlIiwiZXhwIjoxNTM5MDI1MzIxLCJpZGVudGl0eSI6ImNybXllcnNAd3BpLmVkdSIsImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyJ9.gYcVlOsjuabfe0ef2-THTvQWdwuKxaV2uAoihYiH_QM';
-  public username: string = 'crmyers@wpi.edu';
+  private jwt: string = null;
+  public username: string = null;
 
   constructor(private http: HttpClient, private router: Router) { }
 

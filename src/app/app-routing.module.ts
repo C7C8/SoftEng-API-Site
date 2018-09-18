@@ -12,7 +12,7 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'list', component: ListComponent },
   { path: 'about', component: AboutComponent },
-  { path: 'manage', component: ManageComponent},//, canActivate: [UserService] },
+  { path: 'manage', component: ManageComponent, canActivate: [UserService] },
   { path: 'login', component: LoginComponent },
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: '**', component: PageNotFoundComponent }
