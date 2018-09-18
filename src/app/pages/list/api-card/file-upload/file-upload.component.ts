@@ -1,5 +1,5 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatDialogRef, MatSnackBar } from '@angular/material';
+import { Component, Inject, OnInit, ViewChild } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef, MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-file-upload',
@@ -11,7 +11,9 @@ export class FileUploadComponent implements OnInit {
   file: File = null;
   fname: string = null;
 
-  constructor(public dialogRef: MatDialogRef<FileUploadComponent>, public snackbar: MatSnackBar) { }
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any,
+              public dialogRef: MatDialogRef<FileUploadComponent>,
+              public snackbar: MatSnackBar) { }
 
   ngOnInit() {
   }

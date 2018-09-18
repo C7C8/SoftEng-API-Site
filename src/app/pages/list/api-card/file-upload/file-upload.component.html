@@ -1,4 +1,4 @@
-<input type="file" #file id="file-input" (change)="onFileAdded()" accept=".jar, .png" required>
+<input type="file" #file id="file-input" (change)="onFileAdded()" [accept]="data.type" required>
 <h3>Upload File</h3>
 <p>Please select a file from your filesystem. File size isn't hard-limited, but large
 (&gt;100 MB) files <i>will</i> catch the admin's eye - don't be the person that makes me add a limit!</p>

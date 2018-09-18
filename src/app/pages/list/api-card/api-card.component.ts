@@ -62,7 +62,7 @@ export class ApiCardComponent implements OnInit {
 
   changeImage(): void {
     this.dialog.open(FileUploadComponent, {
-      data: File
+      data: { type: 'image/*' }
     })
       .afterClosed().subscribe((result: File) => {
         if (result === null || result === undefined) {
@@ -98,7 +98,7 @@ export class ApiCardComponent implements OnInit {
 
   newVersion(): void {
     this.dialog.open(FileUploadComponent, {
-      data: File
+      data: { type: '.jar' }
     })
       .afterClosed().subscribe((result: File) => {
       if (result === null || result === undefined) {
