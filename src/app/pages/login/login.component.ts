@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material';
 import { UserService } from '../../user.service';
 import { Router } from '@angular/router';
+import { FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
@@ -9,6 +10,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
+  emailFieldControl = new FormControl('', [Validators.required, Validators.email]);
   username = '';
   password = '';
 
@@ -18,10 +20,6 @@ export class LoginComponent implements OnInit {
   }
 
   login(): void {
-    if (this.username.length === 0 || this.password.length === 0) {
-      return;
-    }
-
     if (this.userService.isLoggedIn()) {
       this.snackbar.open('You\'re already logged in!', '', {duration: 2000});
       return;
@@ -40,10 +38,6 @@ export class LoginComponent implements OnInit {
   }
 
   register(): void {
-    if (this.username.length === 0 || this.password.length === 0) {
-      return;
-    }
-
     if (this.userService.isLoggedIn()) {
       this.snackbar.open('You\'re already logged in!', '', {duration: 2000});
       return;

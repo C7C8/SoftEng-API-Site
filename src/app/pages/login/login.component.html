@@ -1,13 +1,15 @@
-<form #loginForm="ngForm" class="login-container">
+<form #loginForm="ngForm" class="login-container" (submit)="login()">
   <mat-card>
     <h4>Login/Register</h4>
     <div class="textinput">
       <mat-form-field>
         <input matInput
                type="text"
-               placeholder="WPI Email"
+               placeholder="Email"
+               [formControl]="emailFieldControl"
                [(ngModel)]="username"
                required>
+        <mat-error *ngIf="emailFieldControl.invalid && emailFieldControl.touched">Invalid email!</mat-error>
       </mat-form-field>
       <mat-form-field>
         <input matInput
@@ -17,7 +19,7 @@
                required>
       </mat-form-field>
     </div>
-    <button mat-raised-button (click)="login()" color="primary">Login</button>
-    <button mat-raised-button (click)="register()" >Register</button>
+    <button mat-raised-button type="submit" color="primary" [disabled]="!loginForm.valid || !emailFieldControl.valid">Login</button>
+    <button mat-raised-button (click)="register()" [disabled]="!loginForm.valid || !emailFieldControl.valid" >Register</button>
   </mat-card>
 </form>
