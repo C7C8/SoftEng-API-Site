@@ -3,6 +3,8 @@ import { UserService } from '../../user.service';
 import { APIFetchService } from '../../apifetch.service';
 import { Router } from '@angular/router';
 import { FormControl, NgForm, Validators } from '@angular/forms';
+import { PyAPIResponse, PyAPISubmission } from '../../api-data';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-manage',
@@ -11,7 +13,7 @@ import { FormControl, NgForm, Validators } from '@angular/forms';
 })
 export class ManageComponent implements OnInit {
 
-  constructor(public userService: UserService, public fetchService: APIFetchService, private router: Router) { }
+  constructor(public userService: UserService, public fetchService: APIFetchService, private router: Router, private snackbar: MatSnackBar) { }
   emailFieldControl = new FormControl('', [Validators.required, Validators.email]);
   letters: string[] = [];
 
@@ -45,7 +47,22 @@ export class ManageComponent implements OnInit {
   }
 
   submitAPI(submitForm: NgForm): void {
-    // TODO: add submission logic
+    const info: PyAPISubmission = {
+      action: 'create',
+      info: {
+        name: this.newAPIName,
+        contact: this.newAPIContact,
+        term: this.newAPITerm,
+        year: this.newAPIYear,
+        team: this.newAPITeam,
+        description: ''
+      }
+    };
+
+    this.userService.createAPI(info, (response: PyAPIResponse) => {
+      this.snackbar.open(response.message);
+    });
+
     submitForm.resetForm();
     this.emailFieldControl.reset();
   }

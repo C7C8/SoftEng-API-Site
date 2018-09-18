@@ -29,11 +29,12 @@ export class APIData {
 
 export class PyAPISubmission {
   action: string;
-  id: string;
+  id?: string;
   info: {
     name?: string;
     version?: string;
     description?: string;
+    contact?: string;
     jar?: string;
     image?: string;
     term?: string;
@@ -45,4 +46,5 @@ export class PyAPISubmission {
 export class PyAPIResponse {
   status: string;
   message: string;
+  id?: string;
 }

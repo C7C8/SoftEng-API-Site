@@ -16,7 +16,7 @@ class AuthResponse {
   providedIn: 'root'
 })
 export class UserService implements CanActivate {
-  private jwt: string = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1MzcyMjk3NjgsIm5iZiI6MTUzNzIyOTc2OCwianRpIjoiNTBmMmY4NGItMzM5OS00NmE4LTk3NGUtZjg3MTE4ZjdjNWEzIiwiZXhwIjoxNTM4OTU3NzY4LCJpZGVudGl0eSI6ImNybXllcnNAd3BpLmVkdSIsImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyJ9.FjVqsjHQsaXIsFYZ931hQrP3HdBqLRpjRbGoGPmWeq4';
+  private jwt: string = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1MzcyODUzNDAsIm5iZiI6MTUzNzI4NTM0MCwianRpIjoiNzJiMDJiYzEtZWE4OS00YWYzLTkwMzctYTdjNzE4ZGJiODBkIiwiZXhwIjoxNTM5MDEzMzQwLCJpZGVudGl0eSI6ImNybXllcnNAd3BpLmVkdSIsImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyJ9.D51maBX6AEZnmxqgvW0051j0nD6UgTQCv50s88yVFsg';
   public username: string = 'crmyers@wpi.edu';
 
   constructor(private http: HttpClient, private router: Router) { }
@@ -110,6 +110,22 @@ export class UserService implements CanActivate {
 
   getUsername(): string {
     return this.username;
+  }
+
+  createAPI(info: PyAPISubmission, callback?: (response: PyAPIResponse) => void) {
+    const requestOptions = {
+      headers: new HttpHeaders({
+        'Authorization': 'Bearer ' + this.jwt,
+      })
+    };
+
+    this.http.post<PyAPIResponse>(environment.api.create, info, requestOptions)
+      .pipe(catchError(this.handleError()))
+      .subscribe((response: PyAPIResponse) => {
+        if (callback) {
+          callback(response);
+        }
+      });
   }
 
   submitUpdate(info: PyAPISubmission, callback?: (response: PyAPIResponse) => void) {
