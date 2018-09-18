@@ -22,4 +22,9 @@ export class ManageComponent implements OnInit {
     this.userService.logout();
     this.router.navigate(['/list']);
   }
+
+  handleDelete(id: string) {
+    this.fetchService.deleteAPI(id);
+    this.fetchService.getFilteredAPIs(this.userService.getUsername());
+  }
 }

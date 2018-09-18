@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormControl, FormGroupDirective, NgForm, Validators } from '@angular/forms';
 import { ErrorStateMatcher, MatDialog, MatSnackBar } from '@angular/material';
 import { faEllipsisH, faStar, faExclamation, faTrash } from '@fortawesome/free-solid-svg-icons';
@@ -23,6 +23,8 @@ class MyErrorStateMatcher implements ErrorStateMatcher {
 export class ApiCardComponent implements OnInit {
   @Input() api: API;
   @Input() admin = false;
+  @Output() deleted = new EventEmitter<string>();
+
   edit = false;
   versionFormControl = new FormControl('', [
     Validators.required,
@@ -59,8 +61,14 @@ export class ApiCardComponent implements OnInit {
   }
 
   delete(): void {
+    // Ask the user if they REALLY want to delete their API, delete it if they do.
     this.dialog.open(AreYouSureComponent, null)
       .afterClosed().subscribe((result: boolean) => {
+        if (result) {
+          this.userService.deleteAPI(this.api.id, () => {
+            this.deleted.emit(this.api.id);
+          });
+        }
     });
   }
 
@@ -136,7 +144,6 @@ export class ApiCardComponent implements OnInit {
         });
       };
       reader.readAsDataURL(result);
-
     });
   }
 

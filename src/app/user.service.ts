@@ -130,6 +130,24 @@ export class UserService implements CanActivate {
       });
   }
 
+  deleteAPI(id: string, callback?: (response: PyAPIResponse) => void) {
+    const requestOptions = {
+      headers: new HttpHeaders({
+        'Authorization': 'Bearer ' + this.jwt,
+      })
+    };
+
+    this.http.delete<PyAPIResponse>(environment.api.delete + '?id=' + id, requestOptions)
+      .pipe(
+        catchError(this.handleError())
+      )
+      .subscribe((response: PyAPIResponse) => {
+        if (callback) {
+          callback(response !== undefined ? response : { status: 'error', message: 'Submission failed' });
+        }
+      });
+  }
+
   private handleError<T> (operation = 'operation', result?: T) {
     return (error: HttpErrorResponse): Observable<T> => {
       console.error(operation + ': ' + error.message);

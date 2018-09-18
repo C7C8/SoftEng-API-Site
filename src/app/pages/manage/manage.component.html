@@ -7,7 +7,7 @@
 <div *ngIf="fetchService.apiData">
   <div *ngIf="fetchService.userApis">
     <mat-accordion multi="true">
-      <app-api-card *ngFor="let api of fetchService.userApis" [api]="api" [admin]="true"></app-api-card>
+      <app-api-card *ngFor="let api of fetchService.userApis" [api]="api" [admin]="true" (deleted)="handleDelete($event)"></app-api-card>
     </mat-accordion>
   </div>
   <i *ngIf="fetchService.userApis.length === 0">No APIs found; submit one below!</i>

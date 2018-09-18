@@ -50,6 +50,13 @@ export class APIFetchService {
     }
   }
 
+  // Remove an API from the view ONLY -- doesn't do anything to the server. Useful for async operations
+  deleteAPI(id: string): void {
+    for (const cls of this.apiData.classes) {
+      cls.apis = cls.apis.filter(api => api.id !== id);
+    }
+  }
+
   private handleError<T> (result?: T) {
     return (error: any): Observable<T> => {
       console.error(error.message);
