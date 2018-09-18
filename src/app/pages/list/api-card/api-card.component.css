@@ -1,0 +1,99 @@
+
+mat-panel-title {
+  font-size: 0.9em;
+  font-weight: bold;
+  margin: auto;
+}
+
+mat-panel-description {
+  font-size: 0.65em;
+  display: flex;
+  justify-content: flex-end;
+}
+
+#version-header {
+  clear: both;
+}
+
+.version-history {
+  font-size: 10px;
+  font-family: monospace;
+  list-style-type: none;
+  padding-left: 1em;
+  padding-top: 0;
+  margin-top: 0;
+}
+
+.version-history > li:before {
+  content: '- ';
+  text-indent: -1em;
+}
+
+.details > img {
+  max-width: 40%;
+  margin: 0 0.5em 0 1em;
+  display: inline-block;
+  float: left;
+}
+
+h4 {
+  margin-bottom: 0.1em;
+  margin-top: 0.5em;
+}
+
+::ng-deep p {
+  margin: 0;
+}
+
+::ng-deep .mat-icon {
+  font-size: 0.5em !important;
+}
+
+mat-action-row {
+  padding: 1px;
+}
+
+#edit-fields {
+  width: 100%;
+}
+
+form > img {
+  display: block;
+  margin: auto;
+  max-width: 40%;
+}
+
+.version-warning {
+  color: red;
+  font-style: italic;
+}
+
+mat-spinner {
+  margin: auto;
+}
+
+#edit-version {
+  max-width: 8em;
+  margin-right: 1em;
+}
+
+#edit-changelog {
+  min-width: 30em;
+  margin-right: 3em;
+}
+
+#submit-version {
+  float: right;
+}
+
+#submit-changes {
+  clear: both;
+  float: right;
+}
+
+#edit-image {
+  clear: both;
+  display: block;
+  margin: 1em auto auto;
+}
+

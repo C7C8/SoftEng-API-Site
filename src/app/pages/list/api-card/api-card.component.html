@@ -1,0 +1,81 @@
+<mat-expansion-panel multi="true" (closed)="setEdit(false)">
+  <mat-expansion-panel-header>
+    <mat-panel-title>Team {{api.team}} {{api.name}}</mat-panel-title>
+    <mat-panel-description><span>
+      v{{api.version}} |
+      {{api.size}} MB |
+      Last updated: {{api.updated | date}} |
+      Contact: <a href="mailto:{{api.contact}}">{{api.contact}}</a></span>
+    </mat-panel-description>
+  </mat-expansion-panel-header>
+
+  <form #editForm="ngForm" *ngIf="edit">
+    <mat-form-field>
+      <input matInput [(ngModel)]="api.name" name="name" placeholder="Edit name">
+    </mat-form-field>
+  </form>
+
+  <!-- Show normal details menu if the API isn't being edited -->
+  <div class="details" *ngIf="!edit">
+    <img *ngIf="api.image" src="{{api.image}}">
+    <h4>Gradle</h4>
+
+    <!--Display warning if there is no version available -->
+    <code *ngIf="api.history.length > 0">{{api.gradle}}</code>
+    <p class="version-warning" *ngIf="api.history.length === 0">No Jar file submitted for this API!</p>
+
+    <h4>About</h4>
+    <div [innerHTML]="api.description | renderMarkdown"></div>
+    <h4 id="version-header" *ngIf="api.history.length > 0">Version History</h4>
+    <ul class="version-history">
+      <li *ngFor="let version of api.history">{{version}}</li>
+    </ul>
+  </div>
+
+  <!-- Edit API info fields -->
+  <div class="edit-form" *ngIf="edit">
+    <form #editForm="ngForm">
+      <p>Current image preview:</p>
+      <img src="{{api.image}}">
+      <button mat-raised-button (click)="changeImage()" id="edit-image">Change Image</button>
+      <h4>Gradle</h4>
+
+      <!--Display warning if there is no version available -->
+      <code *ngIf="api.history.length > 0">{{api.gradle}}</code>
+      <p class="version-warning" *ngIf="api.history.length === 0">No Jar file submitted for this API!</p>
+
+      <h4>About</h4>
+      <mat-form-field id="edit-fields">
+        <textarea matInput [(ngModel)]="newDesc" name="description"></textarea>
+      </mat-form-field>
+      <h4>Version History</h4>
+      <ul class="version-history">
+        <li>
+          <mat-form-field id="edit-version">
+            <input matInput placeholder="Version X.X.X" name="vnum" [(ngModel)]="newVersionNum" [formControl]="versionFormControl"
+            [errorStateMatcher]="matcher" required>
+          </mat-form-field>
+          <mat-form-field id="edit-changelog">
+            <input matInput placeholder="Summary of changes" name="vdesc" [(ngModel)]="newVersionDesc" required>
+          </mat-form-field>
+          <button mat-raised-button id="submit-version" (click)="newVersion()" [disabled]="versionFormControl.errors || newVersionDesc.length === 0">Add Version</button>
+        </li>
+        <li *ngFor="let version of api.history">{{version}}</li>
+      </ul>
+    </form>
+  </div>
+
+  <mat-spinner *ngIf="uploading" [diameter]="50"></mat-spinner>
+
+  <!-- Action row -- show edit and delete if user is admin -->
+  <mat-action-row *ngIf="admin">
+    <button mat-icon-button matTooltip="Delete API" id="delete-button" (click)="delete()">
+      <fa-icon [icon]="faTrash"></fa-icon>
+    </button>
+    <button mat-icon-button matTooltip="Toggle edit mode" id="edit-button" (click)="toggleEdit()">
+      <fa-icon [icon]="faEllipsisH"></fa-icon>
+    </button>
+    <button mat-raised-button color="primary" id="submit-changes" *ngIf="edit" (click)="submit()">Submit Changes</button>
+  </mat-action-row>
+
+</mat-expansion-panel>

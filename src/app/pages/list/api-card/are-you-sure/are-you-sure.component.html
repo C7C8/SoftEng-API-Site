@@ -1,0 +1,11 @@
+<h3>Are you sure?</h3>
+
+<p><i><b>This action cannot be undone!</b></i> After this, you'll no longer be able to edit your API, post
+  new versions, or see it on the list, but its files will stay in the Maven repository in order to avoid
+  breaking others' code.</p>
+
+<div>
+  <button mat-raised-button color="warn" (click)="warn()" (dblclick)="confirm()" matTooltip>Delete API</button>
+  <button mat-raised-button color="primary" (click)="cancel()">Get me out of here!</button>
+</div>
+<i id="dblwarn" *ngIf="warning">Double click to confirm -- if you can't tell, I REALLY don't want you to mess this up!</i>

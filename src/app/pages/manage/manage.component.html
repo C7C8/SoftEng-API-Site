@@ -1,0 +1,82 @@
+<button mat-raised-button id="logout" (click)="logout()">Logout</button>
+
+<h1>Manage APIs</h1>
+<h2>Your APIs</h2>
+<p>You can view, edit, or delete your APIs here. Markdown support is enabled, so you can enhance your API
+  descriptions &amp; documentation with headers, links, lists, code samples, etc.</p>
+<div *ngIf="fetchService.apiData">
+  <div *ngIf="fetchService.userApis">
+    <mat-accordion multi="true">
+      <app-api-card *ngFor="let api of fetchService.userApis" [api]="api" [admin]="true" (deleted)="handleDelete($event)"></app-api-card>
+    </mat-accordion>
+  </div>
+  <i *ngIf="fetchService.userApis.length === 0">No APIs found; submit one below!</i>
+  <br><br>
+</div>
+
+<mat-spinner *ngIf="!fetchService.apiData" [diameter]="50"></mat-spinner>
+
+<h2>Submit New API</h2>
+<p>Use the form below to add a base API entry. You'll need a name for it, the term &amp; and year
+  it was made in, and the letter of the team that created it. Once the entry is created,
+  you can add a description, image preview, and submit a usable version above!</p>
+<p><b>Important: API names are case sensitive!</b> Please choose a short and succinct name that
+wouldn't be painful for a machine to read. When you submit an API, we convert it into an artifact
+  ID by removing the spaces, so something like "API Update Checker" becomes
+  <code>APIUpdateChecker</code>. If nobody uses your API because Gradle can't read it, <b>it's
+  on you!</b></p>
+
+<form #submitForm="ngForm" (submit)="submitAPI(submitForm)">
+  <mat-card>
+    <mat-form-field>
+      <input matInput
+             type="text"
+             placeholder="API Name"
+             name="name"
+             [(ngModel)]="newAPIName"
+             required>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput
+             type="text"
+             placeholder="Contact Email"
+             name="contact"
+             [formControl]="emailFieldControl"
+             [(ngModel)]="newAPIContact"
+             required>
+      <mat-error *ngIf="emailFieldControl.invalid && emailFieldControl.touched">Invalid email!</mat-error>
+    </mat-form-field>
+    <mat-form-field id="year-selector">
+      <input matInput
+             type="number"
+             placeholder="Year"
+             name="year"
+             [(ngModel)]="newAPIYear"
+             required>
+    </mat-form-field>
+    <mat-form-field id="term-selector">
+      <mat-select type="string"
+                  placeholder="Term"
+                  name="term"
+                  [(ngModel)]="newAPITerm"
+                  required>
+        <mat-option value="A">A</mat-option>
+        <mat-option value="B">B</mat-option>
+        <mat-option value="C">C</mat-option>
+        <mat-option value="D">D</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field id="team-selector">
+      <mat-select type="string"
+                  placeholder="Team"
+                  name="team"
+                  [(ngModel)]="newAPITeam"
+                  required>
+        <mat-option *ngFor="let letter of letters" [value]="letter">{{letter}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <br>
+    <button mat-raised-button color="primary" [disabled]="!submitForm.form.valid || !emailFieldControl.valid" type="submit">Create API</button>
+  </mat-card>
+</form>
