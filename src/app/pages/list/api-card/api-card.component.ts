@@ -75,7 +75,6 @@ export class ApiCardComponent implements OnInit {
         this.uploading = true;
         const reader = new FileReader();
         reader.onload = (event: Event) => {
-          this.api.updated = new Date();
           this.api.image = reader.result;
 
           const submission: PyAPISubmission = {
