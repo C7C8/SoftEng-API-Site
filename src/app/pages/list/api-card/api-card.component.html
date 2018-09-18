@@ -67,15 +67,7 @@
 
   <mat-spinner *ngIf="uploading" [diameter]="50"></mat-spinner>
 
-  <!-- Action row -- show a "report" and "like" button if not an admin, otherwise show edit and delete -->
-  <mat-action-row *ngIf="!admin">
-    <button mat-icon-button matTooltip="Report inappropriate content" id="report-button" (click)="report()">
-      <fa-icon [icon]="faExclamation"></fa-icon>
-    </button>
-    <button mat-icon-button matTooltip="Like this API!" id="like-button" (click)="like()">
-      <fa-icon [icon]="faStar"></fa-icon>
-    </button>
-  </mat-action-row>
+  <!-- Action row -- show edit and delete if user is admin -->
   <mat-action-row *ngIf="admin">
     <button mat-icon-button matTooltip="Delete API" id="delete-button" (click)="delete()">
       <fa-icon [icon]="faTrash"></fa-icon>

@@ -38,8 +38,6 @@ export class ApiCardComponent implements OnInit {
   newVersionNum = '';
   uploading = false;
 
-  faStar = faStar;
-  faExclamation = faExclamation;
   faTrash = faTrash;
   faEllipsisH = faEllipsisH;
 
@@ -52,12 +50,6 @@ export class ApiCardComponent implements OnInit {
     const temp = document.createElement('textarea');
     temp.innerHTML = this.api.description;
     this.newDesc = temp.value;
-  }
-
-  report(): void {
-  }
-
-  like(): void {
   }
 
   delete(): void {
