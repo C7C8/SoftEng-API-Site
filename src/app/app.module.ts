@@ -1,7 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatCardModule,
+import {
+  MatCardModule,
   MatExpansionModule,
   MatTabsModule,
   MatButtonModule,
@@ -10,7 +11,7 @@ import { MatCardModule,
   MatInputModule,
   MatSnackBarModule,
   MatProgressSpinnerModule,
-  MatDialogModule,
+  MatDialogModule, MatSelectModule,
 } from '@angular/material';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -64,6 +65,7 @@ import { AreYouSureComponent } from './pages/list/api-card/are-you-sure/are-you-
     MatSnackBarModule,
     MatProgressSpinnerModule,
     MatDialogModule,
+    MatSelectModule,
     AppRoutingModule,
     HttpClientModule,
     FontAwesomeModule

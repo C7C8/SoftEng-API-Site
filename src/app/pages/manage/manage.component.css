@@ -7,10 +7,32 @@ h1 {
   clear: both;
 }
 
+form {
+  text-align: center;
+}
+
+mat-card {
+  display: inline-block;
+  padding: 2em;
+  margin: 2em;
+}
+
 mat-spinner {
   margin: auto;
 }
 
 p {
   margin-bottom: 0.5em;
+}
+
+mat-form-field {
+  margin: 0 1em;
+}
+
+#year-selector, #term-selector, #team-selector {
+  max-width: 5em;
+}
+
+button {
+  margin: 1em 1em;
 }

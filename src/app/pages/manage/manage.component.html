@@ -16,4 +16,57 @@
 
 <mat-spinner *ngIf="!fetchService.apiData" [diameter]="50"></mat-spinner>
 
+<h2>Submit New API</h2>
+<p>Use the form below to add a base API entry. You'll need a name for it, the term &amp; and year
+  it was made in, and the letter of the team that created it. Once the entry is created,
+  you can add a description, image preview, and submit a usable version above!</p>
+<p><b>Important: API names are case sensitive!</b> Please choose a short and succinct name that
+wouldn't be painful for a machine to read. When you submit an API, we convert it into an artifact
+  ID by removing the spaces, so something like "API Update Checker" becomes
+  <code>APIUpdateChecker</code>. If nobody uses your API because Gradle can't read it, <b>it's
+  on you!</b></p>
 
+<form #submitForm="ngForm" (submit)="submitAPI(submitForm)">
+  <mat-card>
+    <mat-form-field>
+      <input matInput
+             type="text"
+             placeholder="API Name"
+             name="name"
+             [(ngModel)]="newAPIName"
+             required>
+    </mat-form-field>
+    <mat-form-field id="year-selector">
+      <input matInput
+             type="number"
+             placeholder="Year"
+             name="year"
+             [(ngModel)]="newAPIYear"
+             required>
+    </mat-form-field>
+    <mat-form-field id="term-selector">
+      <mat-select type="string"
+                  placeholder="Term"
+                  name="term"
+                  [(ngModel)]="newAPITerm"
+                  required>
+        <mat-option value="A">A</mat-option>
+        <mat-option value="B">B</mat-option>
+        <mat-option value="C">C</mat-option>
+        <mat-option value="D">D</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field id="team-selector">
+      <mat-select type="string"
+                  placeholder="Team"
+                  name="team"
+                  [(ngModel)]="newAPITeam"
+                  required>
+        <mat-option *ngFor="let letter of letters" [value]="letter">{{letter}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <br>
+    <button mat-raised-button color="primary" [disabled]="!submitForm.form.valid" type="submit">Create API</button>
+  </mat-card>
+</form>
