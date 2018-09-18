@@ -30,6 +30,7 @@ import { LoginComponent } from './pages/login/login.component';
 import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
 import { RenderMarkdownPipe } from './render-markdown.pipe';
 import { FileUploadComponent } from './pages/list/api-card/file-upload/file-upload.component';
+import { AreYouSureComponent } from './pages/list/api-card/are-you-sure/are-you-sure.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { FileUploadComponent } from './pages/list/api-card/file-upload/file-uplo
     LoginComponent,
     PageNotFoundComponent,
     RenderMarkdownPipe,
-    FileUploadComponent
+    FileUploadComponent,
+    AreYouSureComponent
   ],
   imports: [
     BrowserModule,
@@ -67,7 +69,8 @@ import { FileUploadComponent } from './pages/list/api-card/file-upload/file-uplo
     FontAwesomeModule
   ],
   entryComponents: [
-    FileUploadComponent
+    FileUploadComponent,
+    AreYouSureComponent
   ],
   providers: [],
   bootstrap: [ AppComponent ]

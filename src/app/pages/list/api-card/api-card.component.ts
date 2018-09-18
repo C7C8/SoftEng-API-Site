@@ -5,6 +5,7 @@ import { faEllipsisH, faStar, faExclamation, faTrash } from '@fortawesome/free-s
 import { API, PyAPIResponse, PyAPISubmission } from '../../../api-data';
 import { FileUploadComponent } from './file-upload/file-upload.component';
 import { UserService } from '../../../user.service';
+import { AreYouSureComponent } from './are-you-sure/are-you-sure.component';
 
 // Lifted straight out of the angular docs, unfortunately -- errors when control is dirty, touched, or submitted
 class MyErrorStateMatcher implements ErrorStateMatcher {
@@ -58,6 +59,9 @@ export class ApiCardComponent implements OnInit {
   }
 
   delete(): void {
+    this.dialog.open(AreYouSureComponent, null)
+      .afterClosed().subscribe((result: boolean) => {
+    });
   }
 
   changeImage(): void {
