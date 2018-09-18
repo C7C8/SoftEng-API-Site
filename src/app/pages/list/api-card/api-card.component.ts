@@ -29,6 +29,8 @@ export class ApiCardComponent implements OnInit {
   ]);
   matcher = new MyErrorStateMatcher();
 
+  // Can't bind directly to api.description, have to unescape it first so it's easier for the user to edit
+  newDesc = '';
   newVersionDesc = '';
   newVersionNum = '';
   uploading = false;
@@ -41,6 +43,12 @@ export class ApiCardComponent implements OnInit {
   constructor(private dialog: MatDialog, private snackbar: MatSnackBar, private userService: UserService) { }
 
   ngOnInit() {
+    // Holy hell, this is one ugly hack, but at least it does approximately what I want. Basically, just unescape some HTML, but without
+    // a library -- this just uses the browser's parsing engine, which is probably better than anything I could do in JS.
+    // TODO Optimize plz?
+    const temp = document.createElement('textarea');
+    temp.innerHTML = this.api.description;
+    this.newDesc = temp.value;
   }
 
   report(): void {
@@ -66,7 +74,6 @@ export class ApiCardComponent implements OnInit {
           this.api.updated = new Date();
           this.api.image = reader.result;
 
-          // TODO: Perform submission logic
           const submission: PyAPISubmission = {
             action: 'update',
             id: this.api.id,
@@ -135,7 +142,7 @@ export class ApiCardComponent implements OnInit {
       id: this.api.id,
       info: {
         name: this.api.name,
-        description: this.api.description,
+        description: this.newDesc
       }
     };
 
@@ -145,6 +152,13 @@ export class ApiCardComponent implements OnInit {
       } else {
         this.snackbar.open(response.message, '', { duration: 2000 });
       }
+
+      // Yet another ugly hack, this time to escape HTML so it renders correctly on the API display page
+      const text = document.createTextNode(this.newDesc);
+      const node = document.createElement('textarea');
+      node.appendChild(text);
+      this.api.description = node.innerHTML;
+
       this.edit = false;
     });
   }
