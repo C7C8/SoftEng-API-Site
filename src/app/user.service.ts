@@ -16,16 +16,15 @@ class AuthResponse {
   providedIn: 'root'
 })
 export class UserService implements CanActivate {
-  private apiUrl = environment.apiUrl;
-  private jwt: string = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1MzcyMjk3NjgsIm5iZiI6MTUzNzIyOTc2OCwianRpIjoiNTBmMmY4NGItMzM5OS00NmE4LTk3NGUtZjg3MTE4ZjdjNWEzIiwiZXhwIjoxNTM4OTU3NzY4LCJpZGVudGl0eSI6ImNybXllcnNAd3BpLmVkdSIsImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyJ9.FjVqsjHQsaXIsFYZ931hQrP3HdBqLRpjRbGoGPmWeq4';
-  public username: string = 'crmyers@wpi.edu';
+  private jwt: string = null;
+  public username: string = null;
 
   constructor(private http: HttpClient, private router: Router) { }
 
   login(username: string, password: string, callback?: (boolean) => void): void {
     console.log('Logging in as ' + username);
     this.username = username;
-    this.http.post<AuthResponse>(this.apiUrl + '/auth/login',
+    this.http.post<AuthResponse>(environment.api.login,
       {
         username: username,
         password: password
@@ -60,7 +59,7 @@ export class UserService implements CanActivate {
   }
 
   register(username: string, password: string, callback?: (boolean) => void): void {
-    this.http.post<AuthResponse>(this.apiUrl + '/auth/register',
+    this.http.post<AuthResponse>(environment.api.register,
       {
         username: username,
         password: password
@@ -83,7 +82,7 @@ export class UserService implements CanActivate {
 
   deleteUser(username: string, password: string, callback?: (boolean) => void): void {
     console.log('Deleting user ' + username);
-    this.http.request<AuthResponse>('delete', this.apiUrl + '/auth/registration',
+    this.http.request<AuthResponse>('delete', environment.api.deregister,
       {
         body : {
           username: username,
@@ -120,7 +119,7 @@ export class UserService implements CanActivate {
       })
     };
 
-    this.http.post<PyAPIResponse>(this.apiUrl + '/list', info,  requestOptions)
+    this.http.post<PyAPIResponse>(environment.api.update, info,  requestOptions)
       .pipe(
         catchError(this.handleError())
       )

@@ -17,7 +17,7 @@ export class APIFetchService {
   public userApis: API[];
 
   getAPIData(callback?: (data: APIData) => void): void {
-    this.http.get<APIData>(environment.apiJson)
+    this.http.get<APIData>(environment.api.list)
       .pipe(
         catchError(this.handleError(null))
       )

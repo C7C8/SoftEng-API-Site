@@ -4,8 +4,15 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'http://localhost:5000/api',
-  apiJson: 'http://localhost:4200/assets/demo-apis.json'
+  api: {
+    list: '/api/apilist',
+    login: '/api/auth/login',
+    register: '/api/auth/register',
+    deregister: '/api/auth/register',
+    create: '/api/list',
+    update: '/api/list',
+    delete: '/api/list'
+  }
 };
 
 /*
