@@ -13,7 +13,10 @@ import { MatSnackBar } from '@angular/material';
 })
 export class ManageComponent implements OnInit {
 
-  constructor(public userService: UserService, public fetchService: APIFetchService, private router: Router, private snackbar: MatSnackBar) { }
+  constructor(public userService: UserService,
+              public fetchService: APIFetchService,
+              private router: Router,
+              private snackbar: MatSnackBar) { }
   emailFieldControl = new FormControl('', [Validators.required, Validators.email]);
   letters: string[] = [];
 
@@ -42,8 +45,10 @@ export class ManageComponent implements OnInit {
   }
 
   handleDelete(id: string) {
-    this.fetchService.deleteAPI(id);
-    this.fetchService.getFilteredAPIs(this.userService.getUsername());
+    // Refresh API list to show changes
+    this.fetchService.getAPIData(() => {
+      this.fetchService.getFilteredAPIs(this.userService.getUsername());
+    });
   }
 
   submitAPI(submitForm: NgForm): void {
@@ -60,10 +65,16 @@ export class ManageComponent implements OnInit {
     };
 
     this.userService.createAPI(info, (response: PyAPIResponse) => {
-      this.snackbar.open(response.message);
-    });
+      this.snackbar.open(response.message, '', {duration: 3000});
+      if (response.status === 'success') {
+        submitForm.resetForm();
+        this.emailFieldControl.reset();
 
-    submitForm.resetForm();
-    this.emailFieldControl.reset();
+        // Refresh API list to show changes
+        this.fetchService.getAPIData(() => {
+          this.fetchService.getFilteredAPIs(this.userService.getUsername());
+        });
+      }
+    });
   }
 }

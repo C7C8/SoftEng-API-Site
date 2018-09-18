@@ -46,5 +46,6 @@ export class PyAPISubmission {
 export class PyAPIResponse {
   status: string;
   message: string;
+  access_token?: string;
   id?: string;
 }

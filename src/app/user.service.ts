@@ -7,47 +7,39 @@ import { catchError } from 'rxjs/operators';
 import { CanActivate, Router } from '@angular/router';
 import { PyAPIResponse, PyAPISubmission } from './api-data';
 
-class AuthResponse {
-  message: string;
-  access_token: string;
-}
-
 @Injectable({
   providedIn: 'root'
 })
 export class UserService implements CanActivate {
-  private jwt: string = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1MzcyODUzNDAsIm5iZiI6MTUzNzI4NTM0MCwianRpIjoiNzJiMDJiYzEtZWE4OS00YWYzLTkwMzctYTdjNzE4ZGJiODBkIiwiZXhwIjoxNTM5MDEzMzQwLCJpZGVudGl0eSI6ImNybXllcnNAd3BpLmVkdSIsImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyJ9.D51maBX6AEZnmxqgvW0051j0nD6UgTQCv50s88yVFsg';
+  private jwt: string = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1MzcyOTczMjEsIm5iZiI6MTUzNzI5NzMyMSwianRpIjoiZGQ5MzkyZjktYjNlZC00MTlkLTlhZmYtZjUzNjM2NTY2NWNlIiwiZXhwIjoxNTM5MDI1MzIxLCJpZGVudGl0eSI6ImNybXllcnNAd3BpLmVkdSIsImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyJ9.gYcVlOsjuabfe0ef2-THTvQWdwuKxaV2uAoihYiH_QM';
   public username: string = 'crmyers@wpi.edu';
 
   constructor(private http: HttpClient, private router: Router) { }
 
   login(username: string, password: string, callback?: (boolean) => void): void {
-    console.log('Logging in as ' + username);
-    this.username = username;
-    this.http.post<AuthResponse>(environment.api.login,
+    this.http.post<PyAPIResponse>(environment.api.login,
       {
         username: username,
         password: password
       })
       .pipe(
-        catchError(this.handleError('login', new AuthResponse()))
-      )
+        catchError(this.handleError(callback)))
       .subscribe(response => {
-        if (response.message !== undefined && response.message.includes('Logged in')) {
+        if (response.status === 'success') {
           this.jwt = response.access_token;
-          if (callback !== undefined) {
+          this.username = username;
+
+          if (callback) {
             callback(true);
           }
-        } else {
-          if (callback !== undefined) {
-            callback(false);
-          }
+        } else if (callback) {
+          callback(false);
         }
     });
   }
 
   isLoggedIn(): boolean {
-    return (this.jwt !== null && this.jwt !== undefined && this.jwt.length > 0);
+    return (this.jwt && this.jwt.length > 0);
   }
 
   canActivate(): boolean {
@@ -58,47 +50,34 @@ export class UserService implements CanActivate {
     return res;
   }
 
-  register(username: string, password: string, callback?: (boolean) => void): void {
-    this.http.post<AuthResponse>(environment.api.register,
+  register(username: string, password: string, callback?: (PyAPIResponse) => void): void {
+    this.http.post<PyAPIResponse>(environment.api.register,
       {
         username: username,
         password: password
       })
       .pipe(
-        catchError(this.handleError('register', new AuthResponse()))
+        catchError(this.handleError(callback))
       )
       .subscribe(response => {
-        if (response.message !== undefined && response.message.includes('registered')) {
-          if (callback !== undefined) {
-            callback(true);
-          }
-        } else {
-          if (callback !== undefined) {
-            callback(false);
-          }
-        }
+        callback(response);
       });
   }
 
   deleteUser(username: string, password: string, callback?: (boolean) => void): void {
     console.log('Deleting user ' + username);
-    this.http.request<AuthResponse>('delete', environment.api.deregister,
+    this.http.request<PyAPIResponse>('delete', environment.api.deregister,
       {
         body : {
           username: username,
           password: password
         }
       }).subscribe(response => {
-      console.log(response.message);
-      this.logout();
-      if (callback === undefined) {
-        return;
-      }
-      if (response.message !== undefined && response.message.startsWith('Successfully')) {
-        callback(true);
-      } else {
-        callback(false);
-      }
+        console.log(response.message);
+        this.logout();
+        if (callback) {
+          callback(response.status === 'success');
+        }
     });
   }
 
@@ -141,7 +120,7 @@ export class UserService implements CanActivate {
       )
       .subscribe((response: PyAPIResponse) => {
         if (callback) {
-          callback(response !== undefined ? response : {status: 'error', message: 'Submission failed'});
+          callback(response);
         }
       });
   }
@@ -155,7 +134,7 @@ export class UserService implements CanActivate {
 
     this.http.delete<PyAPIResponse>(environment.api.delete + '?id=' + id, requestOptions)
       .pipe(
-        catchError(this.handleError())
+        catchError(this.handleError(callback))
       )
       .subscribe((response: PyAPIResponse) => {
         if (callback) {
@@ -164,10 +143,12 @@ export class UserService implements CanActivate {
       });
   }
 
-  private handleError<T> (operation = 'operation', result?: T) {
-    return (error: HttpErrorResponse): Observable<T> => {
-      console.error(operation + ': ' + error.message);
-      return of(result as T);
+  private handleError (callback?: (PyAPIResponse) => void) {
+    return (error: HttpErrorResponse): Observable<PyAPIResponse>  => {
+      if (callback) {
+        callback(error.error);
+      }
+      return of(error.error);
     };
   }
 }

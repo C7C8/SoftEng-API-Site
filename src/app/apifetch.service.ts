@@ -14,7 +14,7 @@ export class APIFetchService {
   constructor(private http: HttpClient) { }
 
   public apiData: APIData = null;
-  public userApis: API[];
+  public userApis: API[] = [];
 
   getAPIData(callback?: (data: APIData) => void): void {
     this.http.get<APIData>(environment.api.list)
@@ -47,13 +47,6 @@ export class APIFetchService {
           this.userApis.push(api);
         }
       }
-    }
-  }
-
-  // Remove an API from the view ONLY -- doesn't do anything to the server. Useful for async operations
-  deleteAPI(id: string): void {
-    for (const cls of this.apiData.classes) {
-      cls.apis = cls.apis.filter(api => api.id !== id);
     }
   }
 
