@@ -36,6 +36,16 @@ wouldn't be painful for a machine to read. When you submit an API, we convert it
              [(ngModel)]="newAPIName"
              required>
     </mat-form-field>
+    <mat-form-field>
+      <input matInput
+             type="text"
+             placeholder="Contact Email"
+             name="contact"
+             [formControl]="emailFieldControl"
+             [(ngModel)]="newAPIContact"
+             required>
+      <mat-error *ngIf="emailFieldControl.invalid && emailFieldControl.touched">Invalid email!</mat-error>
+    </mat-form-field>
     <mat-form-field id="year-selector">
       <input matInput
              type="number"
@@ -67,6 +77,6 @@ wouldn't be painful for a machine to read. When you submit an API, we convert it
     </mat-form-field>
 
     <br>
-    <button mat-raised-button color="primary" [disabled]="!submitForm.form.valid" type="submit">Create API</button>
+    <button mat-raised-button color="primary" [disabled]="!submitForm.form.valid || !emailFieldControl.valid" type="submit">Create API</button>
   </mat-card>
 </form>

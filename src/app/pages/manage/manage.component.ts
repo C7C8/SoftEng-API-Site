@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../user.service';
 import { APIFetchService } from '../../apifetch.service';
 import { Router } from '@angular/router';
-import { NgForm } from '@angular/forms';
+import { FormControl, NgForm, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-manage',
@@ -12,9 +12,11 @@ import { NgForm } from '@angular/forms';
 export class ManageComponent implements OnInit {
 
   constructor(public userService: UserService, public fetchService: APIFetchService, private router: Router) { }
+  emailFieldControl = new FormControl('', [Validators.required, Validators.email]);
   letters: string[] = [];
 
   newAPIName: string;
+  newAPIContact: string;
   newAPITerm: string;
   newAPITeam: string;
   newAPIYear: number = (new Date()).getFullYear();
@@ -45,5 +47,6 @@ export class ManageComponent implements OnInit {
   submitAPI(submitForm: NgForm): void {
     // TODO: add submission logic
     submitForm.resetForm();
+    this.emailFieldControl.reset();
   }
 }

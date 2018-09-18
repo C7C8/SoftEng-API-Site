@@ -13,7 +13,6 @@ form {
 
 mat-card {
   display: inline-block;
-  padding: 2em;
   margin: 2em;
 }
 
@@ -26,7 +25,7 @@ p {
 }
 
 mat-form-field {
-  margin: 0 1em;
+  margin: 0 0.5em;
 }
 
 #year-selector, #term-selector, #team-selector {
@@ -34,5 +33,5 @@ mat-form-field {
 }
 
 button {
-  margin: 1em 1em;
+  margin: 2em 1em;
 }
