@@ -16,8 +16,8 @@ class AuthResponse {
   providedIn: 'root'
 })
 export class UserService implements CanActivate {
-  private jwt: string = null;
-  public username: string = null;
+  private jwt: string = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1MzcyMjk3NjgsIm5iZiI6MTUzNzIyOTc2OCwianRpIjoiNTBmMmY4NGItMzM5OS00NmE4LTk3NGUtZjg3MTE4ZjdjNWEzIiwiZXhwIjoxNTM4OTU3NzY4LCJpZGVudGl0eSI6ImNybXllcnNAd3BpLmVkdSIsImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyJ9.FjVqsjHQsaXIsFYZ931hQrP3HdBqLRpjRbGoGPmWeq4';
+  public username: string = 'crmyers@wpi.edu';
 
   constructor(private http: HttpClient, private router: Router) { }
 
