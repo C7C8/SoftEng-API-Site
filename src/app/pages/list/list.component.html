@@ -3,8 +3,8 @@
   <p>Below you can find a list of available APIs, sorted by term and team letter. Be kind to other teams, please use APIs
   from your term if you can!</p>
 
-  <p>Currently storing {{fetchService.apiData.count}} APIs in {{fetchService.apiData.size}} MB, or
-    {{fetchService.apiData.totalCount}} files / {{fetchService.apiData.totalSize}} MB
+  <p>Currently storing {{fetchService.apiData.count}} APIs in {{fetchService.apiData.size | number:'1.0-1'}} MB, or
+    {{fetchService.apiData.totalCount}} files / {{fetchService.apiData.totalSize | number:'1.0-1'}} MB
    across all versions.</p>
   <mat-accordion multi="true">
     <mat-expansion-panel *ngFor="let class of fetchService.apiData.classes">
