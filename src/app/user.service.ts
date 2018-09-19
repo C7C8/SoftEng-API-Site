@@ -145,9 +145,6 @@ export class UserService implements CanActivate {
 
   private handleError (callback?: (PyAPIResponse) => void) {
     return (error: HttpErrorResponse): Observable<PyAPIResponse>  => {
-      if (callback) {
-        callback(error.error);
-      }
       return of(error.error);
     };
   }
