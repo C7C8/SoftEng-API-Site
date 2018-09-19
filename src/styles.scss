@@ -1,5 +1,9 @@
 @import './redblack-theme.scss';
 
+html {
+  height: 100%;
+}
+
 body {
   color: #303030;
   max-width: 50em;

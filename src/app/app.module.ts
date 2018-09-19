@@ -24,7 +24,6 @@ import { HomeComponent } from './pages/home/home.component';
 import { ListComponent } from './pages/list/list.component';
 import { ManageComponent } from './pages/manage/manage.component';
 import { AboutComponent } from './pages/about/about.component';
-import { FooterComponent } from './footer/footer.component';
 import { AppRoutingModule } from './app-routing.module';
 import { ApiCardComponent } from './pages/api-card/api-card.component';
 import { LoginComponent } from './pages/login/login.component';
@@ -42,7 +41,6 @@ import { ConfirmDeleteAccountComponent } from './pages/manage/confirm-delete-acc
     ListComponent,
     ManageComponent,
     AboutComponent,
-    FooterComponent,
     ApiCardComponent,
     LoginComponent,
     PageNotFoundComponent,
