@@ -11,30 +11,27 @@ import { PyAPIResponse, PyAPISubmission } from './api-data';
   providedIn: 'root'
 })
 export class UserService implements CanActivate {
-  private jwt: string = null;
-  public username: string = null;
+  private jwt: string;
+  public username: string;
 
   constructor(private http: HttpClient, private router: Router) { }
 
-  login(username: string, password: string, callback?: (boolean) => void): void {
-    // TODO: fix the callback handling...
+  login(username: string, password: string, callback?: (PyAPIResponse) => void): void {
     this.http.post<PyAPIResponse>(environment.api.login,
       {
         username: username,
         password: password
       })
       .pipe(
-        catchError(this.handleError(callback)))
+        catchError(this.handleError()))
       .subscribe(response => {
         if (response.status === 'success') {
           this.jwt = response.access_token;
           this.username = username;
+        }
 
-          if (callback) {
-            callback(true);
-          }
-        } else if (callback) {
-          callback(false);
+        if (callback) {
+          callback(response);
         }
     });
   }
@@ -57,7 +54,7 @@ export class UserService implements CanActivate {
         username: username,
         password: password
       })
-      .pipe(catchError(this.handleError(callback)))
+      .pipe(catchError(this.handleError()))
       .subscribe(response => {
         if (callback) {
           callback(response);
@@ -73,7 +70,7 @@ export class UserService implements CanActivate {
           password: password
         }
       })
-      .pipe(catchError(this.handleError(callback)))
+      .pipe(catchError(this.handleError()))
       .subscribe(response => {
         this.logout();
         if (callback) {
@@ -99,7 +96,7 @@ export class UserService implements CanActivate {
     };
 
     this.http.post<PyAPIResponse>(environment.api.create, info, requestOptions)
-      .pipe(catchError(this.handleError(callback)))
+      .pipe(catchError(this.handleError()))
       .subscribe((response: PyAPIResponse) => {
         if (callback) {
           callback(response);
@@ -116,7 +113,7 @@ export class UserService implements CanActivate {
 
     this.http.post<PyAPIResponse>(environment.api.update, info,  requestOptions)
       .pipe(
-        catchError(this.handleError(callback))
+        catchError(this.handleError())
       )
       .subscribe((response: PyAPIResponse) => {
         if (callback) {
@@ -134,7 +131,7 @@ export class UserService implements CanActivate {
 
     this.http.delete<PyAPIResponse>(environment.api.delete + '?id=' + id, requestOptions)
       .pipe(
-        catchError(this.handleError(callback))
+        catchError(this.handleError())
       )
       .subscribe((response: PyAPIResponse) => {
         if (callback) {
@@ -143,7 +140,7 @@ export class UserService implements CanActivate {
       });
   }
 
-  private handleError (callback?: (PyAPIResponse) => void) {
+  private handleError() {
     return (error: HttpErrorResponse): Observable<PyAPIResponse>  => {
       return of(error.error);
     };

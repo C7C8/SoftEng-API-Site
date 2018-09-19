@@ -3,6 +3,7 @@ import { MatSnackBar } from '@angular/material';
 import { UserService } from '../../user.service';
 import { Router } from '@angular/router';
 import { FormControl, Validators } from '@angular/forms';
+import { PyAPIResponse } from '../../api-data';
 
 @Component({
   selector: 'app-login',
@@ -28,8 +29,8 @@ export class LoginComponent implements OnInit {
     this.userService.login(this.username, this.password, this.loginCallback.bind(this));
   }
 
-  loginCallback(success: boolean): void {
-    if (success) {
+  loginCallback(response: PyAPIResponse): void {
+    if (response.status === 'success') {
       this.snackbar.open('Logged in as ' + this.username + '!', '', {duration: 2000});
       this.router.navigate(['/manage']);
     } else {
@@ -46,8 +47,8 @@ export class LoginComponent implements OnInit {
     this.userService.register(this.username, this.password, this.registerCallback.bind(this));
   }
 
-  registerCallback(success: boolean): void {
-    if (success) {
+  registerCallback(response: PyAPIResponse): void {
+    if (response.status === 'success') {
       this.snackbar.open('Successfully registered as ' + this.username, '', {duration: 2000});
       this.userService.login(this.username, this.password);
       this.router.navigate(['/manage']);
