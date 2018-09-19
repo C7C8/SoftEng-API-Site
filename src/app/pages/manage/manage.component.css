@@ -1,6 +1,14 @@
+button {
+  margin: 2em 1em;
+}
+
 #logout {
   margin-top: 0.5em;
   float: right;
+}
+
+#delete-account-wrapper {
+  text-align: center;
 }
 
 h1 {
@@ -32,6 +40,3 @@ mat-form-field {
   max-width: 5em;
 }
 
-button {
-  margin: 2em 1em;
-}

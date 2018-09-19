@@ -1,0 +1,14 @@
+.login-container {
+  text-align: center;
+}
+
+.text-input {
+  max-width: 20em;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+button {
+  margin: 0.5em;
+}

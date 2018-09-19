@@ -20,11 +20,11 @@
 <p>Use the form below to add a base API entry. You'll need a name for it, the term &amp; and year
   it was made in, and the letter of the team that created it. Once the entry is created,
   you can add a description, image preview, and submit a usable version above!</p>
-<p><b>Important: API names are case sensitive!</b> Please choose a short and succinct name that
-wouldn't be painful for a machine to read. When you submit an API, we convert it into an artifact
-  ID by removing the spaces, so something like "API Update Checker" becomes
-  <code>APIUpdateChecker</code>. If nobody uses your API because Gradle can't read it, <b>it's
-  on you!</b></p>
+<p><b>Important: API names are case sensitive, and names can only be used once.</b>
+  When you submit an API, we convert it into an artifact ID by removing the spaces, so something
+  like "API Update Checker" becomes <code>APIUpdateChecker</code>. Furthermore, since we don't allow
+  an API's files to ever be completely purged, <b>once you've used a name with a given term/year/team
+    combo, you can never re-use it!</b></p>
 
 <form #submitForm="ngForm" (submit)="submitAPI(submitForm)">
   <mat-card>
@@ -80,3 +80,10 @@ wouldn't be painful for a machine to read. When you submit an API, we convert it
     <button mat-raised-button color="primary" [disabled]="!submitForm.form.valid || !emailFieldControl.valid" type="submit">Create API</button>
   </mat-card>
 </form>
+
+<h2>Delete user account</h2>
+<p>You can delete your user account by clicking the button below. When you delete your account, your APIs
+  are also removed from display, but to avoid breaking others' code their files are not deleted.</p>
+<div id="delete-account-wrapper">
+  <button mat-raised-button color="warn" (click)="confirmDelete()">Delete Account</button>
+</div>

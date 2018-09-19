@@ -8,7 +8,7 @@ mat-card {
   margin: 5em;
 }
 
-.textinput {
+.text-input {
   display: flex;
   flex-direction: column;
 }
@@ -18,7 +18,5 @@ h4 {
 }
 
 button {
-  margin-right: .5em;
-  margin-left: .5em;
-  margin-bottom: 1em;
+  margin: auto 0.5em 1em 0.5em;
 }

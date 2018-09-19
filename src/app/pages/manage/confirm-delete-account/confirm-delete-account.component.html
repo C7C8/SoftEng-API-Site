@@ -1,0 +1,27 @@
+<h3>Be careful!</h3>
+
+<p>Did you click on that button by mistake? I have no idea; to confirm that you really want to
+<b>irrevocably delete your account</b>, enter your username and password below.</p>
+
+<form #loginForm="ngForm" class="login-container" (submit)="confirm()">
+  <div class="text-input">
+    <mat-form-field>
+      <input matInput
+             type="text"
+             placeholder="Email"
+             name="username"
+             [(ngModel)]="username"
+             required>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput
+             type="password"
+             placeholder="Password"
+             name="password"
+             [(ngModel)]="password"
+             required>
+    </mat-form-field>
+  </div>
+  <button mat-raised-button color="warn" [disabled]="!loginForm.valid" type="submit">Delete Account</button>
+  <button mat-raised-button color="primary" (click)="cancel()">Get me out of here!</button>
+</form>

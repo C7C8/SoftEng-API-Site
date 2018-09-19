@@ -4,7 +4,8 @@ import { APIFetchService } from '../../apifetch.service';
 import { Router } from '@angular/router';
 import { FormControl, NgForm, Validators } from '@angular/forms';
 import { PyAPIResponse, PyAPISubmission } from '../../api-data';
-import { MatSnackBar } from '@angular/material';
+import { MatDialog, MatSnackBar } from '@angular/material';
+import { ConfirmDeleteAccountComponent } from './confirm-delete-account/confirm-delete-account.component';
 
 @Component({
   selector: 'app-manage',
@@ -16,7 +17,8 @@ export class ManageComponent implements OnInit {
   constructor(public userService: UserService,
               public fetchService: APIFetchService,
               private router: Router,
-              private snackbar: MatSnackBar) { }
+              private snackbar: MatSnackBar,
+              private dialog: MatDialog) { }
   emailFieldControl = new FormControl('', [Validators.required, Validators.email]);
   letters: string[] = [];
 
@@ -76,5 +78,9 @@ export class ManageComponent implements OnInit {
         });
       }
     });
+  }
+
+  confirmDelete(): void {
+    this.dialog.open(ConfirmDeleteAccountComponent);
   }
 }
