@@ -29,12 +29,12 @@ export class APIFetchService {
       });
   }
 
-  getFilteredAPIs(username: string) {
+  filterToUserAPIs(username: string) {
     // If API data isn't loaded yet, load it, then re-call this function. It's wonderfully recursive, but not infinitely so
     if (this.apiData === null) {
       this.getAPIData((response) => {
         if (response) {
-          this.getFilteredAPIs(username);
+          this.filterToUserAPIs(username);
         }
       });
       return;

@@ -34,8 +34,8 @@ export class ManageComponent implements OnInit {
       this.letters.push(String.fromCharCode('A'.charCodeAt(0) + i));
     }
 
-    if (this.fetchService.apiData === null) {
-      this.fetchService.getFilteredAPIs(this.userService.getUsername());
+    if (this.fetchService.apiData === null || this.fetchService.userApis.length === 0) {
+      this.fetchService.filterToUserAPIs(this.userService.getUsername());
     }
   }
 
@@ -47,7 +47,7 @@ export class ManageComponent implements OnInit {
   handleDelete(id: string) {
     // Refresh API list to show changes
     this.fetchService.getAPIData(() => {
-      this.fetchService.getFilteredAPIs(this.userService.getUsername());
+      this.fetchService.filterToUserAPIs(this.userService.getUsername());
     });
   }
 
@@ -72,7 +72,7 @@ export class ManageComponent implements OnInit {
 
         // Refresh API list to show changes
         this.fetchService.getAPIData(() => {
-          this.fetchService.getFilteredAPIs(this.userService.getUsername());
+          this.fetchService.filterToUserAPIs(this.userService.getUsername());
         });
       }
     });
