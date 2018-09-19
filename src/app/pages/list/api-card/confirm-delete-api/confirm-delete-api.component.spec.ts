@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AreYouSureComponent } from './are-you-sure.component';
+import { ConfirmDeleteApiComponent } from './confirm-delete-api.component';
 
-describe('AreYouSureComponent', () => {
-  let component: AreYouSureComponent;
-  let fixture: ComponentFixture<AreYouSureComponent>;
+describe('ConfirmDeleteApiComponent', () => {
+  let component: ConfirmDeleteApiComponent;
+  let fixture: ComponentFixture<ConfirmDeleteApiComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AreYouSureComponent ]
+      declarations: [ ConfirmDeleteApiComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AreYouSureComponent);
+    fixture = TestBed.createComponent(ConfirmDeleteApiComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

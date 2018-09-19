@@ -31,7 +31,7 @@ import { LoginComponent } from './pages/login/login.component';
 import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
 import { RenderMarkdownPipe } from './render-markdown.pipe';
 import { FileUploadComponent } from './pages/list/api-card/file-upload/file-upload.component';
-import { AreYouSureComponent } from './pages/list/api-card/are-you-sure/are-you-sure.component';
+import { ConfirmDeleteApiComponent } from './pages/list/api-card/confirm-delete-api/confirm-delete-api.component';
 import { ConfirmDeleteAccountComponent } from './pages/manage/confirm-delete-account/confirm-delete-account.component';
 
 @NgModule({
@@ -48,7 +48,7 @@ import { ConfirmDeleteAccountComponent } from './pages/manage/confirm-delete-acc
     PageNotFoundComponent,
     RenderMarkdownPipe,
     FileUploadComponent,
-    AreYouSureComponent,
+    ConfirmDeleteApiComponent,
     ConfirmDeleteAccountComponent
   ],
   imports: [
@@ -74,7 +74,7 @@ import { ConfirmDeleteAccountComponent } from './pages/manage/confirm-delete-acc
   ],
   entryComponents: [
     FileUploadComponent,
-    AreYouSureComponent,
+    ConfirmDeleteApiComponent,
     ConfirmDeleteAccountComponent
   ],
   providers: [],

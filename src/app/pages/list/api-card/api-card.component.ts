@@ -5,7 +5,7 @@ import { faEllipsisH, faStar, faExclamation, faTrash } from '@fortawesome/free-s
 import { API, PyAPIResponse, PyAPISubmission } from '../../../api-data';
 import { FileUploadComponent } from './file-upload/file-upload.component';
 import { UserService } from '../../../user.service';
-import { AreYouSureComponent } from './are-you-sure/are-you-sure.component';
+import { ConfirmDeleteApiComponent } from './confirm-delete-api/confirm-delete-api.component';
 
 // Lifted straight out of the angular docs, unfortunately -- errors when control is dirty, touched, or submitted
 class MyErrorStateMatcher implements ErrorStateMatcher {
@@ -46,7 +46,6 @@ export class ApiCardComponent implements OnInit {
   ngOnInit() {
     // Holy hell, this is one ugly hack, but at least it does approximately what I want. Basically, just unescape some HTML, but without
     // a library -- this just uses the browser's parsing engine, which is probably better than anything I could do in JS.
-    // TODO Optimize plz?
     const temp = document.createElement('textarea');
     temp.innerHTML = this.api.description;
     this.newDesc = temp.value;
@@ -54,7 +53,7 @@ export class ApiCardComponent implements OnInit {
 
   delete(): void {
     // Ask the user if they REALLY want to delete their API, delete it if they do.
-    this.dialog.open(AreYouSureComponent, null)
+    this.dialog.open(ConfirmDeleteApiComponent, null)
       .afterClosed().subscribe((result: boolean) => {
         if (result) {
           this.userService.deleteAPI(this.api.id, () => {

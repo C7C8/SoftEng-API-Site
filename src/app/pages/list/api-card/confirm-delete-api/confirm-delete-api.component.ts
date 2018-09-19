@@ -3,14 +3,14 @@ import { MatDialogRef } from '@angular/material';
 
 @Component({
   selector: 'app-are-you-sure',
-  templateUrl: './are-you-sure.component.html',
-  styleUrls: ['./are-you-sure.component.css']
+  templateUrl: './confirm-delete-api.component.html',
+  styleUrls: ['./confirm-delete-api.component.css']
 })
-export class AreYouSureComponent implements OnInit {
+export class ConfirmDeleteApiComponent implements OnInit {
 
   warning = false;
 
-  constructor(public dialogRef: MatDialogRef<AreYouSureComponent>) { }
+  constructor(public dialogRef: MatDialogRef<ConfirmDeleteApiComponent>) { }
 
   ngOnInit() {
   }
