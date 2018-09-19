@@ -81,6 +81,17 @@ export class ManageComponent implements OnInit {
   }
 
   confirmDelete(): void {
-    this.dialog.open(ConfirmDeleteAccountComponent);
+    this.dialog.open(ConfirmDeleteAccountComponent).afterClosed().subscribe((result: any) => {
+      if (result.result) {
+        this.userService.deleteUser(result.username, result.password, (deleteResult: PyAPIResponse) => {
+          if (deleteResult.status === 'success') {
+            this.snackbar.open('Deleted user!', '', { duration: 2000 });
+            this.logout();
+          } else {
+            this.snackbar.open(deleteResult.message as string, '', { duration: 3000 });
+          }
+        });
+      }
+    });
   }
 }
