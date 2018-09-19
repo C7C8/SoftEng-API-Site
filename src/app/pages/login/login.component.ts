@@ -50,8 +50,7 @@ export class LoginComponent implements OnInit {
   registerCallback(response: PyAPIResponse): void {
     if (response.status === 'success') {
       this.snackbar.open('Successfully registered as ' + this.username, '', {duration: 2000});
-      this.userService.login(this.username, this.password);
-      this.router.navigate(['/manage']);
+      this.userService.login(this.username, this.password, () => { this.router.navigate(['/manage']); } );
     } else {
       this.snackbar.open('Failed to register, this username is probably already taken', '', {duration: 2000});
     }
