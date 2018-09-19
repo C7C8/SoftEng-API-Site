@@ -9,7 +9,7 @@ const conv = new showdown.Converter();
 export class RenderMarkdownPipe implements PipeTransform {
 
   transform(value: string, args?: any): any {
-    conv.setOption('headerLevelStart', 5);
+    conv.setOption('headerLevelStart', 4);
     return conv.makeHtml(value.replace('/\\n/g', '\n'));
   }
 }

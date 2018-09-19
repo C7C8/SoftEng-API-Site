@@ -36,7 +36,7 @@ mat-panel-description {
   float: left;
 }
 
-h4 {
+::ng-deep h4, h4 {
   margin-bottom: 0.1em;
   margin-top: 0.5em;
 }
@@ -47,6 +47,11 @@ h4 {
 
 ::ng-deep .mat-icon {
   font-size: 0.5em !important;
+}
+
+::ng-deep h5,h6 {
+  font-size: 0.9em;
+  font-family: Arial, sans-serif;
 }
 
 mat-action-row {
