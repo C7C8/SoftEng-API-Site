@@ -151,17 +151,17 @@ export class ApiCardComponent implements OnInit {
     this.userService.submitUpdate(submission, (response: PyAPIResponse) => {
       if (response.status !== 'error') {
         this.snackbar.open('Submitted changes!', '', { duration: 2000 });
+
+        // Yet another ugly hack, this time to escape HTML so it renders correctly on the API display page
+        const text = document.createTextNode(this.newDesc);
+        const node = document.createElement('textarea');
+        node.appendChild(text);
+        this.api.description = node.innerHTML;
+
+        this.edit = false;
       } else {
-        this.snackbar.open(response.message, '', { duration: 2000 });
+        this.snackbar.open('Submission failed, did you input illegal text?', '', { duration: 3000 });
       }
-
-      // Yet another ugly hack, this time to escape HTML so it renders correctly on the API display page
-      const text = document.createTextNode(this.newDesc);
-      const node = document.createElement('textarea');
-      node.appendChild(text);
-      this.api.description = node.innerHTML;
-
-      this.edit = false;
     });
   }
 
