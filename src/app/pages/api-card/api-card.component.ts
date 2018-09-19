@@ -122,15 +122,15 @@ export class ApiCardComponent implements OnInit {
         this.userService.submitUpdate(submission, (response: PyAPIResponse) => {
           if (response.status !== 'error') {
             this.snackbar.open('Submitted new version!', '', { duration: 2000 });
+            this.api.history.unshift(this.newVersionNum + ' ' + this.newVersionDesc);
+            this.api.updated = new Date();
+            this.newVersionDesc = '';
+            this.versionFormControl.reset();
           } else {
             this.snackbar.open(response.message, '', { duration: 2000 });
           }
 
           this.uploading = false;
-          this.api.history.unshift(this.newVersionNum + ' ' + this.newVersionDesc);
-          this.api.updated = new Date();
-          this.newVersionDesc = '';
-          this.versionFormControl.reset();
         });
       };
       reader.readAsDataURL(result);
