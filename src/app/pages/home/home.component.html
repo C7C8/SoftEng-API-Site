@@ -1,8 +1,7 @@
 <h1>Software Engineering API Repository</h1>
 
 <p>This server hosts a Maven repository for the APIs created as part of CS 3733 Software Engineering, usable by Gradle.
-  This eliminates the need to load API jar files manually instead of through Gradle, the preferred way of managing
-  builds and dependencies.</p>
+  This eliminates the need to load API jar files manually, allowing users to download and manage dependencies automatically.</p>
 
 <h2>Usage</h2>
 
@@ -19,11 +18,11 @@
   <code>mavenCentral()</code> in your repositories section!</p>
 
 <p>To use an API, browse through the API listing to find the one you want, then copy the dependency string into your
-  dependencies section. For instance, you might add the string <code>[group: 'd18.teamD', name: 'GiftRequest','version: 1.1.0']</code>
+  dependencies section. For instance, you might add the string <code>[group: 'edu.wpi.cs3733.d18.teamD', name: 'GiftRequest','version: 1.1.0']</code>
   in order to add D18 Team D's Gift Request API (version 1.1.0) to your project.</p>
 
 <p>In order to avoid breaking teams' projects and keeping in line with other Gradle repositories, old versions of APIs
-  will be stored, so once you upload a file to the repository, it's here to stay. However, only the most
-  recent information about a team's API will be displayed here, and "deleted" APIs won't be listed. You can check an
+  will be stored, so once you upload a file to the repository, it's there to stay. However, only the most
+  recent information about a team's API will be displayed, and "deleted" APIs won't be listed. You can check an
   API's version history for more information on their updates.</p>
 
