@@ -32,6 +32,7 @@ import { RenderMarkdownPipe } from './render-markdown.pipe';
 import { FileUploadComponent } from './pages/api-card/file-upload/file-upload.component';
 import { ConfirmDeleteApiComponent } from './pages/api-card/confirm-delete-api/confirm-delete-api.component';
 import { ConfirmDeleteAccountComponent } from './pages/manage/confirm-delete-account/confirm-delete-account.component';
+import { UpdateComponent } from './pages/update/update.component';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,8 @@ import { ConfirmDeleteAccountComponent } from './pages/manage/confirm-delete-acc
     RenderMarkdownPipe,
     FileUploadComponent,
     ConfirmDeleteApiComponent,
-    ConfirmDeleteAccountComponent
+    ConfirmDeleteAccountComponent,
+    UpdateComponent
   ],
   imports: [
     BrowserModule,
