@@ -7,14 +7,12 @@ import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.com
 import { LoginComponent } from './pages/login/login.component';
 import {ManageComponent} from './pages/manage/manage.component';
 import {UserService} from './user.service';
-import { UpdateComponent } from './pages/update/update.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'list', component: ListComponent },
   { path: 'about', component: AboutComponent },
   { path: 'manage', component: ManageComponent, canActivate: [UserService] },
-  { path: 'update', component: UpdateComponent },
   { path: 'login', component: LoginComponent },
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: '**', component: PageNotFoundComponent }

@@ -15,7 +15,6 @@ export class NavbarComponent implements OnInit {
     { path: '/home', label: 'Home' },
     { path: '/list', label: 'API List' },
     { path: '/manage', label: 'Manage APIs'},
-    { path: '/update', label: 'Update Checker API'},
     { path: '/about', label: 'About'}
   ];
 

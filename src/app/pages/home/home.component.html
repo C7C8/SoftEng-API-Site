@@ -26,3 +26,11 @@
   recent information about a team's API will be displayed, and "deleted" APIs won't be listed. You can check an
   API's version history for more information on their updates.</p>
 
+<h2>Update Check API</h2>
+
+To expose information about your API's most recent version you can use the provided
+update-check API, a fully self-contained Java API that connects to this server to
+grab metadata about a given API, allow users to check if your API has an update,
+get a changelog, etc. To install, add <code>[group: 'edu.wpi.cs3733.util', name: 'APIUpdateChecker', version:'1.0.0']</code>
+to your Gradle dependencies list and read the [very short] documentation on it
+<a href="https://github.com/C7C8/SoftEng-API-UpdateChecker">here</a>.
