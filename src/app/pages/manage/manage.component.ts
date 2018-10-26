@@ -30,9 +30,9 @@ export class ManageComponent implements OnInit {
 
   ngOnInit() {
     // There has to be a better way of doing this, I'm just super lazy
-    for (let i = 0; i < 26; i++){
-      // IN A SANE LANGUAGE I COULD JUST ADD A NUMBER TO A LETTER AND IT'D BE FINE
-      // WHY DO YOU DO THIS TO ME JAVASCRIPT?
+    for (let i = 0; i < 26; i++) {
+      // IN A SANE LANGUAGE I COULD JUST ADD A NUMBER TO A LETTER AND IT'D BE FINE!
+      // WHY DO YOU DO THIS TO ME, JAVASCRIPT?
       this.letters.push(String.fromCharCode('A'.charCodeAt(0) + i));
     }
 
@@ -47,10 +47,12 @@ export class ManageComponent implements OnInit {
   }
 
   handleDelete(id: string) {
-    // Refresh API list to show changes
-    this.fetchService.getAPIData(() => {
-      this.fetchService.filterToUserAPIs(this.userService.getUsername());
-    });
+    // Refresh API list to show changes. Admins can see everything.
+    if (!this.userService.admin) {
+      this.fetchService.getAPIData(() => {
+        this.fetchService.filterToUserAPIs(this.userService.getUsername());
+      });
+    }
   }
 
   submitAPI(submitForm: NgForm): void {
