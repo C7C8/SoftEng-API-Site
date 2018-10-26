@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   api: {
-    list: '/api/apilist',
+    list: '/list.json',
     login: '/api/auth/login',
     register: '/api/auth/register',
     deregister: '/api/auth/register',
