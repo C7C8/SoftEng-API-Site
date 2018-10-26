@@ -47,5 +47,6 @@ export class PyAPIResponse {
   status: string;
   message: string;
   access_token?: string;
+  admin?: boolean;
   id?: string;
 }

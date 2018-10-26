@@ -8,23 +8,29 @@
   flex: 1 0 auto;
 }
 
+footer {
+
+}
 
 footer {
   flex-shrink: 0;
   text-align: center;
   margin-top: 5em;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-}
-
-footer a {
+  margin-bottom: 2.5em;
   color: #888888;
   font-size: 0.75em;
-}
 
-footer img {
-  max-width: 4em;
-  margin: auto 1em;
-  opacity: 0.4;
+  a {
+    color: #888888;
+  }
+
+  img {
+    max-width: 4em;
+    margin: auto 1em;
+    opacity: 0.4;
+  }
+
+  p {
+    margin-top: 0;
+  }
 }

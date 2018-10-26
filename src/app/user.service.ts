@@ -13,6 +13,7 @@ import { PyAPIResponse, PyAPISubmission } from './api-data';
 export class UserService implements CanActivate {
   private jwt: string;
   public username: string;
+  public admin = false;
 
   constructor(private http: HttpClient, private router: Router) { }
 
@@ -28,6 +29,7 @@ export class UserService implements CanActivate {
         if (response.status === 'success') {
           this.jwt = response.access_token;
           this.username = username;
+          this.admin = response.admin;
         }
 
         if (callback) {
@@ -82,6 +84,7 @@ export class UserService implements CanActivate {
   logout() {
     this.jwt = null;
     this.username = '';
+    this.admin = false;
   }
 
   getUsername(): string {
