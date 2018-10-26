@@ -17,25 +17,23 @@ export class UserService implements CanActivate {
 
   constructor(private http: HttpClient, private router: Router) { }
 
-  login(username: string, password: string, callback?: (PyAPIResponse) => void): void {
-    this.http.post<PyAPIResponse>(environment.api.login,
+  async login(username: string, password: string): Promise<PyAPIResponse> {
+    const response = await this.http.post<PyAPIResponse>(environment.api.login,
       {
         username: username,
         password: password
       })
       .pipe(
         catchError(this.handleError()))
-      .subscribe(response => {
-        if (response.status === 'success') {
-          this.jwt = response.access_token;
-          this.username = username;
-          this.admin = response.admin;
-        }
+      .toPromise();
 
-        if (callback) {
-          callback(response);
-        }
-    });
+    if (response.status === 'success') {
+      this.jwt = response.access_token;
+      this.username = username;
+      this.admin = response.admin;
+    }
+
+    return Promise.resolve(response);
   }
 
   isLoggedIn(): boolean {
@@ -50,22 +48,19 @@ export class UserService implements CanActivate {
     return res;
   }
 
-  register(username: string, password: string, callback?: (PyAPIResponse) => void): void {
-    this.http.post<PyAPIResponse>(environment.api.register,
+  async register(username: string, password: string): Promise<PyAPIResponse> {
+    return this.http.post<PyAPIResponse>(environment.api.register,
       {
         username: username,
         password: password
       })
       .pipe(catchError(this.handleError()))
-      .subscribe(response => {
-        if (callback) {
-          callback(response);
-        }
-      });
+      .toPromise();
   }
 
-  deleteUser(username: string, password: string, callback?: (PyAPIResponse) => void): void {
-    this.http.request<PyAPIResponse>('delete', environment.api.deregister,
+  async deleteUser(username: string, password: string): Promise<PyAPIResponse> {
+    this.logout();
+    return this.http.request<PyAPIResponse>('delete', environment.api.deregister,
       {
         body : {
           username: username,
@@ -73,12 +68,7 @@ export class UserService implements CanActivate {
         }
       })
       .pipe(catchError(this.handleError()))
-      .subscribe(response => {
-        this.logout();
-        if (callback) {
-          callback(response);
-        }
-    });
+      .toPromise();
   }
 
   logout() {
@@ -91,56 +81,44 @@ export class UserService implements CanActivate {
     return this.username;
   }
 
-  createAPI(info: PyAPISubmission, callback?: (response: PyAPIResponse) => void) {
+  async createAPI(info: PyAPISubmission): Promise<PyAPIResponse> {
     const requestOptions = {
       headers: new HttpHeaders({
         'Authorization': 'Bearer ' + this.jwt,
       })
     };
 
-    this.http.post<PyAPIResponse>(environment.api.create, info, requestOptions)
+    return this.http.post<PyAPIResponse>(environment.api.create, info, requestOptions)
       .pipe(catchError(this.handleError()))
-      .subscribe((response: PyAPIResponse) => {
-        if (callback) {
-          callback(response);
-        }
-      });
+      .toPromise();
   }
 
-  submitUpdate(info: PyAPISubmission, callback?: (response: PyAPIResponse) => void) {
+  async submitUpdate(info: PyAPISubmission): Promise<PyAPIResponse> {
     const requestOptions = {
       headers: new HttpHeaders({
         'Authorization': 'Bearer ' + this.jwt,
       })
     };
 
-    this.http.post<PyAPIResponse>(environment.api.update, info,  requestOptions)
+    return this.http.post<PyAPIResponse>(environment.api.update, info,  requestOptions)
       .pipe(
         catchError(this.handleError())
       )
-      .subscribe((response: PyAPIResponse) => {
-        if (callback) {
-          callback(response);
-        }
-      });
+      .toPromise();
   }
 
-  deleteAPI(id: string, callback?: (response: PyAPIResponse) => void) {
+  async deleteAPI(id: string): Promise<PyAPIResponse> {
     const requestOptions = {
       headers: new HttpHeaders({
         'Authorization': 'Bearer ' + this.jwt,
       })
     };
 
-    this.http.delete<PyAPIResponse>(environment.api.delete + '?id=' + id, requestOptions)
+    return this.http.delete<PyAPIResponse>(environment.api.delete + '?id=' + id, requestOptions)
       .pipe(
         catchError(this.handleError())
       )
-      .subscribe((response: PyAPIResponse) => {
-        if (callback) {
-          callback(response !== undefined ? response : { status: 'error', message: 'Submission failed' });
-        }
-      });
+      .toPromise();
   }
 
   private handleError() {

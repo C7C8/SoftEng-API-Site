@@ -10,7 +10,8 @@ export class ListComponent implements OnInit {
   constructor(public fetchService: APIFetchService) { }
 
   ngOnInit() {
-    if (this.fetchService.apiData == null)
+    if (this.fetchService.apiData == null) {
       this.fetchService.getAPIData();
+    }
   }
 }

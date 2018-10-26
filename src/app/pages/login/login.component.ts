@@ -20,16 +20,14 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
   }
 
-  login(): void {
+  async login() {
     if (this.userService.isLoggedIn()) {
       this.snackbar.open('You\'re already logged in!', '', {duration: 2000});
       return;
     }
 
-    this.userService.login(this.username, this.password, this.loginCallback.bind(this));
-  }
+    const response = await this.userService.login(this.username, this.password);
 
-  loginCallback(response: PyAPIResponse): void {
     if (response.status === 'success') {
       this.snackbar.open('Logged in as ' + this.username + '!', '', {duration: 2000});
       this.router.navigate(['/manage']);
@@ -38,19 +36,18 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  register(): void {
+  async register() {
     if (this.userService.isLoggedIn()) {
       this.snackbar.open('You\'re already logged in!', '', {duration: 2000});
       return;
     }
 
-    this.userService.register(this.username, this.password, this.registerCallback.bind(this));
-  }
+    const response = await this.userService.register(this.username, this.password);
 
-  registerCallback(response: PyAPIResponse): void {
     if (response.status === 'success') {
       this.snackbar.open('Successfully registered as ' + this.username, '', {duration: 2000});
-      this.userService.login(this.username, this.password, () => { this.router.navigate(['/manage']); } );
+      await this.userService.login(this.username, this.password);
+      this.router.navigate(['/manage']);
     } else {
       this.snackbar.open('Failed to register, this username is probably already taken', '', {duration: 2000});
     }

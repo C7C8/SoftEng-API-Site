@@ -55,7 +55,7 @@ export class ManageComponent implements OnInit {
     }
   }
 
-  submitAPI(submitForm: NgForm): void {
+  async submitAPI(submitForm: NgForm) {
     const info: PyAPISubmission = {
       action: 'create',
       info: {
@@ -68,32 +68,29 @@ export class ManageComponent implements OnInit {
       }
     };
 
-    this.userService.createAPI(info, (response: PyAPIResponse) => {
-      this.snackbar.open(response.message, '', {duration: 3000});
-      if (response.status === 'success') {
-        submitForm.resetForm();
-        this.emailFieldControl.reset();
+    const response = await this.userService.createAPI(info);
+    this.snackbar.open(response.message, '', {duration: 3000});
+    if (response.status === 'success') {
+      submitForm.resetForm();
+      this.emailFieldControl.reset();
 
-        // Refresh API list to show changes
-        this.fetchService.getAPIData(() => {
-          this.fetchService.filterToUserAPIs(this.userService.getUsername());
-        });
-      }
-    });
+      // Refresh API list to show changes
+      this.fetchService.getAPIData(() => {
+        this.fetchService.filterToUserAPIs(this.userService.getUsername());
+      });
+    }
   }
 
-  confirmDelete(): void {
-    this.dialog.open(ConfirmDeleteAccountComponent).afterClosed().subscribe((result: any) => {
-      if (result.result) {
-        this.userService.deleteUser(result.username, result.password, (deleteResult: PyAPIResponse) => {
-          if (deleteResult.status === 'success') {
-            this.snackbar.open('Deleted user!', '', { duration: 2000 });
-            this.logout();
-          } else {
-            this.snackbar.open(deleteResult.message as string, '', { duration: 3000 });
-          }
-        });
+  async confirmDelete() {
+    const dialogResult = await this.dialog.open(ConfirmDeleteAccountComponent).afterClosed().toPromise();
+    if (dialogResult.result) {
+      const response = await this.userService.deleteUser(dialogResult.username, dialogResult.password);
+      if (response.status === 'success') {
+        this.snackbar.open('Deleted user!', '', { duration: 2000 });
+        this.logout();
+      } else {
+        this.snackbar.open(response.message as string, '', { duration: 3000 });
       }
-    });
+    }
   }
 }
