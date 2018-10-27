@@ -1,16 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { UserService } from '../../user.service';
 import { APIFetchService } from '../../apifetch.service';
 import { Router } from '@angular/router';
 import { FormControl, NgForm, Validators } from '@angular/forms';
-import { PyAPIResponse, PyAPISubmission } from '../../api-data';
-import { MatDialog, MatSnackBar } from '@angular/material';
+import { PyAPIResponse, PyAPISubmission, User } from '../../api-data';
+import { MatDialog, MatPaginator, MatSnackBar, MatSort, MatTable, MatTableDataSource } from '@angular/material';
 import { ConfirmDeleteAccountComponent } from './confirm-delete-account/confirm-delete-account.component';
 
 @Component({
   selector: 'app-manage',
   templateUrl: './manage.component.html',
-  styleUrls: ['./manage.component.css']
+  styleUrls: ['./manage.component.scss']
 })
 export class ManageComponent implements OnInit {
 
@@ -28,7 +28,14 @@ export class ManageComponent implements OnInit {
   newAPITeam: string;
   newAPIYear: number = (new Date()).getFullYear();
 
-  ngOnInit() {
+  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatTable) table: MatTable<any>;
+  displayColumns: string[] = ['username', 'admin'];
+  userlist = new MatTableDataSource<User>();
+
+
+  async ngOnInit() {
     // There has to be a better way of doing this, I'm just super lazy
     for (let i = 0; i < 26; i++) {
       // IN A SANE LANGUAGE I COULD JUST ADD A NUMBER TO A LETTER AND IT'D BE FINE!
@@ -39,11 +46,20 @@ export class ManageComponent implements OnInit {
     if (this.fetchService.apiData === null || this.fetchService.userApis.length === 0) {
       this.fetchService.filterToUserAPIs(this.userService.getUsername());
     }
+
+    if (this.userService.admin) {
+      const users: User[] = await this.userService.getUsers();
+      console.log('Users', users);
+      this.userlist = new MatTableDataSource<User>(users);
+      this.userlist.sort = this.sort;
+      this.userlist.paginator = this.paginator;
+    }
   }
 
   logout(): void {
     this.userService.logout();
     this.router.navigate(['/list']);
+    this.userlist = new MatTableDataSource<User>(); // Clear old data?
   }
 
   handleDelete(id: string) {

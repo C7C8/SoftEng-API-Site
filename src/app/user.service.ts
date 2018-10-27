@@ -5,7 +5,7 @@ import { Observable, of } from 'rxjs';
 import { environment } from '../environments/environment';
 import { catchError } from 'rxjs/operators';
 import { CanActivate, Router } from '@angular/router';
-import { PyAPIResponse, PyAPISubmission } from './api-data';
+import { PyAPIResponse, PyAPISubmission, User } from './api-data';
 
 @Injectable({
   providedIn: 'root'
@@ -23,8 +23,7 @@ export class UserService implements CanActivate {
         username: username,
         password: password
       })
-      .pipe(
-        catchError(this.handleError()))
+      .pipe(catchError(this.handleError()))
       .toPromise();
 
     if (response.status === 'success') {
@@ -33,7 +32,7 @@ export class UserService implements CanActivate {
       this.admin = response.admin;
     }
 
-    return Promise.resolve(response);
+    return response;
   }
 
   isLoggedIn(): boolean {
@@ -84,7 +83,7 @@ export class UserService implements CanActivate {
   async createAPI(info: PyAPISubmission): Promise<PyAPIResponse> {
     const requestOptions = {
       headers: new HttpHeaders({
-        'Authorization': 'Bearer ' + this.jwt,
+        'Authorization': 'Bearer ' + this.jwt
       })
     };
 
@@ -96,21 +95,19 @@ export class UserService implements CanActivate {
   async submitUpdate(info: PyAPISubmission): Promise<PyAPIResponse> {
     const requestOptions = {
       headers: new HttpHeaders({
-        'Authorization': 'Bearer ' + this.jwt,
+        'Authorization': 'Bearer ' + this.jwt
       })
     };
 
     return this.http.post<PyAPIResponse>(environment.api.update, info,  requestOptions)
-      .pipe(
-        catchError(this.handleError())
-      )
+      .pipe(catchError(this.handleError()))
       .toPromise();
   }
 
   async deleteAPI(id: string): Promise<PyAPIResponse> {
     const requestOptions = {
       headers: new HttpHeaders({
-        'Authorization': 'Bearer ' + this.jwt,
+        'Authorization': 'Bearer ' + this.jwt
       })
     };
 
@@ -119,6 +116,27 @@ export class UserService implements CanActivate {
         catchError(this.handleError())
       )
       .toPromise();
+  }
+
+  async getUsers(): Promise<User[]> {
+    if (!this.admin) {
+      return [];
+    }
+
+    const requestOptions = {
+      headers: new HttpHeaders({
+        'Authorization': 'Bearer ' + this.jwt
+      })
+    };
+
+    const response = await this.http.get<PyAPIResponse>(environment.api.userlist, requestOptions)
+      .pipe(catchError(this.handleError()))
+      .toPromise();
+
+    if (response.status !== 'success') {
+      return [];
+    }
+    return response.users;
   }
 
   private handleError() {

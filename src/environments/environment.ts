@@ -11,7 +11,10 @@ export const environment = {
     deregister: '/api/auth/register',
     create: '/api/list',
     update: '/api/list',
-    delete: '/api/list'
+    delete: '/api/list',
+    userlist: '/api/admin',
+    deleteuser: '/api/admin',
+    moduser: '/api/admin'
   }
 };
 

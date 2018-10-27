@@ -98,6 +98,28 @@
   </mat-card>
 </form>
 
+<div class="userlist" *ngIf="userService.admin">
+  <h2>User List</h2>
+  <p><span class="admin-warning">Administrator mode enabled, user data is modifiable and deletion is permanent!</span>
+    Be <i>extremely</i> careful!</p>
+
+  <table mat-table matSort [dataSource]="userlist">
+    <tr mat-header-row *matHeaderRowDef="displayColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayColumns"></tr>
+
+    <ng-container matColumnDef="username">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Username</th>
+      <td mat-cell *matCellDef="let user">{{user.username}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="admin">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Admin?</th>
+      <td mat-cell *matCellDef="let user">{{user.admin}}</td>
+    </ng-container>
+  </table>
+  <mat-paginator [pageSizeOptions]="[10, 25, 50]" showFirstLastButtons></mat-paginator>
+</div>
+
 <h2>Delete user account</h2>
 <p>You can delete your user account by clicking the button below. When you delete your account, your APIs
   are also removed from display, but to avoid breaking others' code their files are not deleted.</p>
