@@ -32,7 +32,7 @@ export class ManageComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatTable) table: MatTable<any>;
-  displayColumns: string[] = ['username', 'admin'];
+  displayColumns: string[] = ['username', 'registered', 'last_login', 'admin'];
   userlist = new MatTableDataSource<User>();
   faUserTimes = faUserTimes; // This is needed. I know why. I know that it's stupid. I need a brick to ease the pain in my head...
 

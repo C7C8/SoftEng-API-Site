@@ -46,6 +46,8 @@ export class PyAPISubmission {
 export class User {
   username: string;
   admin: boolean;
+  registered: Date;
+  last_login: Date;
 }
 
 export class UserChange {
