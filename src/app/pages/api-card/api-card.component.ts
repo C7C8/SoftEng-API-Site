@@ -1,8 +1,8 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormControl, FormGroupDirective, NgForm, Validators } from '@angular/forms';
 import { ErrorStateMatcher, MatDialog, MatSnackBar } from '@angular/material';
-import { faEllipsisH, faStar, faExclamation, faTrash } from '@fortawesome/free-solid-svg-icons';
-import { API, PyAPIResponse, PyAPISubmission } from '../../api-data';
+import { faEllipsisH, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { API, PyAPISubmission } from '../../api-data';
 import { FileUploadComponent } from './file-upload/file-upload.component';
 import { UserService } from '../../user.service';
 import { ConfirmDeleteApiComponent } from './confirm-delete-api/confirm-delete-api.component';

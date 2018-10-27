@@ -6,6 +6,7 @@ import { FormControl, NgForm, Validators } from '@angular/forms';
 import { PyAPIResponse, PyAPISubmission, User, UserChange } from '../../api-data';
 import { MatDialog, MatPaginator, MatSlideToggleChange, MatSnackBar, MatSort, MatTable, MatTableDataSource } from '@angular/material';
 import { ConfirmDeleteAccountComponent } from './confirm-delete-account/confirm-delete-account.component';
+import { faUserTimes } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-manage',
@@ -33,7 +34,7 @@ export class ManageComponent implements OnInit {
   @ViewChild(MatTable) table: MatTable<any>;
   displayColumns: string[] = ['username', 'admin'];
   userlist = new MatTableDataSource<User>();
-
+  faUserTimes = faUserTimes; // This is needed. I know why. I know that it's stupid. I need a brick to ease the pain in my head...
 
   async ngOnInit() {
     // There has to be a better way of doing this, I'm just super lazy
@@ -71,6 +72,7 @@ export class ManageComponent implements OnInit {
   }
 
   async submitAPI(submitForm: NgForm) {
+    // Submit a new API to the server
     const info: PyAPISubmission = {
       action: 'create',
       info: {
@@ -97,6 +99,7 @@ export class ManageComponent implements OnInit {
   }
 
   async confirmDelete() {
+    // Confirm that the user wants to delete their account
     const dialogResult = await this.dialog.open(ConfirmDeleteAccountComponent).afterClosed().toPromise();
     if (dialogResult.result) {
       const response = await this.userService.deleteUser(dialogResult.username, dialogResult.password);
@@ -109,8 +112,22 @@ export class ManageComponent implements OnInit {
     }
   }
 
-  async changeAdmin(event: MatSlideToggleChange, user) {
+  changeAdmin(event: MatSlideToggleChange, user) {
+    // Change a user's admin status
     const request: UserChange = { username: user.username, set_admin: event.checked };
-    await this.userService.changeUser(request);
+    this.userService.changeUser(request);
+  }
+
+  async adminDeleteUser(user: User) {
+    // Administrator delete user; updates the user table if the operation succeeded
+    const response: PyAPIResponse = await this.userService.adminDeleteUser(user.username);
+    if (response.status !== 'success') {
+      return;
+    }
+
+    const users: User[] = await this.userService.getUsers();
+    this.userlist = new MatTableDataSource<User>(users);
+    this.userlist.sort = this.sort;
+    this.userlist.paginator = this.paginator;
   }
 }

@@ -139,7 +139,7 @@ export class UserService implements CanActivate {
     return response.users;
   }
 
-  async changeUser(request: UserChange) {
+  async changeUser(request: UserChange): Promise<PyAPIResponse> {
     if (!this.admin) {
       return;
     }
@@ -150,7 +150,23 @@ export class UserService implements CanActivate {
       })
     };
 
-    return this.http.post(environment.api.moduser, request, requestOptions)
+    return this.http.post<PyAPIResponse>(environment.api.moduser, request, requestOptions)
+      .pipe(catchError(this.handleError()))
+      .toPromise();
+  }
+
+  async adminDeleteUser(username: string): Promise<PyAPIResponse> {
+    if (!this.admin) {
+      return;
+    }
+
+    const requestOptions = {
+      headers: new HttpHeaders({
+        'Authorization': 'Bearer ' + this.jwt
+      })
+    };
+
+    return this.http.delete<PyAPIResponse>(environment.api.deleteuser + '?username=' + username, requestOptions)
       .pipe(catchError(this.handleError()))
       .toPromise();
   }
