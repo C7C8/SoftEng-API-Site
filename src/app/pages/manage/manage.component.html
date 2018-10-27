@@ -111,9 +111,9 @@
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Username</th>
       <td mat-cell *matCellDef="let user">
         <button mat-icon-button
-                [matTooltip]="userService.username === user.username ? 'Use the button at the bottom of the page to delete yourself.' : 'Delete user ' + user.username"
+                [matTooltip]="userService.username === user.username ? 'Use the button at the bottom of the page to delete yourself.' : '(Double click) Delete user ' + user.username"
                 [disabled]="userService.username === user.username"
-                (click)="adminDeleteUser(user)"
+                (dblclick)="adminDeleteUser(user)"
                 color="primary">
           <fa-icon [icon]="faUserTimes"></fa-icon>
         </button>
