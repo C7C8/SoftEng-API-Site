@@ -3,8 +3,8 @@ import { UserService } from '../../user.service';
 import { APIFetchService } from '../../apifetch.service';
 import { Router } from '@angular/router';
 import { FormControl, NgForm, Validators } from '@angular/forms';
-import { PyAPIResponse, PyAPISubmission, User } from '../../api-data';
-import { MatDialog, MatPaginator, MatSnackBar, MatSort, MatTable, MatTableDataSource } from '@angular/material';
+import { PyAPIResponse, PyAPISubmission, User, UserChange } from '../../api-data';
+import { MatDialog, MatPaginator, MatSlideToggleChange, MatSnackBar, MatSort, MatTable, MatTableDataSource } from '@angular/material';
 import { ConfirmDeleteAccountComponent } from './confirm-delete-account/confirm-delete-account.component';
 
 @Component({
@@ -49,7 +49,6 @@ export class ManageComponent implements OnInit {
 
     if (this.userService.admin) {
       const users: User[] = await this.userService.getUsers();
-      console.log('Users', users);
       this.userlist = new MatTableDataSource<User>(users);
       this.userlist.sort = this.sort;
       this.userlist.paginator = this.paginator;
@@ -108,5 +107,10 @@ export class ManageComponent implements OnInit {
         this.snackbar.open(response.message as string, '', { duration: 3000 });
       }
     }
+  }
+
+  async changeAdmin(event: MatSlideToggleChange, user) {
+    const request: UserChange = { username: user.username, set_admin: event.checked };
+    await this.userService.changeUser(request);
   }
 }

@@ -11,7 +11,7 @@ import {
   MatInputModule,
   MatSnackBarModule,
   MatProgressSpinnerModule,
-  MatDialogModule, MatSelectModule, MatTableModule, MatSortModule, MatPaginatorModule,
+  MatDialogModule, MatSelectModule, MatTableModule, MatSortModule, MatPaginatorModule, MatSlideToggleModule,
 } from '@angular/material';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -69,6 +69,7 @@ import { ConfirmDeleteAccountComponent } from './pages/manage/confirm-delete-acc
     MatTableModule,
     MatSortModule,
     MatPaginatorModule,
+    MatSlideToggleModule,
     AppRoutingModule,
     HttpClientModule,
     FontAwesomeModule

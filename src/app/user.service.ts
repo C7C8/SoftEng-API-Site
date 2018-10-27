@@ -5,7 +5,7 @@ import { Observable, of } from 'rxjs';
 import { environment } from '../environments/environment';
 import { catchError } from 'rxjs/operators';
 import { CanActivate, Router } from '@angular/router';
-import { PyAPIResponse, PyAPISubmission, User } from './api-data';
+import { PyAPIResponse, PyAPISubmission, User, UserChange } from './api-data';
 
 @Injectable({
   providedIn: 'root'
@@ -137,6 +137,22 @@ export class UserService implements CanActivate {
       return [];
     }
     return response.users;
+  }
+
+  async changeUser(request: UserChange) {
+    if (!this.admin) {
+      return;
+    }
+
+    const requestOptions = {
+      headers: new HttpHeaders({
+        'Authorization': 'Bearer ' + this.jwt
+      })
+    };
+
+    return this.http.post(environment.api.moduser, request, requestOptions)
+      .pipe(catchError(this.handleError()))
+      .toPromise();
   }
 
   private handleError() {

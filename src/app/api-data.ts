@@ -48,6 +48,13 @@ export class User {
   admin: boolean;
 }
 
+export class UserChange {
+  username: string;
+  new_username?: string;
+  new_password?: string;
+  set_admin?: boolean;
+}
+
 export class PyAPIResponse {
   status: string;
   message: string;
