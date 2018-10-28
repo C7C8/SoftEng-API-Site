@@ -37,6 +37,7 @@ export class LoginComponent implements OnInit {
   }
 
   async register() {
+    console.log("register pressed");
     if (this.userService.isLoggedIn()) {
       this.snackbar.open('You\'re already logged in!', '', {duration: 2000});
       return;

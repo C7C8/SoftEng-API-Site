@@ -1,27 +1,29 @@
-<form #loginForm="ngForm" class="login-container" (submit)="login()">
+<div class="login-container">
   <mat-card>
-    <h4>Login/Register</h4>
-    <div class="text-input">
-      <mat-form-field>
-        <input matInput
-               type="text"
-               placeholder="Email"
-               name="username"
-               [formControl]="emailFieldControl"
-               [(ngModel)]="username"
-               required>
-        <mat-error *ngIf="emailFieldControl.invalid && emailFieldControl.touched">Invalid email!</mat-error>
-      </mat-form-field>
-      <mat-form-field>
-        <input matInput
-               type="password"
-               placeholder="Password"
-               name="password"
-               [(ngModel)]="password"
-               required>
-      </mat-form-field>
-    </div>
-    <button mat-raised-button type="submit" color="primary" [disabled]="!loginForm.valid || !emailFieldControl.valid">Login</button>
-    <button mat-raised-button (click)="register()" [disabled]="!loginForm.valid || !emailFieldControl.valid" >Register</button>
+    <form #loginForm="ngForm" (submit)="login()">
+      <h4>Login/Register</h4>
+      <div class="text-input">
+        <mat-form-field>
+          <input matInput
+                 type="text"
+                 placeholder="Email"
+                 name="username"
+                 [formControl]="emailFieldControl"
+                 [(ngModel)]="username"
+                 required>
+          <mat-error *ngIf="emailFieldControl.invalid && emailFieldControl.touched">Invalid email!</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput
+                 type="password"
+                 placeholder="Password"
+                 name="password"
+                 [(ngModel)]="password"
+                 required>
+        </mat-form-field>
+      </div>
+    </form>
+    <button mat-raised-button id="login" (click)="login()" color="primary" [disabled]="!loginForm.valid || !emailFieldControl.valid">Login</button>
+    <button mat-raised-button id="register" (click)="register()" [disabled]="!loginForm.valid || !emailFieldControl.valid" >Register</button>
   </mat-card>
-</form>
+</div>
