@@ -32,7 +32,7 @@ export class LoginComponent implements OnInit {
       this.snackbar.open('Logged in as ' + this.username + '!', '', {duration: 2000});
       this.router.navigate(['/manage']);
     } else {
-      this.snackbar.open('Could not verify credentials', '', {duration: 2000});
+      this.snackbar.open(response.message, '', {duration: 2000});
     }
   }
 

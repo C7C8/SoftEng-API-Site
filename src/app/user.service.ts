@@ -171,6 +171,23 @@ export class UserService implements CanActivate {
       .toPromise();
   }
 
+  async lockUser(username: string, lock: boolean): Promise<PyAPIResponse> {
+    if (!this.admin) {
+      return;
+    }
+
+    const requestOptions = {
+      headers: new HttpHeaders({
+        'Authorization': 'Bearer ' + this.jwt
+      })
+    };
+
+    const request: UserChange = { username: username, lock: lock};
+    return this.http.post<PyAPIResponse>(environment.api.moduser, request, requestOptions)
+      .pipe(catchError(this.handleError()))
+      .toPromise();
+  }
+
   private handleError() {
     return (error: HttpErrorResponse): Observable<PyAPIResponse>  => {
       return of(error.error);

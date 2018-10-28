@@ -6,7 +6,7 @@ import { FormControl, NgForm, Validators } from '@angular/forms';
 import { PyAPIResponse, PyAPISubmission, User, UserChange } from '../../api-data';
 import { MatDialog, MatPaginator, MatSlideToggleChange, MatSnackBar, MatSort, MatTable, MatTableDataSource } from '@angular/material';
 import { ConfirmDeleteAccountComponent } from './confirm-delete-account/confirm-delete-account.component';
-import { faUserTimes } from '@fortawesome/free-solid-svg-icons';
+import { faUserTimes, faLock, faUnlock } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-manage',
@@ -34,7 +34,11 @@ export class ManageComponent implements OnInit {
   @ViewChild(MatTable) table: MatTable<any>;
   displayColumns: string[] = ['username', 'registered', 'last_login', 'admin'];
   userlist = new MatTableDataSource<User>();
-  faUserTimes = faUserTimes; // This is needed. I know why. I know that it's stupid. I need a brick to ease the pain in my head...
+
+  // These are needed. I know why. I know that it's stupid. I need a brick to ease the pain in my head...
+  faUserTimes = faUserTimes;
+  faLock = faLock;
+  faUnlock = faUnlock;
 
   async ngOnInit() {
     // There has to be a better way of doing this, I'm just super lazy
@@ -121,6 +125,19 @@ export class ManageComponent implements OnInit {
   async adminDeleteUser(user: User) {
     // Administrator delete user; updates the user table if the operation succeeded
     const response: PyAPIResponse = await this.userService.adminDeleteUser(user.username);
+    if (response.status !== 'success') {
+      return;
+    }
+
+    const users: User[] = await this.userService.getUsers();
+    this.userlist = new MatTableDataSource<User>(users);
+    this.userlist.sort = this.sort;
+    this.userlist.paginator = this.paginator;
+  }
+
+  async setUserLock(user: User) {
+    // Enable lockout on a user's account; updates the user table if the operation succeeded
+    const response: PyAPIResponse = await this.userService.lockUser(user.username, !user.locked);
     if (response.status !== 'success') {
       return;
     }

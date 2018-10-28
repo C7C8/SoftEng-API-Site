@@ -48,6 +48,7 @@ export class User {
   admin: boolean;
   registered: Date;
   last_login: Date;
+  locked: boolean;
 }
 
 export class UserChange {
@@ -55,6 +56,7 @@ export class UserChange {
   new_username?: string;
   new_password?: string;
   set_admin?: boolean;
+  lock?: boolean;
 }
 
 export class PyAPIResponse {
