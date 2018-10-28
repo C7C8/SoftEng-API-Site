@@ -62,6 +62,7 @@ export class ManageComponent implements OnInit {
 
   logout(): void {
     this.userService.logout();
+    this.fetchService.userApis = [];
     this.router.navigate(['/list']);
     this.userlist = new MatTableDataSource<User>(); // Clear old data?
   }
