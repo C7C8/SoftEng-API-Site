@@ -1,8 +1,8 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormControl, FormGroupDirective, NgForm, Validators } from '@angular/forms';
 import { ErrorStateMatcher, MatDialog, MatSnackBar } from '@angular/material';
-import { faEllipsisH, faStar, faExclamation, faTrash } from '@fortawesome/free-solid-svg-icons';
-import { API, PyAPIResponse, PyAPISubmission } from '../../api-data';
+import { faEllipsisH, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { API, PyAPISubmission } from '../../api-data';
 import { FileUploadComponent } from './file-upload/file-upload.component';
 import { UserService } from '../../user.service';
 import { ConfirmDeleteApiComponent } from './confirm-delete-api/confirm-delete-api.component';
@@ -51,14 +51,13 @@ export class ApiCardComponent implements OnInit {
     this.newDesc = temp.value;
   }
 
-  delete(): void {
+  delete() {
     // Ask the user if they REALLY want to delete their API, delete it if they do.
     this.dialog.open(ConfirmDeleteApiComponent, null)
-      .afterClosed().subscribe((result: boolean) => {
+      .afterClosed().subscribe(async (result: boolean) => {
         if (result) {
-          this.userService.deleteAPI(this.api.id, () => {
-            this.deleted.emit(this.api.id);
-          });
+          await this.userService.deleteAPI(this.api.id);
+          this.deleted.emit(this.api.id);
         }
     });
   }
@@ -73,7 +72,7 @@ export class ApiCardComponent implements OnInit {
         }
         this.uploading = true;
         const reader = new FileReader();
-        reader.onload = (event: Event) => {
+        reader.onload = async (event: Event) => {
           this.api.image = reader.result;
 
           const submission: PyAPISubmission = {
@@ -84,60 +83,55 @@ export class ApiCardComponent implements OnInit {
             }
           };
 
-          this.userService.submitUpdate(submission, (response: PyAPIResponse) => {
-            if (response.status !== 'error') {
-              this.snackbar.open('Submitted new image!', '', {duration: 2000});
-            } else {
-              this.snackbar.open(response.message, '', {duration: 2000});
-            }
+          const response = await this.userService.submitUpdate(submission);
+          if (response.status !== 'error') {
+            this.snackbar.open('Submitted new image!', '', {duration: 2000});
+          } else {
+            this.snackbar.open(response.message, '', {duration: 2000});
+          }
             this.uploading = false;
-          });
         };
         reader.readAsDataURL(result);
       }
     );
   }
 
-  newVersion(): void {
-    this.dialog.open(FileUploadComponent, {
-      data: { type: '.jar' }
-    })
-      .afterClosed().subscribe((result: File) => {
-      if (result === null || result === undefined) {
-        return;
+  async newVersion() {
+    const result = await this.dialog.open(FileUploadComponent, { data: { type: '.jar' } }) .afterClosed().toPromise();
+    if (result === null || result === undefined) {
+      return;
+    }
+
+    this.uploading = true;
+    const reader = new FileReader();
+    reader.onload = async (event: Event) => {
+      const submission: PyAPISubmission = {
+        action: 'update',
+        id: this.api.id,
+        info: {
+          version: this.newVersionNum + ' ' + this.newVersionDesc,
+          jar: reader.result.toString().split(',')[ 1 ]
+        }
+      };
+
+      const response = await this.userService.submitUpdate(submission);
+      if (response.status !== 'error') {
+        this.snackbar.open('Submitted new version!', '', { duration: 2000 });
+        this.api.history.unshift(this.newVersionNum + ' ' + this.newVersionDesc);
+        this.api.updated = new Date();
+        this.newVersionDesc = '';
+        this.versionFormControl.reset();
+      } else {
+        this.snackbar.open(response.message, '', { duration: 2000 });
       }
 
-      this.uploading = true;
-      const reader = new FileReader();
-      reader.onload = (event: Event) => {
-        const submission: PyAPISubmission = {
-          action: 'update',
-          id: this.api.id,
-          info: {
-            version: this.newVersionNum + ' ' + this.newVersionDesc,
-            jar: reader.result.toString().split(',')[1]
-          }
-        };
+      this.uploading = false;
+    };
 
-        this.userService.submitUpdate(submission, (response: PyAPIResponse) => {
-          if (response.status !== 'error') {
-            this.snackbar.open('Submitted new version!', '', { duration: 2000 });
-            this.api.history.unshift(this.newVersionNum + ' ' + this.newVersionDesc);
-            this.api.updated = new Date();
-            this.newVersionDesc = '';
-            this.versionFormControl.reset();
-          } else {
-            this.snackbar.open(response.message, '', { duration: 2000 });
-          }
-
-          this.uploading = false;
-        });
-      };
-      reader.readAsDataURL(result);
-    });
+    reader.readAsDataURL(result);
   }
 
-  submit(): void {
+  async submit() {
     const submission: PyAPISubmission = {
       action: 'update',
       id: this.api.id,
@@ -147,21 +141,20 @@ export class ApiCardComponent implements OnInit {
       }
     };
 
-    this.userService.submitUpdate(submission, (response: PyAPIResponse) => {
-      if (response.status !== 'error') {
-        this.snackbar.open('Submitted changes!', '', { duration: 2000 });
+    const response = await this.userService.submitUpdate(submission);
+    if (response.status !== 'error') {
+      this.snackbar.open('Submitted changes!', '', { duration: 2000 });
 
-        // Yet another ugly hack, this time to escape HTML so it renders correctly on the API display page
-        const text = document.createTextNode(this.newDesc);
-        const node = document.createElement('textarea');
-        node.appendChild(text);
-        this.api.description = node.innerHTML;
+      // Yet another ugly hack, this time to escape HTML so it renders correctly on the API display page
+      const text = document.createTextNode(this.newDesc);
+      const node = document.createElement('textarea');
+      node.appendChild(text);
+      this.api.description = node.innerHTML;
 
-        this.edit = false;
-      } else {
-        this.snackbar.open('Submission failed, did you input illegal text?', '', { duration: 3000 });
-      }
-    });
+      this.edit = false;
+    } else {
+      this.snackbar.open('Submission failed, did you input illegal text?', '', { duration: 3000 });
+    }
   }
 
   toggleEdit() {

@@ -4,7 +4,11 @@
     "logLevel": "debug"
   },
   "/img": {
-    "target": "http://localhost:5000",
+    "target": "http://localhost:8000",
+    "logLevel": "debug"
+  },
+  "/list.json": {
+    "target": "http://localhost:8000",
     "logLevel": "debug"
   }
 }

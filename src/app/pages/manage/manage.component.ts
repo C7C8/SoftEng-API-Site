@@ -1,16 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { UserService } from '../../user.service';
 import { APIFetchService } from '../../apifetch.service';
 import { Router } from '@angular/router';
 import { FormControl, NgForm, Validators } from '@angular/forms';
-import { PyAPIResponse, PyAPISubmission } from '../../api-data';
-import { MatDialog, MatSnackBar } from '@angular/material';
+import { PyAPIResponse, PyAPISubmission, User, UserChange } from '../../api-data';
+import { MatDialog, MatPaginator, MatSlideToggleChange, MatSnackBar, MatSort, MatTable, MatTableDataSource } from '@angular/material';
 import { ConfirmDeleteAccountComponent } from './confirm-delete-account/confirm-delete-account.component';
+import { faUserTimes, faLock, faUnlock } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-manage',
   templateUrl: './manage.component.html',
-  styleUrls: ['./manage.component.css']
+  styleUrls: ['./manage.component.scss']
 })
 export class ManageComponent implements OnInit {
 
@@ -28,32 +29,55 @@ export class ManageComponent implements OnInit {
   newAPITeam: string;
   newAPIYear: number = (new Date()).getFullYear();
 
-  ngOnInit() {
+  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatTable) table: MatTable<any>;
+  displayColumns: string[] = ['username', 'registered', 'last_login', 'admin'];
+  userlist = new MatTableDataSource<User>();
+
+  // These are needed. I know why. I know that it's stupid. I need a brick to ease the pain in my head...
+  faUserTimes = faUserTimes;
+  faLock = faLock;
+  faUnlock = faUnlock;
+
+  async ngOnInit() {
     // There has to be a better way of doing this, I'm just super lazy
-    for (let i = 0; i < 26; i++){
-      // IN A SANE LANGUAGE I COULD JUST ADD A NUMBER TO A LETTER AND IT'D BE FINE
-      // WHY DO YOU DO THIS TO ME JAVASCRIPT?
+    for (let i = 0; i < 26; i++) {
+      // IN A SANE LANGUAGE I COULD JUST ADD A NUMBER TO A LETTER AND IT'D BE FINE!
+      // WHY DO YOU DO THIS TO ME, JAVASCRIPT?
       this.letters.push(String.fromCharCode('A'.charCodeAt(0) + i));
     }
 
     if (this.fetchService.apiData === null || this.fetchService.userApis.length === 0) {
       this.fetchService.filterToUserAPIs(this.userService.getUsername());
     }
+
+    if (this.userService.admin) {
+      const users: User[] = await this.userService.getUsers();
+      this.userlist = new MatTableDataSource<User>(users);
+      this.userlist.sort = this.sort;
+      this.userlist.paginator = this.paginator;
+    }
   }
 
   logout(): void {
     this.userService.logout();
+    this.fetchService.userApis = [];
     this.router.navigate(['/list']);
+    this.userlist = new MatTableDataSource<User>(); // Clear old data?
   }
 
   handleDelete(id: string) {
-    // Refresh API list to show changes
-    this.fetchService.getAPIData(() => {
-      this.fetchService.filterToUserAPIs(this.userService.getUsername());
-    });
+    // Refresh API list to show changes. Admins can see everything.
+    if (!this.userService.admin) {
+      this.fetchService.getAPIData(() => {
+        this.fetchService.filterToUserAPIs(this.userService.getUsername());
+      });
+    }
   }
 
-  submitAPI(submitForm: NgForm): void {
+  async submitAPI(submitForm: NgForm) {
+    // Submit a new API to the server
     const info: PyAPISubmission = {
       action: 'create',
       info: {
@@ -66,32 +90,62 @@ export class ManageComponent implements OnInit {
       }
     };
 
-    this.userService.createAPI(info, (response: PyAPIResponse) => {
-      this.snackbar.open(response.message, '', {duration: 3000});
-      if (response.status === 'success') {
-        submitForm.resetForm();
-        this.emailFieldControl.reset();
+    const response = await this.userService.createAPI(info);
+    this.snackbar.open(response.message, '', {duration: 3000});
+    if (response.status === 'success') {
+      submitForm.resetForm();
+      this.emailFieldControl.reset();
 
-        // Refresh API list to show changes
-        this.fetchService.getAPIData(() => {
-          this.fetchService.filterToUserAPIs(this.userService.getUsername());
-        });
-      }
-    });
+      // Refresh API list to show changes
+      this.fetchService.getAPIData(() => {
+        this.fetchService.filterToUserAPIs(this.userService.getUsername());
+      });
+    }
   }
 
-  confirmDelete(): void {
-    this.dialog.open(ConfirmDeleteAccountComponent).afterClosed().subscribe((result: any) => {
-      if (result.result) {
-        this.userService.deleteUser(result.username, result.password, (deleteResult: PyAPIResponse) => {
-          if (deleteResult.status === 'success') {
-            this.snackbar.open('Deleted user!', '', { duration: 2000 });
-            this.logout();
-          } else {
-            this.snackbar.open(deleteResult.message as string, '', { duration: 3000 });
-          }
-        });
+  async confirmDelete() {
+    // Confirm that the user wants to delete their account
+    const dialogResult = await this.dialog.open(ConfirmDeleteAccountComponent).afterClosed().toPromise();
+    if (dialogResult.result) {
+      const response = await this.userService.deleteUser(dialogResult.username, dialogResult.password);
+      if (response.status === 'success') {
+        this.snackbar.open('Deleted user!', '', { duration: 2000 });
+        this.logout();
+      } else {
+        this.snackbar.open(response.message as string, '', { duration: 3000 });
       }
-    });
+    }
+  }
+
+  changeAdmin(event: MatSlideToggleChange, user) {
+    // Change a user's admin status
+    const request: UserChange = { username: user.username, set_admin: event.checked };
+    this.userService.changeUser(request);
+  }
+
+  async adminDeleteUser(user: User) {
+    // Administrator delete user; updates the user table if the operation succeeded
+    const response: PyAPIResponse = await this.userService.adminDeleteUser(user.username);
+    if (response.status !== 'success') {
+      return;
+    }
+
+    const users: User[] = await this.userService.getUsers();
+    this.userlist = new MatTableDataSource<User>(users);
+    this.userlist.sort = this.sort;
+    this.userlist.paginator = this.paginator;
+  }
+
+  async setUserLock(user: User) {
+    // Enable lockout on a user's account; updates the user table if the operation succeeded
+    const response: PyAPIResponse = await this.userService.lockUser(user.username, !user.locked);
+    if (response.status !== 'success') {
+      return;
+    }
+
+    const users: User[] = await this.userService.getUsers();
+    this.userlist = new MatTableDataSource<User>(users);
+    this.userlist.sort = this.sort;
+    this.userlist.paginator = this.paginator;
   }
 }

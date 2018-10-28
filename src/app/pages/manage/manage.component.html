@@ -1,16 +1,33 @@
 <button mat-raised-button id="logout" (click)="logout()">Logout</button>
 
 <h1>Manage APIs</h1>
-<h2>Your APIs</h2>
 <p>You can view, edit, or delete your APIs here. Markdown support is enabled, so you can enhance your API
   descriptions &amp; documentation with headers, links, lists, code samples, etc.</p>
+
+<p *ngIf="userService.admin"><span class="admin-warning">Administrator mode enabled, all APIs modifiable.
+  Be careful!</span> Since there may be dozens of API's, grouped view has been enabled.</p>
+
 <div *ngIf="fetchService.apiData">
-  <div *ngIf="fetchService.userApis">
-    <mat-accordion multi="true">
-      <app-api-card *ngFor="let api of fetchService.userApis" [api]="api" [admin]="true" (deleted)="handleDelete($event)"></app-api-card>
-    </mat-accordion>
-  </div>
-  <i *ngIf="fetchService.userApis.length === 0">No APIs found; submit one below!</i>
+
+  <!--Regular view -- non-grouped -->
+  <mat-accordion multi="true" *ngIf="fetchService.userApis && !userService.admin">
+    <app-api-card *ngFor="let api of fetchService.userApis" [api]="api" [admin]="true" (deleted)="handleDelete($event)"></app-api-card>
+  </mat-accordion>
+
+  <!--Admin view -- grouped like the main list page for ease of navigation-->
+  <mat-accordion multi="true" *ngIf="userService.admin">
+    <mat-expansion-panel *ngFor="let class of fetchService.apiData.classes">
+      <mat-expansion-panel-header>
+        <mat-panel-title>{{class.term}} Term {{class.year}}</mat-panel-title>
+        <mat-action-row>{{class.apis.length}} APIs</mat-action-row>
+      </mat-expansion-panel-header>
+      <mat-accordion multi="true">
+        <app-api-card *ngFor="let api of class.apis" [api]="api" [admin]="true" (deleted)="handleDelete($event)"></app-api-card>
+      </mat-accordion>
+    </mat-expansion-panel>
+  </mat-accordion>
+
+  <i *ngIf="(fetchService.userApis.length === 0 && !userService.admin) || (userService.admin && fetchService.apiData.count === 0)">No APIs found; submit one below!</i>
   <br><br>
 </div>
 
@@ -80,6 +97,70 @@
     <button mat-raised-button color="primary" [disabled]="!submitForm.form.valid || !emailFieldControl.valid" type="submit">Create API</button>
   </mat-card>
 </form>
+
+<div class="userlist" *ngIf="userService.admin">
+  <h2>User List</h2>
+  <p><span class="admin-warning">Administrator mode enabled, user data is modifiable and deletion is permanent!</span>
+    Be <i>extremely</i> careful!</p>
+
+  <table mat-table matSort [dataSource]="userlist">
+    <tr mat-header-row *matHeaderRowDef="displayColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayColumns"></tr>
+
+    <ng-container matColumnDef="username">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Username</th>
+      <td mat-cell *matCellDef="let user">
+        <!-- User delete button -->
+        <button mat-icon-button
+                [matTooltip]="userService.username === user.username ? 'Use the button at the bottom of the page to delete yourself.' : '(Double click) Delete user ' + user.username"
+                [disabled]="userService.username === user.username"
+                (dblclick)="adminDeleteUser(user)"
+                color="primary">
+          <fa-icon [icon]="faUserTimes"></fa-icon>
+        </button>
+
+        <!-- User lock/unlock button -->
+        <button mat-icon-button *ngIf="!user.locked"
+                [matTooltip]="userService.username === user.username ? 'Can\'t lock yourself out of your own account' : 'Lock ' + user.username"
+                [disabled]="userService.username === user.username"
+                (click)="setUserLock(user)">
+          <fa-icon [icon]="faUnlock"></fa-icon>
+        </button>
+        <button mat-icon-button *ngIf="user.locked"
+                [matTooltip]="'Unlock ' + user.username"
+                (click)="setUserLock(user)"
+                color="primary">
+          <fa-icon [icon]="faLock"></fa-icon>
+        </button>
+        {{user.username}}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="last_login">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Last login</th>
+      <td mat-cell *matCellDef="let user">{{user.last_login | date:'medium'}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="registered">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Registration Date</th>
+      <td mat-cell *matCellDef="let user">{{user.registered| date:'medium'}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="admin">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Admin?</th>
+      <td mat-cell *matCellDef="let user">
+        <mat-slide-toggle [checked]="user.admin"
+                          (change)="changeAdmin($event, user)"
+                          [disabled]="userService.username === user.username"
+                          [matTooltip]="userService.username === user.username ? 'For safety reasons you\'re not allowed to un-admin yourself' : ''"
+                          color="primary">
+        </mat-slide-toggle>
+      </td>
+    </ng-container>
+
+  </table>
+  <mat-paginator [pageSizeOptions]="[10, 25, 50]" showFirstLastButtons></mat-paginator>
+</div>
 
 <h2>Delete user account</h2>
 <p>You can delete your user account by clicking the button below. When you delete your account, your APIs

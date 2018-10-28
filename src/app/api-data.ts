@@ -43,9 +43,27 @@ export class PyAPISubmission {
   };
 }
 
+export class User {
+  username: string;
+  admin: boolean;
+  registered: Date;
+  last_login: Date;
+  locked: boolean;
+}
+
+export class UserChange {
+  username: string;
+  new_username?: string;
+  new_password?: string;
+  set_admin?: boolean;
+  lock?: boolean;
+}
+
 export class PyAPIResponse {
   status: string;
   message: string;
   access_token?: string;
+  admin?: boolean;
   id?: string;
+  users?: User[];
 }

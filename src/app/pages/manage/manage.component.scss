@@ -40,3 +40,22 @@ mat-form-field {
   max-width: 5em;
 }
 
+.admin-warning {
+  font-weight: bolder;
+  color: red;
+}
+
+mat-panel-title {
+  font-weight: bold;
+  margin: auto;
+}
+
+table {
+  width: 100%;
+}
+
+td {
+  button {
+    margin: 0;
+  }
+}

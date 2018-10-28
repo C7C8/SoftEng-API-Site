@@ -5,7 +5,7 @@ import { Observable, of } from 'rxjs';
 import { environment } from '../environments/environment';
 import { catchError } from 'rxjs/operators';
 import { CanActivate, Router } from '@angular/router';
-import { PyAPIResponse, PyAPISubmission } from './api-data';
+import { PyAPIResponse, PyAPISubmission, User, UserChange } from './api-data';
 
 @Injectable({
   providedIn: 'root'
@@ -13,27 +13,26 @@ import { PyAPIResponse, PyAPISubmission } from './api-data';
 export class UserService implements CanActivate {
   private jwt: string;
   public username: string;
+  public admin = false;
 
   constructor(private http: HttpClient, private router: Router) { }
 
-  login(username: string, password: string, callback?: (PyAPIResponse) => void): void {
-    this.http.post<PyAPIResponse>(environment.api.login,
+  async login(username: string, password: string): Promise<PyAPIResponse> {
+    const response = await this.http.post<PyAPIResponse>(environment.api.login,
       {
         username: username,
         password: password
       })
-      .pipe(
-        catchError(this.handleError()))
-      .subscribe(response => {
-        if (response.status === 'success') {
-          this.jwt = response.access_token;
-          this.username = username;
-        }
+      .pipe(catchError(this.handleError()))
+      .toPromise();
 
-        if (callback) {
-          callback(response);
-        }
-    });
+    if (response.status === 'success') {
+      this.jwt = response.access_token;
+      this.username = username;
+      this.admin = response.admin;
+    }
+
+    return response;
   }
 
   isLoggedIn(): boolean {
@@ -48,22 +47,19 @@ export class UserService implements CanActivate {
     return res;
   }
 
-  register(username: string, password: string, callback?: (PyAPIResponse) => void): void {
-    this.http.post<PyAPIResponse>(environment.api.register,
+  async register(username: string, password: string): Promise<PyAPIResponse> {
+    return this.http.post<PyAPIResponse>(environment.api.register,
       {
         username: username,
         password: password
       })
       .pipe(catchError(this.handleError()))
-      .subscribe(response => {
-        if (callback) {
-          callback(response);
-        }
-      });
+      .toPromise();
   }
 
-  deleteUser(username: string, password: string, callback?: (PyAPIResponse) => void): void {
-    this.http.request<PyAPIResponse>('delete', environment.api.deregister,
+  async deleteUser(username: string, password: string): Promise<PyAPIResponse> {
+    this.logout();
+    return this.http.request<PyAPIResponse>('delete', environment.api.deregister,
       {
         body : {
           username: username,
@@ -71,73 +67,125 @@ export class UserService implements CanActivate {
         }
       })
       .pipe(catchError(this.handleError()))
-      .subscribe(response => {
-        this.logout();
-        if (callback) {
-          callback(response);
-        }
-    });
+      .toPromise();
   }
 
   logout() {
     this.jwt = null;
     this.username = '';
+    this.admin = false;
   }
 
   getUsername(): string {
     return this.username;
   }
 
-  createAPI(info: PyAPISubmission, callback?: (response: PyAPIResponse) => void) {
+  async createAPI(info: PyAPISubmission): Promise<PyAPIResponse> {
     const requestOptions = {
       headers: new HttpHeaders({
-        'Authorization': 'Bearer ' + this.jwt,
+        'Authorization': 'Bearer ' + this.jwt
       })
     };
 
-    this.http.post<PyAPIResponse>(environment.api.create, info, requestOptions)
+    return this.http.post<PyAPIResponse>(environment.api.create, info, requestOptions)
       .pipe(catchError(this.handleError()))
-      .subscribe((response: PyAPIResponse) => {
-        if (callback) {
-          callback(response);
-        }
-      });
+      .toPromise();
   }
 
-  submitUpdate(info: PyAPISubmission, callback?: (response: PyAPIResponse) => void) {
+  async submitUpdate(info: PyAPISubmission): Promise<PyAPIResponse> {
     const requestOptions = {
       headers: new HttpHeaders({
-        'Authorization': 'Bearer ' + this.jwt,
+        'Authorization': 'Bearer ' + this.jwt
       })
     };
 
-    this.http.post<PyAPIResponse>(environment.api.update, info,  requestOptions)
-      .pipe(
-        catchError(this.handleError())
-      )
-      .subscribe((response: PyAPIResponse) => {
-        if (callback) {
-          callback(response);
-        }
-      });
+    return this.http.post<PyAPIResponse>(environment.api.update, info,  requestOptions)
+      .pipe(catchError(this.handleError()))
+      .toPromise();
   }
 
-  deleteAPI(id: string, callback?: (response: PyAPIResponse) => void) {
+  async deleteAPI(id: string): Promise<PyAPIResponse> {
     const requestOptions = {
       headers: new HttpHeaders({
-        'Authorization': 'Bearer ' + this.jwt,
+        'Authorization': 'Bearer ' + this.jwt
       })
     };
 
-    this.http.delete<PyAPIResponse>(environment.api.delete + '?id=' + id, requestOptions)
+    return this.http.delete<PyAPIResponse>(environment.api.delete + '?id=' + id, requestOptions)
       .pipe(
         catchError(this.handleError())
       )
-      .subscribe((response: PyAPIResponse) => {
-        if (callback) {
-          callback(response !== undefined ? response : { status: 'error', message: 'Submission failed' });
-        }
-      });
+      .toPromise();
+  }
+
+  async getUsers(): Promise<User[]> {
+    if (!this.admin) {
+      return [];
+    }
+
+    const requestOptions = {
+      headers: new HttpHeaders({
+        'Authorization': 'Bearer ' + this.jwt
+      })
+    };
+
+    const response = await this.http.get<PyAPIResponse>(environment.api.userlist, requestOptions)
+      .pipe(catchError(this.handleError()))
+      .toPromise();
+
+    if (response.status !== 'success') {
+      return [];
+    }
+    return response.users;
+  }
+
+  async changeUser(request: UserChange): Promise<PyAPIResponse> {
+    if (!this.admin) {
+      return;
+    }
+
+    const requestOptions = {
+      headers: new HttpHeaders({
+        'Authorization': 'Bearer ' + this.jwt
+      })
+    };
+
+    return this.http.post<PyAPIResponse>(environment.api.moduser, request, requestOptions)
+      .pipe(catchError(this.handleError()))
+      .toPromise();
+  }
+
+  async adminDeleteUser(username: string): Promise<PyAPIResponse> {
+    if (!this.admin) {
+      return;
+    }
+
+    const requestOptions = {
+      headers: new HttpHeaders({
+        'Authorization': 'Bearer ' + this.jwt
+      })
+    };
+
+    return this.http.delete<PyAPIResponse>(environment.api.deleteuser + '?username=' + username, requestOptions)
+      .pipe(catchError(this.handleError()))
+      .toPromise();
+  }
+
+  async lockUser(username: string, lock: boolean): Promise<PyAPIResponse> {
+    if (!this.admin) {
+      return;
+    }
+
+    const requestOptions = {
+      headers: new HttpHeaders({
+        'Authorization': 'Bearer ' + this.jwt
+      })
+    };
+
+    const request: UserChange = { username: username, lock: lock};
+    return this.http.post<PyAPIResponse>(environment.api.moduser, request, requestOptions)
+      .pipe(catchError(this.handleError()))
+      .toPromise();
   }
 
   private handleError() {
