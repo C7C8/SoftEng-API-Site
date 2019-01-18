@@ -45,7 +45,7 @@
 
       <h4>Description</h4>
       <mat-form-field id="edit-fields">
-        <textarea matInput [(ngModel)]="newDesc" name="description"></textarea>
+        <textarea matInput matTextareaAutosize matAutosizeMinRows=5 [(ngModel)]="newDesc" name="description"></textarea>
       </mat-form-field>
       <h4>Version History</h4>
       <ul class="version-history">
