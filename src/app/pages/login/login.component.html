@@ -1,6 +1,6 @@
 <div class="login-container">
   <mat-card>
-    <form #loginForm="ngForm" (submit)="login()">
+    <form #loginForm="ngForm" (keydown)="loginGuard($event)">
       <h4>Login/Register</h4>
       <div class="text-input">
         <mat-form-field>

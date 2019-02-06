@@ -4,6 +4,7 @@ import { UserService } from '../../user.service';
 import { Router } from '@angular/router';
 import { FormControl, Validators } from '@angular/forms';
 import { PyAPIResponse } from '../../api-data';
+import { ENTER } from '@angular/cdk/keycodes';
 
 @Component({
   selector: 'app-login',
@@ -20,6 +21,14 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
   }
 
+  // Hack for getting login-on-'Enter' to work, because having two buttons the form is messing with Angular forms
+  // (somehow). I don't have enough time to properly understand and fix it, so here's a manual solution...
+  async loginGuard(event: KeyboardEvent) {
+    if (event.code === 'Enter' && this.emailFieldControl.valid && this.password.length > 0) {
+      this.login();
+    }
+  }
+
   async login() {
     if (this.userService.isLoggedIn()) {
       this.snackbar.open('You\'re already logged in!', '', {duration: 2000});
@@ -27,7 +36,6 @@ export class LoginComponent implements OnInit {
     }
 
     const response = await this.userService.login(this.username, this.password);
-
     if (response.status === 'success') {
       this.snackbar.open('Logged in as ' + this.username + '!', '', {duration: 2000});
       this.router.navigate(['/manage']);
@@ -37,7 +45,6 @@ export class LoginComponent implements OnInit {
   }
 
   async register() {
-    console.log("register pressed");
     if (this.userService.isLoggedIn()) {
       this.snackbar.open('You\'re already logged in!', '', {duration: 2000});
       return;
