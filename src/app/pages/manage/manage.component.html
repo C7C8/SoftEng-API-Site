@@ -34,14 +34,7 @@
 <mat-spinner *ngIf="!fetchService.apiData" [diameter]="50"></mat-spinner>
 
 <h2>Submit New API</h2>
-<p>Use the form below to add a base API entry. You'll need a name for it, the term &amp; and year
-  it was made in, and the letter of the team that created it. Once the entry is created,
-  you can add a description, image preview, and submit a usable version above!</p>
 <p><b>Important: API names are case sensitive, and names can only be used once.</b>
-  When you submit an API, we convert it into an artifact ID by removing the spaces, so something
-  like "API Update Checker" becomes <code>APIUpdateChecker</code>. Furthermore, since we don't allow
-  an API's files to ever be completely purged, <b>once you've used a name with a given term/year/team
-    combo, you can never re-use it!</b></p>
 
 <form #submitForm="ngForm" (submit)="submitAPI(submitForm)">
   <mat-card>
@@ -92,11 +85,19 @@
         <mat-option *ngFor="let letter of letters" [value]="letter">{{letter}}</mat-option>
       </mat-select>
     </mat-form-field>
-
+    <div class="api-name-preview" *ngIf="submitForm.form.valid">
+      <i>Gradle Preview: </i><code>
+      [group: 'edu.wpi.cs3733.{{newAPITerm.toLowerCase()}}{{newAPIYear.toString().slice(2, 4)}}.team{{newAPITeam}}', name: '{{newAPIName | nospace}}', version: '1.0.0']
+    </code>
+    </div>
     <br>
     <button mat-raised-button color="primary" [disabled]="!submitForm.form.valid || !emailFieldControl.valid" type="submit">Create API</button>
   </mat-card>
 </form>
+
+<div>
+  Once you've registered your API, find its entry above and edit it to upload a jar file for it.
+</div>
 
 <div class="userlist" *ngIf="userService.admin">
   <h2>User List</h2>
