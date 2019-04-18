@@ -23,10 +23,10 @@ export class ManageComponent implements OnInit {
   emailFieldControl = new FormControl('', [Validators.required, Validators.email]);
   letters: string[] = [];
 
-  newAPIName: string;
-  newAPIContact: string;
-  newAPITerm: string;
-  newAPITeam: string;
+  newAPIName = '';
+  newAPIContact = '';
+  newAPITerm = '';
+  newAPITeam = '';
   newAPIYear: number = (new Date()).getFullYear();
 
   @ViewChild(MatSort) sort: MatSort;
