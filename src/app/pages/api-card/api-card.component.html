@@ -44,6 +44,8 @@
       <p class="version-warning" *ngIf="api.history.length === 0">No Jar file submitted for this API!</p>
 
       <h4>Description</h4>
+		  <p>Markdown is fully supported, you can use lists, font styles, links, etc! See
+        <a href="https://guides.github.com/features/mastering-markdown/">here</a> for a quick guide on how to use it.</p>
       <mat-form-field id="edit-fields">
         <textarea matInput matTextareaAutosize matAutosizeMinRows=5 [(ngModel)]="newDesc" name="description"></textarea>
       </mat-form-field>
