@@ -4,11 +4,11 @@
     "logLevel": "debug"
   },
   "/img": {
-    "target": "http://localhost:8000",
+    "target": "https://apisite.crmyers.dev",
     "logLevel": "debug"
   },
   "/list.json": {
-    "target": "http://localhost:8000",
+    "target": "https://apisite.crmyers.dev",
     "logLevel": "debug"
   }
 }

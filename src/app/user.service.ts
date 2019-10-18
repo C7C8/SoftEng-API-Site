@@ -18,7 +18,7 @@ export class UserService implements CanActivate {
   constructor(private http: HttpClient, private router: Router) { }
 
   async login(username: string, password: string): Promise<PyAPIResponse> {
-    const response = await this.http.post<PyAPIResponse>(environment.api.login,
+    const response = await this.http.post<PyAPIResponse>('https://api.' + document.domain + environment.api.login,
       {
         username: username,
         password: password
@@ -48,7 +48,7 @@ export class UserService implements CanActivate {
   }
 
   async register(username: string, password: string): Promise<PyAPIResponse> {
-    return this.http.post<PyAPIResponse>(environment.api.register,
+    return this.http.post<PyAPIResponse>('https://api.' + document.domain + environment.api.register,
       {
         username: username,
         password: password
@@ -59,7 +59,7 @@ export class UserService implements CanActivate {
 
   async deleteUser(username: string, password: string): Promise<PyAPIResponse> {
     this.logout();
-    return this.http.request<PyAPIResponse>('delete', environment.api.deregister,
+    return this.http.request<PyAPIResponse>('delete', 'https://api.' + document.domain + environment.api.deregister,
       {
         body : {
           username: username,
@@ -87,7 +87,7 @@ export class UserService implements CanActivate {
       })
     };
 
-    return this.http.post<PyAPIResponse>(environment.api.create, info, requestOptions)
+    return this.http.post<PyAPIResponse>('https://api.' + document.domain + environment.api.create, info, requestOptions)
       .pipe(catchError(this.handleError()))
       .toPromise();
   }
@@ -99,7 +99,7 @@ export class UserService implements CanActivate {
       })
     };
 
-    return this.http.post<PyAPIResponse>(environment.api.update, info,  requestOptions)
+    return this.http.post<PyAPIResponse>('https://api.' + document.domain + environment.api.update, info,  requestOptions)
       .pipe(catchError(this.handleError()))
       .toPromise();
   }
@@ -111,7 +111,7 @@ export class UserService implements CanActivate {
       })
     };
 
-    return this.http.delete<PyAPIResponse>(environment.api.delete + '?id=' + id, requestOptions)
+    return this.http.delete<PyAPIResponse>('https://api.' + document.domain + environment.api.delete + '?id=' + id, requestOptions)
       .pipe(
         catchError(this.handleError())
       )
@@ -129,7 +129,7 @@ export class UserService implements CanActivate {
       })
     };
 
-    const response = await this.http.get<PyAPIResponse>(environment.api.userlist, requestOptions)
+    const response = await this.http.get<PyAPIResponse>('https://api.' + document.domain + environment.api.userlist, requestOptions)
       .pipe(catchError(this.handleError()))
       .toPromise();
 
@@ -150,7 +150,7 @@ export class UserService implements CanActivate {
       })
     };
 
-    return this.http.post<PyAPIResponse>(environment.api.moduser, request, requestOptions)
+    return this.http.post<PyAPIResponse>('https://api.' + document.domain + environment.api.moduser, request, requestOptions)
       .pipe(catchError(this.handleError()))
       .toPromise();
   }
@@ -166,7 +166,7 @@ export class UserService implements CanActivate {
       })
     };
 
-    return this.http.delete<PyAPIResponse>(environment.api.deleteuser + '?username=' + username, requestOptions)
+    return this.http.delete<PyAPIResponse>('https://api.' + document.domain + environment.api.deleteuser + '?username=' + username, requestOptions)
       .pipe(catchError(this.handleError()))
       .toPromise();
   }
@@ -183,7 +183,7 @@ export class UserService implements CanActivate {
     };
 
     const request: UserChange = { username: username, lock: lock};
-    return this.http.post<PyAPIResponse>(environment.api.moduser, request, requestOptions)
+    return this.http.post<PyAPIResponse>('https://api.' + document.domain + environment.api.moduser, request, requestOptions)
       .pipe(catchError(this.handleError()))
       .toPromise();
   }

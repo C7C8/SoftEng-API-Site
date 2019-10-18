@@ -4,7 +4,12 @@ import { APIFetchService } from '../../apifetch.service';
 import { Router } from '@angular/router';
 import { FormControl, NgForm, Validators } from '@angular/forms';
 import { PyAPIResponse, PyAPISubmission, User, UserChange } from '../../api-data';
-import { MatDialog, MatPaginator, MatSlideToggleChange, MatSnackBar, MatSort, MatTable, MatTableDataSource } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSlideToggleChange } from '@angular/material/slide-toggle';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatSort } from '@angular/material/sort';
+import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { ConfirmDeleteAccountComponent } from './confirm-delete-account/confirm-delete-account.component';
 import { faUserTimes, faLock, faUnlock } from '@fortawesome/free-solid-svg-icons';
 
@@ -29,9 +34,9 @@ export class ManageComponent implements OnInit {
   newAPITeam = '';
   newAPIYear: number = (new Date()).getFullYear();
 
-  @ViewChild(MatSort) sort: MatSort;
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatTable) table: MatTable<any>;
+  @ViewChild(MatSort, { static: false }) sort: MatSort;
+  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
+  @ViewChild(MatTable, { static: false }) table: MatTable<any>;
   displayColumns: string[] = ['username', 'registered', 'last_login', 'admin'];
   userlist = new MatTableDataSource<User>();
 

@@ -7,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
+  mavenURL: string = 'https://' + window.location.hostname + '/maven';
+
   constructor() { }
 
   ngOnInit() {
