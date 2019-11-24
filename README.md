@@ -1,4 +1,5 @@
 # Software Engineering API Repository
+![Build status](https://codebuild.us-east-1.amazonaws.com/badges?uuid=eyJlbmNyeXB0ZWREYXRhIjoidjMwRGJ2blNhTEo1bXhFazFOZ0NPMTVUTitvNjZLVzVPWTZxMnJRQm42ajk3WGU0Q0hNdVlrVlVvRGIzTEpIRjcxWWwxbnIvRzM3T1AzcHN0MGJkVFVjPSIsIml2UGFyYW1ldGVyU3BlYyI6IitZMks1MlFDY1ZHaGxsc1ciLCJtYXRlcmlhbFNldFNlcmlhbCI6MX0%3D&branch=master)
 
 Built to host APIs created as part of CS 3733 Software Engineering, at Worcester Polytechnic Institute
 (WPI). As part of the course, students sometimes create Java APIs that act as pseudo-applications, which
