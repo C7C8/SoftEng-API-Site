@@ -34,9 +34,9 @@ export class ManageComponent implements OnInit {
   newAPITeam = '';
   newAPIYear: number = (new Date()).getFullYear();
 
-  @ViewChild(MatSort, { static: false }) sort: MatSort;
-  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
-  @ViewChild(MatTable, { static: false }) table: MatTable<any>;
+  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatTable) table: MatTable<any>;
   displayColumns: string[] = ['username', 'registered', 'last_login', 'admin'];
   userlist = new MatTableDataSource<User>();
 
