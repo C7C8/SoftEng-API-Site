@@ -5,7 +5,7 @@
       v{{api.version}} |
       {{api.size}} MB |
       Last updated: {{api.updated | date}} |
-      Contact: <a href="mailto:{{api.contact}}">{{api.contact}}</a></span>
+      Contact: <a [href]="'mailto:' + api.contact">{{api.contact}}</a></span>
     </mat-panel-description>
   </mat-expansion-panel-header>
 
@@ -53,7 +53,7 @@
       <ul class="version-history">
         <li>
           <mat-form-field id="edit-version">
-            <input matInput placeholder="Version X.X.X" name="vnum" [(ngModel)]="newVersionNum" [formControl]="versionFormControl"
+            <input matInput placeholder="X.X.X" name="vnum" [(ngModel)]="newVersionNum" [formControl]="versionFormControl"
             [errorStateMatcher]="matcher" required>
           </mat-form-field>
           <mat-form-field id="edit-changelog">
