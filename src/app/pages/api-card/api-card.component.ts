@@ -20,7 +20,7 @@ class MyErrorStateMatcher implements ErrorStateMatcher {
 @Component({
   selector: 'app-api-card',
   templateUrl: './api-card.component.html',
-  styleUrls: ['./api-card.component.css']
+  styleUrls: ['./api-card.component.scss']
 })
 export class ApiCardComponent implements OnInit {
   @Input() api: API;

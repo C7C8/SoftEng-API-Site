@@ -3,13 +3,11 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { UserService } from '../../user.service';
 import { Router } from '@angular/router';
 import { FormControl, Validators } from '@angular/forms';
-import { PyAPIResponse } from '../../api-data';
-import { ENTER } from '@angular/cdk/keycodes';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
   emailFieldControl = new FormControl('', [Validators.required, Validators.email]);

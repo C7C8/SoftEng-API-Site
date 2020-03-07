@@ -1,14 +1,20 @@
 {
   "/api": {
-    "target": "http://localhost:5000",
-    "logLevel": "debug"
+    "target": "https://api.apisite.crmyers.dev",
+    "logLevel": "debug",
+    "secure": false,
+    "changeOrigin": true
   },
   "/img": {
     "target": "https://apisite.crmyers.dev",
-    "logLevel": "debug"
+    "logLevel": "debug",
+    "secure": false,
+    "changeOrigin": true
   },
   "/list.json": {
     "target": "https://apisite.crmyers.dev",
-    "logLevel": "debug"
+    "logLevel": "debug",
+    "secure": false,
+    "changeOrigin": true
   }
 }
