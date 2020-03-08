@@ -10,6 +10,7 @@ import { FormControl, Validators } from '@angular/forms';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
+  inProgress = false;
   emailFieldControl = new FormControl('', [Validators.required, Validators.email]);
   username = '';
   password = '';
@@ -33,7 +34,9 @@ export class LoginComponent implements OnInit {
       return;
     }
 
+    this.inProgress = true;
     const response = await this.userService.login(this.username, this.password);
+    this.inProgress = false;
     if (response.status === 'success') {
       this.snackbar.open('Logged in as ' + this.username + '!', '', {duration: 2000});
       this.router.navigate(['/manage']);
@@ -48,7 +51,9 @@ export class LoginComponent implements OnInit {
       return;
     }
 
+    this.inProgress = true;
     const response = await this.userService.register(this.username, this.password);
+    this.inProgress = false;
 
     if (response.status === 'success') {
       this.snackbar.open('Successfully registered as ' + this.username, '', {duration: 2000});
