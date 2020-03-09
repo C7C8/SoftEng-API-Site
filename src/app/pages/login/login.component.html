@@ -21,6 +21,7 @@
                  [formControl]="passwordFieldControl"
                  [(ngModel)]="password"
                  required>
+          <mat-error *ngIf="passwordFieldControl.invalid && passwordFieldControl.touched">Password too long, can be at most 2048 characters</mat-error>
         </mat-form-field>
       </div>
     </form>
