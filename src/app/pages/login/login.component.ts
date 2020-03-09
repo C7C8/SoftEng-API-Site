@@ -13,6 +13,7 @@ export class LoginComponent implements OnInit {
   inProgress = false;
   emailFieldControl = new FormControl('', [Validators.required, Validators.email]);
   username = '';
+  passwordFieldControl = new FormControl('', [Validators.maxLength(2048), Validators.required]);
   password = '';
 
   constructor(private userService: UserService, private snackbar: MatSnackBar, private router: Router) { }
