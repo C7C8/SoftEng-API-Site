@@ -44,17 +44,19 @@
              placeholder="API Name"
              name="name"
              [(ngModel)]="newAPIName"
+             [formControl]="apiNameControl"
              required>
+      <mat-error *ngIf="apiNameControl.touched && apiNameControl.invalid">Invalid name!</mat-error>
     </mat-form-field>
     <mat-form-field>
       <input matInput
              type="text"
              placeholder="Contact Email"
              name="contact"
-             [formControl]="emailFieldControl"
+             [formControl]="apiEmailControl"
              [(ngModel)]="newAPIContact"
              required>
-      <mat-error *ngIf="emailFieldControl.invalid && emailFieldControl.touched">Invalid email!</mat-error>
+      <mat-error *ngIf="apiEmailControl.invalid && apiEmailControl.touched">Invalid email!</mat-error>
     </mat-form-field>
     <mat-form-field id="year-selector">
       <input matInput
@@ -85,13 +87,13 @@
         <mat-option *ngFor="let letter of letters" [value]="letter">{{letter}}</mat-option>
       </mat-select>
     </mat-form-field>
-    <div class="api-name-preview" *ngIf="submitForm.form.valid">
+    <div class="api-name-preview" *ngIf="submitForm.form.valid && apiNameControl.valid && apiEmailControl.valid">
       <i>Gradle Preview: </i><code>
       [group: 'edu.wpi.cs3733.{{newAPITerm.toLowerCase()}}{{newAPIYear.toString().slice(2, 4)}}.team{{newAPITeam}}', name: '{{newAPIName | nospace}}', version: '1.0.0']
     </code>
     </div>
     <br>
-    <button mat-raised-button color="primary" [disabled]="!submitForm.form.valid || !emailFieldControl.valid" type="submit">Create API</button>
+    <button mat-raised-button color="primary" [disabled]="!submitForm.form.valid || !apiEmailControl.valid || !apiNameControl.valid" type="submit">Create API</button>
   </mat-card>
 </form>
 

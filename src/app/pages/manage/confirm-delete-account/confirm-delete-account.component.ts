@@ -4,7 +4,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 @Component({
   selector: 'app-confirm-delete-account',
   templateUrl: './confirm-delete-account.component.html',
-  styleUrls: ['./confirm-delete-account.component.css']
+  styleUrls: ['./confirm-delete-account.component.scss']
 })
 export class ConfirmDeleteAccountComponent implements OnInit {
 

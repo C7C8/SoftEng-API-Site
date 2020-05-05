@@ -25,9 +25,10 @@ export class ManageComponent implements OnInit {
               private router: Router,
               private snackbar: MatSnackBar,
               private dialog: MatDialog) { }
-  emailFieldControl = new FormControl('', [Validators.required, Validators.email]);
   letters: string[] = [];
 
+  apiEmailControl = new FormControl('', [Validators.required, Validators.email, Validators.pattern('((?!wwong2@wpi.edu).)*')]);
+  apiNameControl = new FormControl('', [Validators.pattern('((?!Team|team).)*')]);
   newAPIName = '';
   newAPIContact = '';
   newAPITerm = '';
@@ -99,7 +100,7 @@ export class ManageComponent implements OnInit {
     this.snackbar.open(response.message, '', {duration: 3000});
     if (response.status === 'success') {
       submitForm.resetForm();
-      this.emailFieldControl.reset();
+      this.apiEmailControl.reset();
 
       // Refresh API list to show changes
       this.fetchService.getAPIData(() => {

@@ -18,12 +18,15 @@
                  type="password"
                  placeholder="Password"
                  name="password"
+                 [formControl]="passwordFieldControl"
                  [(ngModel)]="password"
                  required>
+          <mat-error *ngIf="passwordFieldControl.invalid && passwordFieldControl.touched">Password too long, can be at most 2048 characters</mat-error>
         </mat-form-field>
       </div>
     </form>
     <button mat-raised-button id="login" (click)="login()" color="primary" [disabled]="!loginForm.valid || !emailFieldControl.valid">Login</button>
     <button mat-raised-button id="register" (click)="register()" [disabled]="!loginForm.valid || !emailFieldControl.valid" >Register</button>
   </mat-card>
+  <mat-spinner *ngIf="inProgress"></mat-spinner>
 </div>

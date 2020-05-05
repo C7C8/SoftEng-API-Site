@@ -5,16 +5,16 @@
 export const environment = {
   production: false,
   api: {
-    list: '/list.json',
-    login: '/auth/login',
-    register: '/auth/register',
-    deregister: '/auth/register',
-    create: '/list',
-    update: '/list',
-    delete: '/list',
-    userlist: '/admin',
-    deleteuser: '/admin',
-    moduser: '/admin'
+    list:       'list.json',
+    login:      '/api/auth/login',
+    register:   '/api/auth/register',
+    deregister: '/api/auth/register',
+    create:     '/api/list',
+    update:     '/api/list',
+    delete:     '/api/list',
+    userlist:   '/api/admin',
+    deleteuser: '/api/admin',
+    moduser:    '/api/admin'
   }
 };
 

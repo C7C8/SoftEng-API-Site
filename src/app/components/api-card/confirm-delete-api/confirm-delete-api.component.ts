@@ -4,7 +4,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 @Component({
   selector: 'app-are-you-sure',
   templateUrl: './confirm-delete-api.component.html',
-  styleUrls: ['./confirm-delete-api.component.css']
+  styleUrls: ['./confirm-delete-api.component.scss']
 })
 export class ConfirmDeleteApiComponent implements OnInit {
 
