@@ -61,6 +61,19 @@ mat-panel-description {
       font-size: 0.9em;
       font-family: Arial, sans-serif;
     }
+
+    ::ng-deep pre {
+      background-color: #555;
+      font-size: 13px;
+      padding: 2px 4px 1px;
+    }
+
+    ::ng-deep pre > ::ng-deep code {
+      white-space: pre-wrap;
+      display: inline-block;
+      text-align: left;
+      padding: 2px 4px 2px;
+    }
   }
 }
 
